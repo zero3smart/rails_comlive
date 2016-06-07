@@ -44,21 +44,21 @@ RSpec.describe Commodity, :type => :model do
       assoc = Commodity.reflect_on_association(:references)
       expect(assoc.macro).to eq :has_many
     end
-    it "belongs to unspsc segment" do
-      assoc = Commodity.reflect_on_association(:unspsc_segment)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to unspsc family" do
-      assoc = Commodity.reflect_on_association(:unspsc_family)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to unspsc class" do
-      assoc = Commodity.reflect_on_association(:unspsc_class)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to unspsc commodity" do
-      assoc = Commodity.reflect_on_association(:unspsc_commodity)
-      expect(assoc.macro).to eq :belongs_to
-    end
+    # it "belongs to unspsc segment" do
+    #   assoc = Commodity.reflect_on_association(:unspsc_segment)
+    #   expect(assoc.macro).to eq :belongs_to
+    # end
+    # it "belongs to unspsc family" do
+    #   assoc = Commodity.reflect_on_association(:unspsc_family)
+    #   expect(assoc.macro).to eq :belongs_to
+    # end
+    # it "belongs to unspsc class" do
+    #   assoc = Commodity.reflect_on_association(:unspsc_class)
+    #   expect(assoc.macro).to eq :belongs_to
+    # end
+    # it "belongs to unspsc commodity" do
+    #   assoc = Commodity.reflect_on_association(:unspsc_commodity)
+    #   expect(assoc.macro).to eq :belongs_to
+    # end
   end
 end

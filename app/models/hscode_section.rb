@@ -4,11 +4,11 @@ class HscodeSection < ApplicationRecord
   validates_presence_of :category, :description
   validates_uniqueness_of :category
 
-  before_create :set_range
+  # before_create :set_range
 
   private
 
-  def set_range
-    self.range = category.split('-').inject { |s,e| s.to_i..e.to_i }.to_a.map{|a| a.to_i }
-  end
+  # def set_range
+  #   self.range = category.split('-').inject { |s,e| s.to_i..e.to_i }.to_a.map{|a| a.to_i }
+  # end
 end
