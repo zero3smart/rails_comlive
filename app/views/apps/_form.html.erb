@@ -1,0 +1,8 @@
+<%= form_for @app do |f| %>
+    <%= errors_for @app %>
+    <div>
+      <%= f.label :description %><br>
+      <%= f.text_area :description, rows: 3 %>
+    </div>
+    <%= f.submit %>
+<% end %>

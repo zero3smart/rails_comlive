@@ -1,0 +1,18 @@
+<%= form_for [@app,@measurement] do |f| %>
+    <%= errors_for @measurement %>
+    <div>
+      <%= f.label :property %><br>
+      <%= f.select :property, grouped_options_for_select(options_for_property(@app), @measurement.property), { prompt: "Select Property" }, data: { url: uoms_path } %>
+    </div>
+    <div>
+      <%= f.label :value %><br>
+      <%= f.text_field :value %>
+    </div>
+    <div>
+      <%= f.label :uom %><br>
+      <%= f.select :uom, options_for_select(uoms_for_property(@measurement.property), @measurement.uom) %>
+    </div>
+
+    <%= f.submit %>
+
+<% end %>

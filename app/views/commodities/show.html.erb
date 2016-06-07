@@ -1,0 +1,7 @@
+<h1>Commodity</h1>
+
+<p><b>Short Description:</b> <%= @commodity.short_description %></p>
+<p><b>Long Description:</b> <%= @commodity.long_description %></p>
+<p><%= @commodity.generic ? "Generic" : "Not Generic" %></p>
+<p><%= link_to "Edit", edit_app_commodity_path(@app,@commodity) %>| <%= link_to "Links", app_links_path(@app) %> |
+<%= link_to "References", app_references_path(@app) %></p>

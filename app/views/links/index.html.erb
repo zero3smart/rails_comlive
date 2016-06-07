@@ -1,0 +1,7 @@
+<h1>Links <small><%= link_to "Add", new_app_link_path(@app) %></small></h1>
+
+<% if @links.any? %>
+    <%= render @links %>
+<% else %>
+    <p>No links found <%= link_to "Add link", new_app_link_path(@app) %></p>
+<% end %>

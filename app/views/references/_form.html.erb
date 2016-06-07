@@ -1,0 +1,20 @@
+<%= form_for [@app, @reference] do |f| %>
+    <%= errors_for @reference %>
+    <div>
+      <%= f.label :kind %><br>
+      <%= f.select :kind, options_for_kind  %>
+    </div>
+    <div>
+      <%= f.label :source_commodity %><br>
+      <%= f.select :source_commodity_id, Commodity.generic.map{|c| [c.short_description, c.id]} %>
+    </div>
+    <div>
+      <%= f.label :target_commodity %><br>
+      <%= f.select :target_commodity_id, Commodity.not_generic.map{|c| [c.short_description, c.id]} %>
+    </div>
+    <div>
+      <%= f.label :description %><br>
+      <%= f.text_area :description %>
+    </div>
+    <%= f.submit %>
+<% end %>

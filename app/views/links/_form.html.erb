@@ -1,0 +1,16 @@
+<%= form_for [@app,@link] do |f| %>
+    <%= errors_for @link %>
+    <div>
+      <%= f.label :url %><br>
+      <%= f.text_field :url %>
+    </div>
+    <div>
+      <%= f.label :commodity %><br>
+      <%= f.select :commodity_id, Commodity.all.map {|c| [c.short_description, c.id] } %>
+    </div>
+    <div>
+      <%= f.label :description %><br>
+      <%= f.text_area :description, rows: 4 %>
+    </div>
+    <%= f.submit %>
+<% end %>

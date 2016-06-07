@@ -1,0 +1,8 @@
+<%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<h1>App</h1>
+
+<% if @apps.any? %>
+    <%= render @apps %>
+<% else %>
+    <p>No apps found. <%= link_to "Create First App", new_app_path %></p>
+<% end %>

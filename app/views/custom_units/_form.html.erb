@@ -1,0 +1,13 @@
+<%= form_for [@app,@unit] do |f| %>
+    <%= errors_for @unit %>
+
+    <div>
+      <%= f.label :property %><br>
+      <%= f.text_field :property %>
+    </div>
+    <div>
+      <%= f.label :uom %><br>
+      <%= f.text_field :uom %>
+    </div>
+    <%= f.submit %>
+<% end %>
