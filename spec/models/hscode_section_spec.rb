@@ -22,6 +22,11 @@ RSpec.describe HscodeSection, :type => :model do
       hscode_section.valid?
       expect(hscode_section.errors[:category]).to include("has already been taken")
     end
+    it "sets range of its category before create" do
+      hscode_section = create(:hscode_section, category: "01-05")
+      expected_range = %w(1 2 3 4 5)
+      expect(hscode_section.range).to match_array(expected_range)
+    end
   end
 
   describe "Associations" do

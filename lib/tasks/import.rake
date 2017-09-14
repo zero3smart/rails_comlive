@@ -58,15 +58,18 @@ namespace :db do
           { category: '90-97', description: 'Miscellaneous'},
           { category: '98-99', description: 'Service'}
       ]
-      HscodeSection.create!(sections)
-      puts "   * Created #{HscodeSection.count} sections"
+      sections.each {|section|
+        hscode_section = HscodeSection.where(category: section[:category]).first_or_create!(section)
+        puts "   * Created hscode section: #{hscode_section.description}"
+      }
 
       puts "=> Importing chapters, headings and subheadings from API."
 
       uri = URI('http://comtrade.un.org/data/cache/classificationH4.json')
       response = JSON.parse Net::HTTP.get(uri)
+      response =  response["results"].reject!{|r| r["parent"] == "#" }
 
-      response["results"].reject{|r| r["parent"] == "#" }.each_with_index do |result, index|
+      response.each_with_index do |result,index|
         category    = result["id"]
         description = result["text"].gsub(/^[0-9]+/,'').gsub(/\s-/,'').gsub(/^-|\:/,'').strip
         parent      = result["parent"]
@@ -74,17 +77,19 @@ namespace :db do
         case category.length
           when 2
             hscode_section = HscodeSection.where("'#{category.to_i}' = ANY (range)").first
-            hscode_section.hscode_chapters.create!(category: category, description: description)
+            hscode_section.hscode_chapters.where(category: category).first_or_create!(description: description)
           when 4
             hscode_chapter = HscodeChapter.find_by(category: parent)
-            hscode_chapter.hscode_headings.create!(category: category, description: description)
+            hscode_chapter.hscode_headings.where(category: category).first_or_create!(description: description)
           when 6
-            hscode_heading = HscodeHeading.find_by(category: parent) # TODO: fix bug
-            hscode_heading.hscode_subheadings.create!(category: category, description: description)
+            if result["parent"].length == 4
+              hscode_heading = HscodeHeading.find_by(category: parent) # TODO: fix bug
+              hscode_heading.hscode_subheadings.where(category: category).first_or_create!(description: description)
+            end
         end
-        print "   *" if index % 1000 == 0
+        print "   *" if index % 200 == 0
       end
-      puts "=> Done!"
+      puts "\n=> Done!"
     end
   end
 end
