@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[ ![Codeship Status for elmatica/commoditylive](https://codeship.com/projects/a9814eb0-0df5-0134-2348-1a3a57c424fc/status?branch=master)](https://codeship.com/projects/156235)
 
-Things you may want to cover:
+**Importing Data**
+To import UNSPSC codes run the following command
 
-* Ruby version
+`rake db:import:unspsc_codes`
 
-* System dependencies
+To import HSCODES run the following command
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`rake db:import:hscodes`
