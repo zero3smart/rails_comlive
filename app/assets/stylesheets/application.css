@@ -10,7 +10,13 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *= require font-awesome
+ *= require material-design-iconic-font
+ *= require animate.min
+ *= require perfect-scrollbar
+ *= require bootstrap
+ *= require app
  *= require select2.min
+ *= require_tree .
  *= require_self
  */
