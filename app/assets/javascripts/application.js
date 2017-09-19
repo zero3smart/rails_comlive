@@ -12,6 +12,15 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui.min
+//= require bootstrap
+//= require hoverIntent
+//= require superfish
+//= require jquery.slimscroll
 //= require turbolinks
 //= require select2.min
+//= require perfect-scrollbar.jquery
+//= require library
+//= require plugins
+//= require app
 //= require_tree .

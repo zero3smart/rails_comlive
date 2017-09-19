@@ -15,6 +15,7 @@ gem 'devise'
 gem 'unitwise'
 gem 'figaro'
 gem 'roo', '~> 2.0.0'
+gem 'font-awesome-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
