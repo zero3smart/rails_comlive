@@ -1,5 +1,5 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * This is a manifest file that'll be compiled into landing.css, which will include all the files
  * listed below.
  *
  * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
@@ -11,31 +11,9 @@
  * It is generally better to create a new file per style scope.
  *
  *= require bootstrap
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
- *= require font-awesome
  *= require bootstrap-select.min
- *= require material-design-iconic-font
- *= require animate.min
- *= require perfect-scrollbar
  *= require typeahead
- *= require jqtree
- *= require select2.min
- *= require lightslider
  *= require custom
- *= require commodities
- *= require barcodes
  *= require searches
- *= require apps
  *= require_self
  */
-
-.breadcrumb li:last-child {
-    color: #464441;
-}
-.alert{
-    border-radius: 0px;
-}
-
-#global-alert{
-    margin: 0px !important;
-}

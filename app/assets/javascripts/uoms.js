@@ -8,23 +8,49 @@ var build_uoms = function(uoms){
         arr.push(option);
     });
 
-    $("select#measurement_uom").html(arr);
+    $("select#specification_uom").html(arr);
 }
 
-ready = function(){
-    $("select#measurement_property").change(function(){
-        var select = $(this);
-        var selected = $(this).find(":selected");
-        var property = selected.val();
+var allUoms = function () {
+    uoms = new Array();
 
-        $.ajax({
-            url: select.data("url"),
-            type: "GET",
-            data: { property: property },
-            success: function(data){
-                build_uoms(data);
-            }
+    $.each($.unitwiseAtoms ,function(key,arrays){
+        $.each(arrays, function(index,value){
+            uoms.push(value);
         });
     });
+    build_uoms(uoms);
 }
-$(document).on('turbolinks:load', ready);
+
+function specificationPropertyCallbacks() {
+    $("select#type_of_measure").change(function () {
+        var select = $(this);
+        var selected = $(this).find(":selected");
+        var key = selected.val();
+        var property = selected.text();
+
+        if(key == ""){
+            allUoms();
+        } else {
+            var data = $.unitwiseAtoms[key];
+            if(data == undefined){
+                $.ajax({
+                    url: select.data("url"),
+                    type: "GET",
+                    data: { property: property },
+                    success: function (data) {
+                        build_uoms(data);
+                    }
+                });
+            } else {
+                build_uoms(data);
+            }
+        }
+    });
+}
+ready = function(){
+    specificationPropertyCallbacks();
+    allUoms();
+}
+
+$(document).ready(ready);

@@ -1,3 +1,28 @@
 // Place all the styles related to the commodities controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.modal-body #new_packaging input[type="submit"] {
+  display: none;
+}
+
+// search box on commodities#index
+.stylish-input-group .input-group-addon{
+  background: white !important;
+}
+.stylish-input-group .form-control{
+  border-right: solid 1px #c7c7c7;
+}
+.stylish-input-group button{
+  border:0;
+  background:transparent;
+}
+
+.search-result{
+  color: #188ae2 !important;
+}
+
+.field_with_errors .form-control {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
