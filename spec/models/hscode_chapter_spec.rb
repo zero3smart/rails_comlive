@@ -16,12 +16,14 @@ RSpec.describe HscodeChapter, :type => :model do
       hscode_chapter.valid?
       expect(hscode_chapter.errors[:description]).to include("can't be blank")
     end
+
     it "is invalid with a duplicate category" do
-      create(:hscode_chapter, category: "09")
-      hscode_chapter = build(:hscode_chapter, category: "09")
+      create(:hscode_chapter, category: "jn")
+      hscode_chapter = build(:hscode_chapter, category: "jn")
       hscode_chapter.valid?
       expect(hscode_chapter.errors[:category]).to include("has already been taken")
     end
+
     it "is invalid without a hscode section" do
       hscode_chapter = build(:hscode_chapter, hscode_section: nil)
       hscode_chapter.valid?

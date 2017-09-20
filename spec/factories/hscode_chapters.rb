@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :hscode_chapter do
-    category { Faker::Number.between(10, 99)}
+    category { ('a'..'z').to_a.shuffle.sample(2).join }
     description { Faker::Lorem.sentence }
     association :hscode_section
   end

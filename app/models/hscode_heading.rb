@@ -3,5 +3,6 @@ class HscodeHeading < ApplicationRecord
   has_many :hscode_subheadings
 
   validates_presence_of :category, :description
-  validates :category, uniqueness: true, length: { is: 4 }
+  validates :category, length: { is: 4 }
+  validates_uniqueness_of :category
 end
