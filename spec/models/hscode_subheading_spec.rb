@@ -17,8 +17,8 @@ RSpec.describe HscodeSubheading, :type => :model do
       expect(hscode_subheading.errors[:description]).to include("can't be blank")
     end
     it "is invalid with a duplicate category" do
-      create(:hscode_subheading, category: "050100")
-      hscode_subheading = build(:hscode_subheading, category: "050100")
+      create(:hscode_subheading, category: "jhgyur")
+      hscode_subheading = build(:hscode_subheading, category: "jhgyur")
       hscode_subheading.valid?
       expect(hscode_subheading.errors[:category]).to include("has already been taken")
     end
