@@ -22,6 +22,7 @@ RSpec.describe HscodeSubheading, :type => :model do
       hscode_subheading.valid?
       expect(hscode_subheading.errors[:category]).to include("has already been taken")
     end
+
     it "is invalid if category length is less than 6 characters" do
       hscode_subheading = build(:hscode_subheading, category: "10176")
       hscode_subheading.valid?

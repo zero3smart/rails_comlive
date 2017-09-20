@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'App Management' do
   background do
     @user = create(:user, email: 'user@example.com', password: 'secretpass')
-    sign_in(@user)
+    log_in(@user)
   end
 
   scenario "User can create app with valid app details" do
@@ -45,13 +45,5 @@ feature 'App Management' do
 
     visit app_path(app)
     expect(page).to have_text(app.description)
-  end
-
-  def sign_in(user)
-    visit new_user_session_path
-
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Log in'
   end
 end

@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'devise'
+require 'support/features/session_helpers'
 
 Capybara.javascript_driver = :poltergeist
 
@@ -39,6 +40,9 @@ RSpec.configure do |config|
 
   # Devise helpers
   config.include Devise::TestHelpers, :type => :controller
+
+  # Session helpers
+  config.include Features::SessionHelpers, type: :feature
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
