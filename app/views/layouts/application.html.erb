@@ -27,133 +27,42 @@
       </div>
       <ul class="sf-menu aside-menu aside-top-menu" id="aside-top-menu">
         <li>
-          <a href="javascript:void(0)" class="menu-link">
+          <a href="/" class="menu-link">
             <span class="menu-icon"><i class="zmdi zmdi-home zmdi-hc-lg"></i></span>
             <span class="menu-text">Dashboard</span>
           </a>
+        </li><!-- .menu-item -->
+
+        <li>
+          <a href="javascript:void(0)" class="menu-link">
+            <span class="menu-icon"><i class="zmdi zmdi-label zmdi-hc-lg"></i></span>
+            <span class="menu-text"><%= t('misc.commodities') %></span>
+          </a>
           <ul>
-            <li><a href="index.html">Dashboard 1</a></li>
-            <li><a href="dashboard.2.html">Dashboard 2</a></li>
+            <li><a href="../default/index.html"><%= t('misc.search') %></a></li>
+            <li><a href="../topbar/index.html"><%= t('misc.latest') %></a></li>
+          </ul>
+        </li><!-- .menu-item -->
+
+        <li>
+          <a href="javascript:void(0)" class="menu-link">
+            <span class="menu-icon"><i class="zmdi zmdi-city-alt zmdi-hc-lg"></i></span>
+            <span class="menu-text"><%= t('misc.companies') %></span>
+          </a>
+          <ul>
+            <li><a href="../default/index.html"><%= t('misc.search') %></a></li>
+            <li><a href="../topbar/index.html"><%= t('misc.latest') %></a></li>
           </ul>
         </li><!-- .menu-item -->
 
         <li>
           <a href="javascript:void(0)" class="menu-link">
             <span class="menu-icon"><i class="zmdi zmdi-layers zmdi-hc-lg"></i></span>
-            <span class="menu-text">Layouts</span>
+            <span class="menu-text"><%= t('misc.collections') %></span>
           </a>
           <ul>
-            <li><a href="../default/index.html">Default</a></li>
-            <li><a href="../topbar/index.html">Topbar</a></li>
-          </ul>
-        </li><!-- .menu-item -->
-
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-puzzle-piece zmdi-hc-lg"></i></span>
-            <span class="menu-text">UI Kit</span>
-          </a>
-          <ul>
-            <li><a href="buttons.html">Buttons</a></li>
-            <li><a href="alerts.html">Alerts</a></li>
-            <li><a href="panels.html">Panels</a></li>
-            <li><a href="lists.html">Lists</a></li>
-            <li><a href="icons.html">Icons</a></li>
-            <li><a href="widgets.html">Widgets</a></li>
-            <li><a href="media.html">Media</a></li>
-            <li><a href="tabs.html">Tabs &amp; Accordions</a></li>
-            <li><a href="progress.html">Progress</a></li>
-          </ul>
-        </li><!-- .menu-item -->
-
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-pages zmdi-hc-lg"></i></span>
-            <span class="menu-text">Pages</span>
-          </a>
-          <ul>
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="price.html">Prices</a></li>
-            <li><a href="invoice.html">Invoice</a></li>
-            <li><a href="gallery.1.html">Gallery</a></li>
-            <li><a href="gallery.2.html">Gallery 2</a></li>
-            <li><a href="support.html">FAQ</a></li>
-            <li>
-              <a href="javascript:void(0)">
-                <span>Extras</span>
-                <span class="menu-caret"><i class="zmdi zmdi-hc-sm zmdi-chevron-right"></i></span>
-              </a>
-              <ul>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
-                <li><a href="password-forget.html">Reset Password</a></li>
-                <li><a href="unlock.html">Unlock Screen</a></li>
-                <li><a href="404.html">404 Error</a></li>
-              </ul>
-            </li><!-- .menu-item -->
-          </ul>
-        </li><!-- .menu-item -->
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-storage zmdi-hc-lg"></i></span>
-            <span class="menu-text">Forms</span>
-          </a>
-          <ul>
-            <li><a href="form.layouts.html">Form Layouts</a></li>
-            <li><a href="form.elements.html">Form Elements</a></li>
-            <li><a href="form.custom.html">Customized Elements</a></li>
-            <li><a href="form.plugins.html">Form Plugins</a></li>
-            <li><a href="file-upload.html">File Upload</a></li>
-            <li><a href="form.datetime.html">DateTime Pickers</a></li>
-            <li><a href="editors.html">Editors</a></li>
-          </ul>
-        </li><!-- .menu-item -->
-
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-chart zmdi-hc-lg"></i></span>
-            <span class="menu-text">Charts</span>
-          </a>
-          <ul>
-            <li><a href="charts.flot.html">Flot Charts</a></li>
-            <li><a href="echarts.bar.html">Bar echarts</a></li>
-            <li><a href="echarts.pie.html">Pie echarts</a></li>
-            <li><a href="echarts.line.html">Line echarts</a></li>
-            <li><a href="echarts.map.html">Map echarts</a></li>
-            <li><a href="echarts.scatter.html">Scatter echarts</a></li>
-            <li><a href="echarts.custom.html">Custom echarts</a></li>
-          </ul>
-        </li><!-- .menu-item -->
-
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-pin zmdi-hc-lg"></i></span>
-            <span class="menu-text">Maps</span>
-          </a>
-          <ul>
-            <li><a href="map-google.html">Google Maps</a></li>
-            <li><a href="map-vector.html">Vector Maps</a></li>
-          </ul>
-        </li><!-- .menu-item -->
-
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-apps zmdi-hc-lg"></i></span>
-            <span class="menu-text">Apps</span>
-          </a>
-          <ul>
-            <li>
-              <a href="javascript:void(0)">
-                <span>Mail Box</span>
-                <span class="menu-caret"><i class="zmdi zmdi-hc-sm zmdi-chevron-right"></i></span>
-              </a>
-              <ul>
-                <li><a href="inbox.html">Inbox <span class="badge bg-primary menu-badge">12</span></a></li>
-                <li><a href="compose.html">Compose</a></li>
-              </ul>
-            </li>
-            <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="contacts.html">Contacts</a></li>
+            <li><a href="../default/index.html"><%= t('misc.search') %></a></li>
+            <li><a href="../topbar/index.html"><%= t('misc.latest') %></a></li>
           </ul>
         </li><!-- .menu-item -->
       </ul>

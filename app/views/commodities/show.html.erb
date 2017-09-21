@@ -1,7 +1,133 @@
-<h1>Commodity</h1>
-
-<p><b>Short Description:</b> <%= @commodity.short_description %></p>
-<p><b>Long Description:</b> <%= @commodity.long_description %></p>
-<p><%= @commodity.generic ? "Generic" : "Not Generic" %></p>
-<p><%= link_to "Edit", edit_app_commodity_path(@app,@commodity) %>| <%= link_to "Links", app_links_path(@app) %> |
+<p><%= link_to "Edit", edit_app_commodity_path(@app,@commodity) %> <br />
 <%= link_to "References", app_references_path(@app) %></p>
+
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="widget stats-widget">
+      <header class="widget-header">
+        <small class="text-color"><%= t('misc.commodity') %></small>
+        <h3 class="widget-title"><%= @commodity.short_description %></h3>
+      </header>
+      <div class="widget-body clearfix">
+        <p class="m-b-lg"><%= @commodity.long_description %></p>
+      </div>
+      <% if @commodity.generic %>
+        <footer class="widget-footer bg-warning">
+          <h5>THIS IS A GENERIC COMMODITY</h5>
+        </footer>
+      <% end %>
+    </div><!-- .widget -->
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-3 col-sm-6">
+    <div class="widget stats-widget">
+      <header class="widget-header">
+        <h4 class="widget-title">Classifications</h4>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body clearfix">
+        <div class="pull-left">
+          <h3 class="widget-title text-danger"><span class="counter" data-plugin="counterUp">3.490</span>k</h3>
+          <small class="text-color">Total Pending</small>
+        </div>
+        <span class="pull-right big-icon watermark"><i class="fa fa-ban"></i></span>
+      </div>
+      <footer class="widget-footer bg-danger">
+        <small>% charge</small>
+        <span class="small-chart pull-right" data-plugin="sparkline" data-options="[1,2,3,5,4], { type: 'bar', barColor: '#ffffff', barWidth: 5, barSpacing: 2 }"></span>
+      </footer>
+    </div><!-- .widget -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Links</h4>
+        <span class="pull-right"><%= link_to "Add", new_app_link_path(@app) %></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table no-cellborder">
+            <thead>
+              <tr><th>Description</th><th>Link</th></tr>
+            </thead>
+            <tbody>
+            <% @commodity.links.each do |link| %>
+              <tr><td class="text-primary"><%= link.description %></td><td><a href="<%= link.url %>" target="_blank">link</a></td></tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- .widget -->
+  </div><!-- END column -->
+
+  <div class="col-md-5">
+    <div class="widget todo-widget">
+      <header class="widget-header">
+        <h4 class="widget-title">Todo List</h4>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body p-b-0">
+        <ul class="todo-list">
+          <li class="todo-item">
+            <div class="checkbox checkbox-default">
+              <input type="checkbox" id="checkbox02"/>
+              <label for="checkbox02">Record The First Episode Of HTML Tutorial</label>
+            </div>
+          </li><!-- .todo-item -->
+
+          <li class="todo-item">
+            <div class="checkbox checkbox-pink">
+              <input type="checkbox" id="checkbox2"/>
+              <label for="checkbox2">Prepare The Conference Schedule</label>
+            </div>
+          </li><!-- .todo-item -->
+
+          <li class="todo-item">
+            <div class="checkbox checkbox-warning">
+              <input type="checkbox" id="checkbox4" checked/>
+              <label for="checkbox4">Decide The Live Discussion Time</label>
+            </div>
+          </li><!-- .todo-item -->
+
+          <li class="todo-item">
+            <div class="checkbox checkbox-success">
+              <input type="checkbox" id="checkbox3" checked/>
+              <label for="checkbox3">Prepare For The Next Project</label>
+            </div>
+          </li><!-- .todo-item -->
+
+          <li class="todo-item">
+            <div class="checkbox checkbox-danger">
+              <input type="checkbox" id="checkbox5" checked/>
+              <label for="checkbox5">Finish Up AngularJs Tutorial</label>
+            </div>
+          </li><!-- .todo-item -->
+
+          <li class="todo-item">
+            <div class="checkbox checkbox-purple">
+              <input type="checkbox" id="checkbox1" checked/>
+              <label for="checkbox1">Finish Infinity Project</label>
+            </div>
+          </li><!-- .todo-item -->
+        </ul><!-- .todo-list -->
+      </div>
+      <div class="new-todo">
+        <input type="text" placeholder="add new task"/>
+      </div>
+      <footer class="widget-footer">
+        <a href="javascript:void(0)" class="btn btn-sm btn-success m-r-md">All</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-default">Archive</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-default pull-right">Clear completed</a>
+      </footer>
+    </div><!-- .widget -->
+  </div>
+</div><!-- .row -->

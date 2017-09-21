@@ -20,4 +20,14 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  sitename: "Commodity Live"
+  sitename: "commodity.live"
+
+  misc:
+    commodity: "commodity"
+    commoditites: "commodities"
+    company: "company"
+    companies: "companies"
+    collection: "collection"
+    collections: collections
+    search: "search"
+    latest: "latest"

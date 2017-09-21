@@ -8,6 +8,7 @@ class LinksController < ApplicationController
 
   def show
     @link = @app.links.find(params[:id])
+    redirect_to app_commodity_path(@link.commodity_id)
   end
 
   def new
