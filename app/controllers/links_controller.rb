@@ -2,15 +2,6 @@ class LinksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_app
 
-  def index
-    @links = @app.links
-  end
-
-  def show
-    @link = @app.links.find(params[:id])
-    redirect_to app_commodity_path(@link.commodity_id)
-  end
-
   def new
     @link = Link.new
   end
@@ -18,7 +9,7 @@ class LinksController < ApplicationController
   def create
     @link = @app.links.create(link_params)
     if @link.save
-      redirect_to [@app, @link], notice: "link successfully created"
+      redirect_to [@app,@link.commodity], notice: "link successfully created"
     else
       render :new
     end
@@ -31,7 +22,7 @@ class LinksController < ApplicationController
   def update
     @link = @app.links.find(params[:id])
     if @link.update(link_params)
-      redirect_to [@app, @link], notice: "link successfully updated"
+      redirect_to [@app, @link.commodity], notice: "link successfully updated"
     else
       render :edit
     end

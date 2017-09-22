@@ -29,7 +29,8 @@ feature 'Measurements View' do
 
     feature "Visiting #new page" do
       background do
-        4.times { create(:custom_unit, app: @app) }
+        units = %w(officiis voluptas est distinctio)
+        units.each {|unit| create(:custom_unit, app: @app, property: unit ) }
         visit new_app_measurement_path(@app)
       end
 

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :apps do
     resources :commodities
-    resources :links
+    resources :links, except: [:index, :show]
     resources :references
     resources :measurements
     resources :custom_units, path: "custom-units"

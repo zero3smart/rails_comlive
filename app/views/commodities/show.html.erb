@@ -56,11 +56,17 @@
         <div class="table-responsive">
           <table class="table no-cellborder">
             <thead>
-              <tr><th>Description</th><th>Link</th></tr>
+              <tr>
+                <th>Description</th>
+                <th>Link</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
-            <% @commodity.links.each do |link| %>
-              <tr><td class="text-primary"><%= link.description %></td><td><a href="<%= link.url %>" target="_blank">link</a></td></tr>
+            <% if @commodity.links.any? %>
+              <%= render @commodity.links %>
+            <% else %>
+              <p>No links found</p>
             <% end %>
             </tbody>
           </table>

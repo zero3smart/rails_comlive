@@ -18,8 +18,8 @@ RSpec.describe HscodeChapter, :type => :model do
     end
 
     it "is invalid with a duplicate category" do
-      create(:hscode_chapter, category: "jn")
-      hscode_chapter = build(:hscode_chapter, category: "jn")
+      create(:hscode_chapter, category: "&y")
+      hscode_chapter = build(:hscode_chapter, category: "&y")
       hscode_chapter.valid?
       expect(hscode_chapter.errors[:category]).to include("has already been taken")
     end

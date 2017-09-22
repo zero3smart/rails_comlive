@@ -1,4 +1,9 @@
-<p><%= link.description %></p>
-<p><%= link.url %></p>
-<p><%= link_to "View", [@app,link] %></p>
-<hr>
+<tr>
+  <td class="text-primary"><%= link.description %></td>
+  <td><%= link_to "Open Link", link.url, target: "_blank" %></td>
+  <td>
+    <%= link_to edit_app_link_path(@app, link), class: "pull-right" do %>
+        <i class="fa fa-pencil"></i> Edit
+    <% end %>
+  </td>
+</tr>

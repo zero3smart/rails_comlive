@@ -4,42 +4,12 @@ feature 'Links' do
   background do
     @user = create(:user, email: 'user@example.com', password: 'secretpass')
     @app = create(:app, user_id: @user.id)
+    @commodity = create(:commodity, app_id: @app.id)
     log_in(@user)
-  end
-
-  feature "Visiting #index page" do
-    scenario "With links present, it should list available commodities" do
-      link_1 = create(:link, app_id: @app.id)
-      link_2 = create(:link, app_id: @app.id)
-
-      visit app_links_path(@app)
-
-      expect(page).to have_text(link_1.description)
-      expect(page).to have_text(link_1.url)
-      expect(page).to have_text(link_2.description)
-      expect(page).to have_text(link_2.url)
-    end
-
-    scenario "With no links present, it should display no links found" do
-      visit app_links_path(@app)
-
-      expect(page).to have_text("No links found")
-    end
-  end
-
-  feature "Visiting #show page" do
-    scenario "It should show the links's details" do
-      link = create(:link, app_id: @app.id)
-      visit app_link_path(@app, link)
-
-      expect(page).to have_text(link.description)
-      expect(page).to have_text(link.url)
-    end
   end
 
   feature "Visiting #new page" do
     background do
-      @commodity = create(:commodity)
       visit new_app_link_path(@app)
     end
 
@@ -51,7 +21,7 @@ feature 'Links' do
       click_button "Create Link"
 
       expect(page).to have_text("link successfully created")
-      expect(page).to have_text("http://johnsonprohaska.biz/joaquin")
+      expect(page).to have_link("Open Link", href: "http://johnsonprohaska.biz/joaquin")
       expect(page).to have_text("description for link")
     end
 
@@ -70,9 +40,7 @@ feature 'Links' do
 
   feature "Visiting #edit page" do
     background do
-      @link = create(:link, app_id: @app.id)
-      @commodity = create(:commodity)
-
+      @link = create(:link, app_id: @app.id, commodity_id: @commodity.id)
       visit edit_app_link_path(@app, @link)
     end
 
@@ -92,7 +60,7 @@ feature 'Links' do
 
       expect(page).to have_text("link successfully updated")
       expect(page).to have_text("description updated")
-      expect(page).to have_text("https://www.google.com/search?q=strengtheningthenumbers")
+      expect(page).to have_link("Open Link", href: "https://www.google.com/search?q=strengtheningthenumbers")
     end
 
     scenario "With incorrect details, link should not be updated" do
