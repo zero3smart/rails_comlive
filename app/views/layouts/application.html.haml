@@ -1,0 +1,31 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "UTF-8"}/
+    %title= yield :title
+    %meta{:content => "", :name => ""}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    = favicon_link_tag "logo.png"
+    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300',
+                          'http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700'
+    = stylesheet_link_tag 'application', media: 'all'
+    = csrf_meta_tags
+  %body.menubar-top
+    / ============= start main area
+    / APP NAVBAR ==========
+    = render 'layouts/navbar'
+    / .media-group-item
+    / ========== END app navbar
+    / APP MAIN ==========
+    %main#app-main.app-main
+      = render 'shared/flash'
+      .container
+        .wrap
+          %section.app-content
+            = yield
+
+    = render 'layouts/footer'
+    = render 'shared/modal'
+    = javascript_include_tag 'application'
+    = yield :js

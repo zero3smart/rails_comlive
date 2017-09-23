@@ -1,0 +1,14 @@
+- if policy(reference).show?
+  %tr.segment.segment-edit
+    %td= reference.source_commodity.name
+    %td= reference.kind
+    %td= reference.target_commodity.name
+    %td= truncate reference.description, length: 50
+    %td.segment-actions
+      %span.hidden 2
+      - if policy(reference).edit?
+        = link_to edit_app_commodity_reference_reference_path(current_app,reference.commodity_reference,reference), class: "btn-edit" do
+          %i.fa.fa-pencil
+          Edit
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: reference.visibility_status

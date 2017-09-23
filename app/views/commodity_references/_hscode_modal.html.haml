@@ -1,0 +1,25 @@
+/ Modal
+#hscodeModal.modal.fade{"aria-labelledby" => "hscodeModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#packagingModalLabel.modal-title Assign HSCODE
+      .modal-body
+        = form_for [@app, @commodity_reference] do |f|
+          .form-group
+            = f.label :section
+            = f.select :hscode_section_id, options_for_hscode_sections, { prompt: "Select Section" }, class: "form-control", data: { href: hscode_chapters_path }
+          .form-group
+            = f.label :chapter
+            = f.select :hscode_chapter_id, [], { prompt: "Select Chapter" }, class: "form-control", data: { href: hscode_headings_path }
+          .form-group
+            = f.label :heading
+            = f.select :hscode_heading_id, [], {  prompt: "Select Heading" }, class: "form-control", data: { href: hscode_subheadings_path }
+          .form-group
+            = f.label :subheading
+            = f.select :hscode_subheading_id, [], { prompt: "Select Sub Heading" }, class: "form-control"
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        %button#assign-hscode.btn.btn-primary{:type => "button"} Submit

@@ -1,0 +1,15 @@
+- if policy(specification).show?
+  %tr.segment.segment-edit
+    %td= specification.property
+    %td= specification.uom
+    %td= specification.value
+    %td= specification.min
+    %td= specification.max
+    %td.segment-actions
+      %span.hidden 2
+      - if policy(specification).edit?
+        = link_to edit_polymorphic_url(object_url(specification.parent, specification)), class: "btn-edit" do
+          %i.fa.fa-pencil
+          Edit
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: specification.visibility_status

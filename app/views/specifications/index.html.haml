@@ -1,0 +1,7 @@
+%h1
+  Specifications
+  %small= link_to "Add", new_app_commodity_reference_specification_path(@app, @parent)
+- if @specifications.any?
+  = render @specifications
+- else
+  %p No specifications found

@@ -1,0 +1,53 @@
+#tab-0.tab-pane.in.active.fade{:role => "tabpanel"}
+  - if @commodity.short_description.present?
+    .row
+      .col-md-12
+        %h4.segment-name Summary
+    .box.p-t-md
+      .row.no-gutter
+        .col-sm-6.col-md-5
+          .col-sm-12
+            %h4.p-sm.p-l-md.p-b-0.fz-md.pull-left.m-0 Image Gallery
+          .col-sm-12.segment.segment-edit.segment-image
+            - if user_signed_in?
+              .segment-actions
+                = link_to edit_commodity_path(@commodity), class: "btn-edit" do
+                  %i.fa.fa-pencil
+                  Edit
+                .segment-state.dropdown
+                  = link_to new_app_commodity_reference_image_path(current_app, @com_ref), class: "btn-edit" do
+                    %i.fa.fa-plus
+                    Add Image
+
+            #widget-gallery.m-md.m-r-lg
+              %ul#image-gallery.gallery.list-unstyled.cS-hidden
+                - @commodity.images.each do |image|
+                  %li{ data: { thumb: "https://process.filestackapi.com/resize=width:50,height:35,fit:crop/#{image.handle}" } }
+                    = image_tag image.url
+
+        .col-sm-6.col-md-7
+          .col-sm-12
+            %h4.p-smp-l-md.p-b-0.fz-md.m-0.inline-block Description
+          .row.no-gutter
+            .col-md-12
+              .segment.segment-edit.segment-description
+                .segment-actions
+                  - if user_signed_in?
+                    = link_to "#", class: "btn-edit" do
+                      %i.fa.fa-pencil
+                      Edit
+                  .segment-state.dropdown
+                    = render 'shared/pubmode', mode: "Official"
+
+                %article.p-md
+                  = @commodity.short_description
+
+                %article.p-md
+                  = @commodity.long_description
+
+          .row.no-gutter
+            .col-md-12
+              .segment.segment-edit.segment-description
+                .segment-actions
+  - else
+    = render 'shared/missing_prompt', title: t("commodities.show.tabs.summary.title"), description: t("commodities.show.tabs.summary.description"), anchor: t("commodities.show.tabs.summary.button"), href: "#"

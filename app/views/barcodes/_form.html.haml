@@ -1,0 +1,26 @@
+= form_for object_url(@parent, @barcode), html: { class: "form-horizontal" } do |f|
+  .form-group
+    = f.label :name, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_field :name, class: "form-control select2"
+      = errors_for_field(@barcode, :name)
+  .form-group
+    = f.label :format, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :format, options_for_barcodes, {}, class: "form-control select2"
+      = errors_for_field(@barcode, :format)
+  .form-group
+    = f.label :content, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_field :content, class: "form-control"
+      = errors_for_field(@barcode, :content)
+
+  .form-group
+    = f.label :publishing, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :visibility, options_for_visibility(@barcode), {}, class: "selectpicker show-tick", data: { width: "fit", header: t('barcodes.publishing')}
+      = errors_for_field(@barcode, :visibility)
+
+  .row
+    .col-sm-8.col-sm-offset-4
+      = f.submit class: "btn btn-primary"

@@ -1,0 +1,18 @@
+#navbar-search
+  = form_tag searches_path, class: "form-horizontal", id: "global-search-form",
+  data: { commodity_au: autocomplete_commodities_path, brand_au: autocomplete_brands_path, standard_au: autocomplete_standards_path },
+  method: :get do
+    .input-group
+      = search_field_tag :query, nil, placeholder: "Search", id: "global-search", class: "form-control"
+      %span.input-group-addon{:style => "width:0px; padding-left:0px; padding-right:0px; border:none;"}
+      .dropdown.form-control
+        %select.selectpicker.show-tick{:title => "Everywhere"}
+          %option{:value => "1"} Commodity
+          %option{:value => "2"} Product
+          %option{:value => "3"} Brand
+          %option{:value => "4"} Standard
+          %option{:value => "5"} Classification
+
+    = button_tag(type: 'submit', class: "btn btn-primary", name: nil, id: "submit-search-btn") do
+      %i.fa.fa-search
+    / END navbar search

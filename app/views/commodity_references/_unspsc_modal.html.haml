@@ -1,0 +1,21 @@
+/ Modal
+#unspscModal.modal.fade{"aria-labelledby" => "unspscModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-lg{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#unspscModalLabel.modal-title Assign UNSPSC Code
+      .modal-body
+        %table#unspsc_segments.table.responsive.no-wrap{"data-source" => "#{unspsc_segments_path(format: "json")}", "data-submit-url" => "#{app_commodity_reference_path(@app,@commodity_reference)}"}
+          %caption UNSPSC Segments.
+          %thead
+            %tr
+              %th Short Code
+              %th Long Code
+              %th Description
+              %th
+          %tbody
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        %button#assign-unspsc.btn.btn-primary{:type => "button"} Submit

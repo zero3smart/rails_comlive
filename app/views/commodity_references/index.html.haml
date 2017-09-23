@@ -1,0 +1,64 @@
+%body
+  .row
+    .col-md-12
+      .widget
+        %header.widget-header
+          %h4.widget-title.pull-left Commodities
+          %span.pull-right= link_to "Add Commodity", new_app_commodity_reference_path(@app)
+        %hr.widget-separator/
+        .widget-body
+          = form_tag app_commodity_references_path(@app), method: :get do
+            .input-group.stylish-input-group
+              = text_field_tag :query, params[:query], id: "commodity-search", class: "form-control", placeholder: "Search Commodities",                                      |
+                autocomplete: "off", data: { prefetch_url: "#", autocomplete_url: "#" } |
+              %span.input-group-addon
+                = button_tag type: "submit", name: nil, id: "search-btn" do
+                  %span.fa.fa-search
+      / .widget
+  - if params[:query]
+    .row
+      .col-md-12
+        .widget
+          %header.widget-header
+            %h4.widget-title.pull-left Search Results
+            %span.pull-right= link_to "Clear", app_commodity_references_path(@app)
+          %hr.widget-separator/
+          .widget-body
+            - if @commodity_references.any?
+              = render @commodity_references
+              = will_paginate @commodity_references, renderer: BootstrapPagination::Rails
+            - else
+              %p
+                No commodities found matching
+                %b= params[:query]
+        / .widget
+  - else
+    .row
+      .col-md-6
+        .widget
+          %header.widget-header
+            %h4.widget-title.pull-left Recently Added
+          %hr.widget-separator/
+          .widget-body
+            .list-group.recently-added
+              - if @recent_commodity_references.any?
+                - @recent_commodity_references.each do |commodity|
+                  = link_to [@app, commodity], class: "list-group-item" do
+                    = commodity.name
+              - else
+                %p No commodities found
+        / .widget
+      .col-md-6
+        .widget
+          %header.widget-header
+            %h4.widget-title.pull-left Recently Visited
+          %hr.widget-separator/
+          .widget-body
+            .list-group.recently-visited
+              - if recent_commodities.any?
+                - recent_commodities.each do |commodity|
+                  = link_to [commodity.app, commodity], class: "list-group-item" do
+                    = commodity.name
+              - else
+                %p No recent commodities visited
+        / .widget

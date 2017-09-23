@@ -1,0 +1,95 @@
+.row
+  .col-md-6
+    .box.recent
+      %header.box-header
+        %h4.box-title Recently Added
+      .box-body
+        .list-group.recently-added
+          - if @recent_commodities.any?
+            - @recent_commodities.each do |commodity|
+              = link_to user_signed_in? ? commodity : slugged_commodity_path(commodity.uuid, commodity.name.parameterize), class: "list-group-item" do
+                = image_tag commodity.avatar_url, alt: ""
+                %strong= commodity.name
+                - if commodity.brand
+                  %span.text-muted
+                    by #{commodity.brand.name}
+
+                %span.btn-state.public= commodity.visibility_status
+          - else
+            %p No commodities found
+  / .box
+  .col-md-6
+    .box.recent
+      %header.box-header
+        %h4.box-title Recently Visited
+      .box-body
+        .list-group.recently-visited
+          - if recent_commodities.any?
+            - recent_commodities.each do |commodity|
+              = link_to commodity, class: "list-group-item" do
+                = image_tag "commodity-default.gif", alt: ""
+                %strong= commodity.name
+                - if commodity.brand
+                  %span.text-muted
+                    by #{commodity.brand.name}
+                %span.btn-state.public= commodity.visibility_status
+          - else
+            %p No recent commodities visited
+
+
+.text-center.m-b-lg
+  .row
+    .col-sm-8.col-sm-push-2
+      %h5.widget-title= t(".title")
+.row
+  .row-md-height
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to new_commodity_path do
+          .box-front
+            %h3= t("misc.commodity")
+          .box-back
+            %p= t(".commodity.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t(".button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to new_commodity_path do
+          .box-front
+            %h3= t("misc.product")
+          .box-back
+            %p= t(".product.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t(".button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to new_brand_path do
+          .box-front
+            %h3= t("misc.brand")
+          .box-back
+            %p= t(".brand.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t(".button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to "#" do
+          .box-front
+            %h3= t("misc.standard")
+          .box-back
+            %p= t(".standard.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t(".button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to "#" do
+          .box-front
+            %h3= t("misc.classification")
+          .box-back
+            %p= t(".classification.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t(".button_text")

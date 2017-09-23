@@ -1,0 +1,11 @@
+%tr.segment.segment-edit
+  %td= image_tag(barcode.output, class: "img-responsive p-sm")
+  %td= barcode.name
+  %td= barcode.content
+  %td.segment-actions
+    %span.hidden 2
+    = link_to "#", class: "btn-edit" do
+      %i.fa.fa-pencil
+      Edit
+    .segment-state.dropdown
+      = render 'shared/pubmode', mode: barcode.visibility_status

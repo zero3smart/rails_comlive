@@ -1,0 +1,22 @@
+%footer.app-footer
+  .text-center
+    %ul.footer-menu
+      %li
+        %a{:href => "#"} Home
+      %li
+        %a{:href => "#"} Developers
+      %li
+        %a{:href => "#"} Feedback
+      %li
+        %a{:href => "#"} Dispute
+      %li
+      %li
+        .dropup.dropup-language
+          %a.btn.btn-default.btn-language.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown"}
+            = t('menu.languages.lang')
+            %span.caret
+          %ul.dropdown-menu.dropdown-menu-right
+            %li{ class: I18n.locale == :en ? "selected" : "" }
+              = link_to t('menu.languages.en'), url_for(locale: 'en')
+            %li{ class: I18n.locale == :nb ? "selected" : "" }
+              = link_to t('menu.languages.nb'), url_for(locale: 'nb')

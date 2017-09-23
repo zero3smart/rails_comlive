@@ -1,0 +1,9 @@
+= form_for @standardization do |f|
+  = errors_for @standardization
+  = f.hidden_field :referable_type
+  = f.hidden_field :referable_id
+  .form-group
+    = f.label :standard
+    = f.select :standard_id, [], {}, class: "form-control",  data: { url: standards_path }
+    = errors_for_field(@standardization, :standard_id)
+  = f.submit "Assign Standard", class: "btn btn-primary"

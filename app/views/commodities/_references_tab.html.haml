@@ -1,0 +1,37 @@
+#tab-5.tab-pane.fade{ role: "tabpanel" }
+  - if @references.any?
+    .row
+      .col-md-12
+        %h4.segment-name References
+    .table-responsive.box.p-t-md
+      %table.table.table-striped.no-cellborder.dataTable{ cellspacing: 0}
+        %thead
+          %tr
+            %th Source Commodity
+            %th Kind
+            %th Target Commodity
+            %th Description
+            %th
+        %tbody
+          = render @references
+  - else
+    - if user_signed_in?
+      = render 'shared/missing_prompt', title: t("commodities.show.tabs.references.title"), description: t("commodities.show.tabs.references.description"), anchor: t("commodities.show.tabs.references.button"), href:  new_app_commodity_reference_reference_path(current_app,@com_ref)
+
+
+  - if @com_source_references.any?
+    .row
+      .col-md-12
+        %h4.segment-name Source References For Commodity
+
+        .table-responsive.box.p-t-md
+          %table.table.table-striped.no-cellborder.dataTable{ cellspacing: 0}
+            %thead
+              %tr
+                %th Source Commodity
+                %th Kind
+                %th Target Commodity
+                %th Description
+                %th
+            %tbody
+              = render @com_source_references

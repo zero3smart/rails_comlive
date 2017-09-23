@@ -1,0 +1,17 @@
+#tab-7.tab-pane.fade{ role: "tabpanel" }
+  - if @links.any?
+    .row
+      .col-md-12
+        %h4.segment-name External Links
+    .table-responsive.box.p-t-md
+      %table.table.table-striped.no-cellborder.dataTable{ cellspacing: 0}
+        %thead
+          %tr
+            %th URL
+            %th Description
+            %th
+        %tbody
+          = render @links
+  - else
+    - if user_signed_in?
+      = render 'shared/missing_prompt', title: t("commodities.show.tabs.links.title"), description: t("commodities.show.tabs.links.description"), anchor: t("commodities.show.tabs.links.button"), href: new_app_commodity_reference_link_path(current_app,@com_ref)

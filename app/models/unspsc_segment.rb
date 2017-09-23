@@ -4,4 +4,5 @@ class UnspscSegment < ApplicationRecord
   validates_presence_of :code, :long_code, :description
   validates :long_code, length: { is: 8 }
 
+  self.per_page = 30
 end

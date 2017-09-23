@@ -1,0 +1,9 @@
+.widget.widget-form
+  .row
+    .col-sm-10.col-sm-push-1
+      %header.widget-header.m-0
+        %h4.widget-title= t(".title")
+        %p.subheading.text-center= @commodity_reference.name
+
+      .widget-body
+        = render 'form'

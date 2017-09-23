@@ -1,0 +1,36 @@
+- title "Contact Us"
+
+%main#app-main.app-main
+  .container
+    .wrap.m-b-lg
+      %section.app-content
+        .row
+          .col-md-10.col-md-offset-1
+            .text-center
+              %h2.heading Contact
+              %p.m-b-xl Do you have questions, feedback or need support? We are here to help you!
+        .contact-us
+          .row
+            .col-sm-8.col-sm-push-2.col-md-6.col-md-push-3
+              = render 'shared/flash'
+
+              = form_tag send_message_path, id: "contact-form" do
+                .form-group
+                  = text_field_tag :name, nil, class: "form-control input-lg", placeholder: "Your Name", data: { validation: "required"}
+                .form-group
+                  = email_field_tag :email, nil, class: "form-control input-lg", placeholder: "Your Email", data: { validation: "email required"}
+                .form-group
+                  = text_area_tag :message, nil, class: "form-control input-lg", placeholder: "Your Message", data: { validation: "required" }
+                = button_tag type: "submit", class: "btn btn-primary btn-lg" do
+                  Submit
+              %ul.list-unstyled
+                %li NTTY AS
+                %li Grensen 12
+                %li 0159 Oslo
+                %li info@ntty.com
+                %li
+                  %a{:href => "http://ntty.com", :target => "_blank"} www.ntty.com
+            / col
+          / row
+      / .app-content
+    / .wrap

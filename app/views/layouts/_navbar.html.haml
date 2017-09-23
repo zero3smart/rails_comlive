@@ -1,0 +1,111 @@
+%nav#app-navbar.app-navbar.navbar-fixed-top
+  .container
+    / navbar-header
+    #navbar-header.pull-left
+      = link_to root_path, class: "app-brand", id: "app-brand" do
+        %span#brand-icon.brand-icon
+          = image_tag "commodity-live_logo.png"
+        %span#brand-name.hidden-xs.hidden-sm commodity.live
+
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+
+    %ul#top-nav.pull-right
+      / .list-group-item
+      %li.nav-item
+        - if user_signed_in?
+          .avatar.avatar-circle.avatar-user.dropdown
+            %a{"data-toggle" => "dropdown", :href => "javascript:void(0)"}
+              = gravatar_for(current_user.email, 50, "img-responsive")
+            %ul.dropdown-menu.animated.flipInY
+              %li
+                %a.text-color{:href => "#"}
+                  %span.m-r-xs
+                    %i.fa.fa-user
+                  %span Profile
+              %li
+                %a.text-color{:href => "#"}
+                  %span.m-r-xs
+                    %i.fa.fa-gear
+                  %span Settings
+              %li
+                = link_to app_custom_units_path(current_app), class: "text-color" do
+                  %span.m-r-xs
+                    %i.zmdi.zmdi-hc-lg.zmdi-graphic-eq
+                  %span Custom Units
+              %li.divider{:role => "separator"}
+              %li
+                = link_to logout_path, method: :delete, class: "text-color" do
+                  %span.m-r-xs
+                    %i.fa.fa-power-off
+                  %span Logout
+
+          %li.nav-item
+            .avatar.avatar-circle.avatar-team.dropdown
+              %a{"data-toggle" => "dropdown", :href => "javascript:void(0)"}
+                %i.icon-team.bg-1= initials_for(current_app)
+              .media-group.dropdown-menu.animated.flipInY
+                = render current_user.apps
+
+                / .media-group-item
+                = link_to new_app_path, class: "media-group-item" do
+                  .media
+                    .media-left
+                      .icon.icon-sm.icon-circle.m-r-md
+                        %i.fa.fa-plus
+                    .media-body
+                      %h5.media-heading Add Team
+
+    / navbar-collapse
+    #bs-navbar-collapse.collapse.navbar-collapse
+      / navbar search
+      = render 'layouts/search'
+
+      / test this in rspec
+      - if user_signed_in?
+        #navbar-add.hidden-xs
+          .dropdown.inline-block
+            %a.btn.btn-add-entity{"data-toggle" => "dropdown", :href => "javascript:void(0)"}
+              %i.fa.fa-plus
+            %ul.dropdown-menu.animated.flipInY
+              %li
+                = link_to "Add New...", add_items_path
+              %li.divider.m-0
+              %li
+                = link_to "Commodity", new_commodity_path
+              %li
+                = link_to "Brand", new_brand_path
+              %li
+                = link_to "Standard", "#"
+              %li
+                = link_to "Classification", "#"
+          .dropdown.inline-block
+            %a.btn.btn-add-entity{"data-toggle" => "dropdown", :href => "javascript:void(0)"}
+              %i.fa.fa-ellipsis-h
+            %ul.dropdown-menu.media-group.animated.flipInY
+
+              %li
+                / .media-group-item
+                = link_to new_app_invitation_path(current_app), class: "media-group-item" do
+                  .media
+                    .media-left
+                      .icon.icon-sm.icon-circle.m-r-md.m-b-0
+                        %i.fa.fa-user
+                    .media-body
+                      %h5.media-heading Invite Users
+
+        .visible-xs
+          %ul#navbar-xs
+            %li
+              = link_to "Add New...", add_items_path
+            %li
+              = link_to "Commodity", new_commodity_path
+            %li
+              = link_to "Brand", new_brand_path
+            %li
+              = link_to "Standard", "#"
+            %li
+              = link_to "Classification", "#"

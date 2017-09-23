@@ -1,0 +1,11 @@
+.list.hide
+  .table-responsive.box.p-t-md
+    %table.table.table-striped.no-cellborder.dataTable{:cellspacing => "0", :width => "100%"}
+      %thead
+        %tr
+          %th
+          %th Name
+          %th Description
+          %th
+      %tbody
+        = render partial: 'commodities/list', collection: commodities, as: :commodity

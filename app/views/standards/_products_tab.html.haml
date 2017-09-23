@@ -1,0 +1,10 @@
+#tab-2.tab-pane.fade{:role => "tabpanel"}
+  .row
+    .col-md-12
+      %h4.segment-name Commodities associated with #{@standard.name}
+      %a.btn.btn-sm.btn-view-type{"data-placement" => "bottom", "data-toggle" => "tooltip", :href => "javascript:;", :title => "Change view"}
+        %i.fa.fa-th-list
+  .row
+    .col-md-12
+      = render 'commodities/gridview', commodities: @standard.commodities
+      = render 'commodities/listview', commodities: @standard.commodities

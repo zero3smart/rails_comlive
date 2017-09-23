@@ -1,0 +1,40 @@
+.grid-item.grid-item-20
+  .box.standard.segment.segment-edit
+    .row
+      .col-md-12
+        = link_to brand do
+          %span.brand-logo.logo-sm
+            = image_tag brand.logo, class: "img-responsive"
+          %h4.p-t-md.p-t-lg.segment-title= brand.name
+      .col-md-12
+        .standard-row
+          %p.m-0= truncate(brand.description, length: 100)
+          %span.block.m-t-xs
+            Certifier:
+            %strong LGA Intercert
+            %a{:href => "standard.html#", :target => "_blank"}
+              %i.fa.fa-external-link
+          %span.block.m-t-xs
+            Expires on:
+            %strong 17 Sept 2018
+      .col-md-12
+        .standard-row.standard-commodities
+          %small Products
+          %div
+            .avatar.avatar-sm.avatar-circle.m-r-xs
+              %a{:href => "commodity.html", :title => "Commodity Name"}
+                %img{:alt => "", :src => "assets/images/custom/commodity/thumb/beer1.jpg"}/
+            / .avatar
+            .avatar.avatar-sm.avatar-circle.m-r-xs
+              %a{:href => "commodity.html", :title => "Commodity Name"}
+                %img{:alt => "", :src => "assets/images/custom/commodity/thumb/beer2.jpg"}/
+            / .avatar
+            .icon.icon-circle.b-0
+              %a{:href => "http://localhost/commodities.html"}
+                %span.number + 22
+    .segment-actions
+      = link_to edit_brand_path(brand), class: "btn-edit" do
+        %i.fa.fa-pencil
+        Edit
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: "Public"

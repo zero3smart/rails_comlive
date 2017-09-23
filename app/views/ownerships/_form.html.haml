@@ -1,0 +1,13 @@
+= form_for @ownership, html: { class: "form-horizontal" } do |f|
+  = errors_for @ownership
+
+  = f.hidden_field :child_id, value: @child.id
+  = f.hidden_field :child_type, value: @child.class.to_s
+  .form-group
+    = f.label :app, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :parent_id, options_for_apps(current_user), {}, class: "form-control"
+  .row
+    .col-sm-8.col-sm-offset-4
+      = f.submit class: "btn btn-primary"
+      = link_to "Cancel", :back, class: "btn btn-default btn-md m-l-sm"

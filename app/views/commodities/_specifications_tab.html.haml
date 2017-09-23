@@ -1,0 +1,21 @@
+#tab-1.tab-pane.fade{ role: "tabpanel" }
+  - if @specifications.any?
+    .row
+      .col-md-12
+        %h4.segment-name Specifications
+    .table-responsive.box.p-t-md
+      %table.table.table-striped.no-cellborder.dataTable{ cellspacing: 0}
+        %thead
+          %tr
+            %th Property
+            %th Unit of Measure
+            %th Value
+            %th Minimum
+            %th Maximum
+            %th
+        %tbody
+          = render @specifications
+  - else
+    - if user_signed_in?
+      = render 'shared/missing_prompt', title: t("commodities.show.tabs.specifications.title"), description: t("commodities.show.tabs.specifications.description"), anchor: t("commodities.show.tabs.specifications.button"), href: new_app_commodity_reference_specification_path(current_app, @com_ref)
+

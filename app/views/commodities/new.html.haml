@@ -1,0 +1,18 @@
+.widget.widget-form
+  %header.widget-header
+    %h4= t(".title")
+    %p.commodity-desc{ class: @brand.present? ? "hidden" : "" }= t(".description.commodity")
+    %p.product-desc{ class: @brand.present? ? "" : "hidden" }= t(".description.product")
+
+  .widget-body
+    - unless @brand.present?
+      .text-center.m-b-lg
+        .btn-group{"data-toggle" => "buttons"}
+          %label.btn.btn-default{ class: @commodity.generic? ? "active" : ""}
+            %input#commodity{:autocomplete => "off", :value=> "commodity", :checked => "checked", :name => "commodity-product", :type => "radio"}/
+            Add Commodity
+          %label.btn.btn-default{ class: @commodity.generic? ? "" : "active"}
+            %input#product{:autocomplete => "off", :value=> "product", :name => "commodity-product", :type => "radio"}/
+            Add Product
+    = render 'form'
+  / .widget

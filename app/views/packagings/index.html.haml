@@ -1,0 +1,23 @@
+%body
+  .row
+    .col-md-12
+      .widget
+        %header.widget-header
+          %h4.widget-title.pull-left Packagings
+          %span.pull-right
+        %hr.widget-separator/
+        .widget-body
+          .table-responsive
+            %table.table.no-cellborder
+              %thead
+                %tr
+                  %th Name
+                  %th Quantity
+                  %th UOM
+                  %th Visibility
+              %tbody
+                - if @packagings.any?
+                  = render @packagings
+                - else
+                  %p No packagings found
+      / .widget

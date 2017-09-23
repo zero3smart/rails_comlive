@@ -19,7 +19,7 @@ RSpec.describe CustomUnit, :type => :model do
     it "is invalid without an app_id" do
       custom_unit = build(:custom_unit, app: nil)
       custom_unit.valid?
-      expect(custom_unit.errors[:app]).to include("must exist")
+      expect(custom_unit.errors[:app]).to include("can't be blank")
     end
   end
 

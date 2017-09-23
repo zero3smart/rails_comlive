@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :hscode_subheading do
-    category { Faker::Number.between(100000, 999999)}
+    sequence(:category, 100000)
     description { Faker::Lorem.sentence }
     association :hscode_heading
   end

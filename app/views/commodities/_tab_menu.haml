@@ -1,0 +1,7 @@
+- tabs = %w(summary specifications packagings standards barcodes references classifications links)
+
+%ul.nav.nav-tabs.box.m-0{ role: "tablist" }
+  - tabs.each_with_index do |tab,index|
+    %li{ role: "presentation", class: index.zero? ? "active"  : "" }
+      = link_to "#tab-#{index}", aria: { controls: "tab-#{index}" }, data: { toggle: "tab" }, role: "tab" do
+        = tab

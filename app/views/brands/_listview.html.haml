@@ -1,0 +1,13 @@
+.list.hide
+  .table-responsive.box.data-table
+    %table#tableStandardBrand.table.table-striped.no-cellborder.dataTable{:cellspacing => "0", "data-options" => "{\n                                                ajax: '../api/json/dataTableStandardBrand.json',\n                                                responsive: true,\n                                                keys: true\n                                                }", :width => "100%"}
+      %thead
+        %tr
+          %th Brand
+          %th
+          %th Certifier
+          %th Expires on
+          %th Description
+          %th
+      %tbody
+        = render partial: 'brands/list', collection: @standard.brands, as: :brand

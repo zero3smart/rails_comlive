@@ -1,0 +1,14 @@
+.list.hide
+  .table-responsive.box.p-t-md
+    %table.table.table-striped.no-cellborder.dataTable{:cellspacing => "0", :id => "", :width => "100%"}
+      %thead
+        %tr
+          %th Standard
+          %th Code
+          %th Name
+          %th Certifier
+          %th Expires on
+          %th Description
+          %th
+      %tbody
+        = render partial: 'standards/list', collection: standards, as: :standard

@@ -1,0 +1,8 @@
+%h1
+  Hello #{@recipient_email},
+%p
+  %b= @sender.first_name ? @sender.first_name : @sender.email
+  has invited you to be an administrator of
+  the #{@app.name} dashboard on Commodity Live.
+%p
+  To accept this invitation, go to #{link_to accept_invitation_url(@token, locale: I18n.locale), accept_invitation_url(@token, I18n.locale)}

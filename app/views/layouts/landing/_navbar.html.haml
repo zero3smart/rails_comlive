@@ -1,0 +1,27 @@
+%nav#app-navbar.app-navbar.navbar-fixed-top.public{ class: current_page?(root_path) ? "landing"  : ""}
+  .container
+    / navbar-header
+    #navbar-header.pull-left
+      = link_to root_path, id: "app-brand", class: "app-brand" do
+        %span#brand-icon.brand-icon
+          = image_tag "commodity-live_logo.png", alt: "Logo"
+        %span#brand-name commodity.live
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+    / /navbar-header
+    / Collect the nav links, forms, and other content for toggling
+    #bs-navbar-collapse.collapse.navbar-collapse
+      / navbar search
+      = render 'layouts/search'
+      
+      %ul.nav-auth.hidden
+        %li.nav-item.dropdown
+          = link_to "Sign up", "#", class: "btn btn-secondary auth-btn signup"
+        %li.nav-item
+          = link_to "LOGIN", "#", class: "btn btn-primary auth-btn login"
+    / /.navbar-collapse
+  / /.container
+/ navbar

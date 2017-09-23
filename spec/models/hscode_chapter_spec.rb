@@ -27,7 +27,7 @@ RSpec.describe HscodeChapter, :type => :model do
     it "is invalid without a hscode section" do
       hscode_chapter = build(:hscode_chapter, hscode_section: nil)
       hscode_chapter.valid?
-      expect(hscode_chapter.errors[:hscode_section]).to include("must exist")
+      expect(hscode_chapter.errors[:hscode_section]).to include("can't be blank")
     end
 
     it "is invalid if length of category is less than two letters long" do

@@ -16,6 +16,8 @@ gem 'unitwise'
 gem 'figaro'
 gem 'roo', '~> 2.0.0'
 gem 'font-awesome-rails'
+gem 'will_paginate-bootstrap'
+gem 'jquery-datatables-rails', '~> 3.3.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'

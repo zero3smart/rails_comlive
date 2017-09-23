@@ -1,0 +1,34 @@
+.box.segment.segment-edit.p-sm.m-0
+  .row.no-gutter
+    .col-sm-12
+      - if @standard.logo.present?
+        .table-cell
+          %span.standard-logo{:title => ""}
+            = image_tag @standard.logo, class: "img-responsive"
+      .table-cell.col-sm-middle
+        %h1.m-t-0= @standard.code
+        %h2.fz-lg.fw-500.m-t-0= @standard.name
+  .segment-actions
+    - if user_signed_in?
+      = link_to edit_brand_standard_path(@brand), class: "btn-edit" do
+        %i.fa.fa-pencil
+        Edit
+    .segment-state.dropdown.inline-block
+      = render 'shared/pubmode', mode: @standard.visibility_status
+
+.row
+  .col-md-12
+    %hr.m-0
+    .m-b-lg.nav-tabs-horizontal
+      .segment-add
+        = render 'tabs_menu'
+
+        .segment-actions
+          %a.btn-add.icon.icon-circle.icon-md{"data-target" => "#modalAddStandard", "data-toggle" => "modal", :href => "standard.html", :title => "Add"}
+            %i.fa.fa-plus
+
+
+      .tab-content
+        = render 'summary_tab'
+        = render 'brands_tab'
+        = render 'products_tab'

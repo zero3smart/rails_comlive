@@ -1,0 +1,21 @@
+#modalAddBrand.modal.fade{:role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header.b-0
+        %h3.widget-title.m-b-0= t('brands.additems.title')
+        = link_to "#", class: "modal-close", data: { dismiss: "modal" } do
+          %i.fa.fa-times
+      .modal-body
+        .list-group.widget-add
+          = link_to new_brand_standard_path(@brand), class: "list-group-item" do
+            = t('misc.standard')
+            %span.btn-add.icon.icon-circle.icon-md
+              %i.fa.fa-plus
+          = link_to new_commodity_path(brand_id: @brand.id), class: "list-group-item" do
+            = t('misc.product')
+            %span.btn-add.icon.icon-circle.icon-md
+              %i.fa.fa-plus
+          = link_to "#", class: "list-group-item" do
+            = t('misc.classification')
+            %span.btn-add.icon.icon-circle.icon-md
+              %i.fa.fa-plus

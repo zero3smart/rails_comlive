@@ -1,0 +1,18 @@
+.row
+  .col-md-12
+    .segment.segment-edit.segment-header.segment-alert
+      .alert.alert-warning.commodity-alert{:role => "alert"}
+        %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+        -#%span{"aria-hidden" => "true"} ×
+        %h4 State: #{@state.status.titleize}
+        %p= @state.info
+        %p= link_to "Read More", @state.url, target: "_blank", class: "alert-link"
+        - if current_app
+          - if policy(current_app).edit?
+            .segment-actions
+              = link_to edit_app_commodity_reference_state_path(current_app,@state.commodity_reference,@state), class: "btn-edit", title: "Edit" do
+                %i.fa.fa-pencil
+                Edit
+              = link_to app_commodity_reference_state_path(current_app,@state.commodity_reference,@state), method: :delete, class: "btn-edit", title: "Delete" do
+                %i.fa.fa-trash
+                Delete

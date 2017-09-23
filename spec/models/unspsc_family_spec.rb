@@ -24,7 +24,7 @@ RSpec.describe UnspscFamily, :type => :model do
     it "is invalid without a unspsc segment" do
       unspsc_family = build(:unspsc_family, unspsc_segment: nil)
       unspsc_family.valid?
-      expect(unspsc_family.errors[:unspsc_segment]).to match_array(["must exist", "can't be blank"])
+      expect(unspsc_family.errors[:unspsc_segment]).to include("can't be blank")
     end
     it "is invalid if long code is less than 8 chars" do
       unspsc_family = build(:unspsc_family, long_code: "a"*6)

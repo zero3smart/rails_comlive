@@ -1,0 +1,7 @@
+%h1
+  Custom Units
+  %small= link_to "Add", new_app_custom_unit_path(@app)
+- if @units.any?
+  = render @units
+- else
+  %p No custom units found

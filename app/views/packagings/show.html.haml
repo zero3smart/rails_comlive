@@ -1,0 +1,64 @@
+%body
+  .row
+    .col-md-9
+      .widget
+        %header.widget-header
+          %h4.widget-title.pull-left
+            Packaging: #{@packaging.name}
+        %hr.widget-separator/
+        .widget-body
+          %p= @packaging.description
+          %p
+            Quantity: #{@packaging.quantity}
+          %p
+            Uom: #{@packaging.uom}
+      / .widget
+    .col-md-3
+      .widget
+        %header.widget-header
+          %h4.widget-title.pull-left Share Barcode
+        %hr.widget-separator/
+        .widget-body.text-center
+          = barcode_for(@packaging)
+      / .widget
+  .row
+    .col-md-6
+      .widget
+        %header.widget-header
+          %h4.widget-title.pull-left Packaging Specifications
+          %span.pull-right= link_to "Add Specification", new_app_commodity_reference_packaging_specification_path(@app, @commodity_reference, @packaging) if @app
+        %hr.widget-separator/
+        .widget-body
+          %table.table.no-cellborder
+            %thead
+              %tr
+                %th Property
+                %th Value
+                %th Unit of Measure
+                %th
+            %tbody
+              - if @packaging.specifications.any?
+                = render @packaging.specifications
+              - else
+                %p No specifications found.
+      / .widget
+    .col-md-6
+      .widget
+        %header.widget-header
+          %h4.widget-title.pull-left Packaging Barcodes
+          %span.pull-right= link_to "Add Barcode", new_app_commodity_reference_packaging_barcode_path(@app, @commodity_reference, @packaging) if @app
+        %hr.widget-separator/
+        .widget-body
+          %table.table.no-cellborder
+            %thead
+              %tr
+                %th Name
+                %th Data
+                %th Barcode
+            %tbody
+              - if @packaging.barcodes.any?
+                = render @packaging.barcodes
+              - else
+                %p No barcodes found.
+      / .widget
+= render 'shared/social_share', share_url: slugged_packaging_url(@packaging.uuid,@packaging.name.parameterize)

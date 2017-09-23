@@ -1,0 +1,23 @@
+#modalShare.modal.fade{:role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h3.pull-left.m-0 Share this page
+        %a.pull-right.fz-lg.text-muted{"data-dismiss" => "modal", :href => "#"}
+          %i.fa.fa-times
+      .modal-body
+        .row
+          .col-md-12.share-link
+            %a{:href => "https://www.facebook.com/sharer/sharer.php?u=#{share_url}", target: "_blank"}
+              %i.fa.fa-facebook
+            %a{:href => "https://twitter.com/home?status=#{share_url}", target: "_blank"}
+              %i.fa.fa-twitter
+            %a{:href => "https://plus.google.com/share?url=#{share_url}", target: "_blank"}
+              %i.fa.fa-google-plus
+            %a{:href => "https://www.linkedin.com/shareArticle?mini=true&url=#{share_url}", target: "_blank"}
+              %i.fa.fa-linkedin
+            %a{:href => "mailto:?subject=I wanted you to see this site&body=Check out this site #{share_url}"}
+              %i.fa.fa-envelope
+        .row
+          .col-md-12
+            %input.form-control.input-lg{:name => "share_url", :title => "Share link", :type => "text", :value => share_url }/

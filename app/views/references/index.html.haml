@@ -1,0 +1,8 @@
+%h1
+  References
+  %small= link_to "Add", "#"
+- if @references.any?
+  = render @references
+- else
+  %p
+    No references found. #{link_to "Add Reference", "#" }

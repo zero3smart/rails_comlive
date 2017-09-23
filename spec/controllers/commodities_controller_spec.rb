@@ -1,53 +1,153 @@
 require 'rails_helper'
 
 RSpec.describe CommoditiesController, :type => :controller do
-  before(:each) do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = create(:user)
-    sign_in @user
-  end
+  let(:user) { create(:user) }
+  let(:commodity) { create(:commodity, :with_reference, ref_app_id: user.default_app.id) }
+  let(:brand) { create(:brand) }
 
-  describe "GET #index" do
-    it "returns 200 http status code" do
-      app = create(:app, user_id: @user.id)
-      get :index, params: { app_id: app }
-      expect(response.status).to eq 200
+  context "When user signed in" do
+    before(:each) do
+      sign_in user
     end
-  end
 
-  describe "GET #show" do
-    it "returns 200 http status code" do
-      app = create(:app, user_id: @user.id)
-      commodity =  create(:commodity, app_id: app.id)
-      get :show, params: { app_id: app.id, id: commodity.id }
-      expect(response.status).to eq 200
-    end
-  end
-
-  describe "GET #new" do
-    it "returns 200 http status code" do
-      app = create(:app, user_id: @user.id)
-      get :new, params: { app_id: app.id }
-      expect(response.status).to eq 200
-    end
-  end
-
-  describe "POST #create" do
-    context "with valid attributes" do
-      it "saves the new app in the database" do
-        app = create(:app, user_id: @user.id)
-        expect{
-          post :create, params: { app_id: app.id, commodity: attributes_for(:commodity) }
-        }.to change(Commodity, :count).by(1)
+    describe "GET #index" do
+      it "returns 200 http status code" do
+        get :index
+        expect(response.status).to eq 200
       end
     end
 
-    context "with invalid attributes" do
-      it "does not save the new app in the database" do
-        app = create(:app, user_id: @user.id)
-        expect{
-          post :create, params: { app_id: app.id, commodity: attributes_for(:invalid_commodity)}
-        }.not_to change(Commodity, :count)
+    describe "GET #show" do
+      it "returns 200 http status code" do
+        get :show, params: { id: commodity }
+        expect(response.status).to eq 200
+      end
+    end
+
+    describe "GET #new" do
+      it "returns 200 http status code" do
+        get :new
+        expect(response.status).to eq 200
+      end
+    end
+
+    describe "POST #create" do
+      context "with valid attributes" do
+        it "saves a generic commodity in the database" do
+          expect{
+            post :create, params: { commodity: attributes_for(:generic_commodity) }
+          }.to change(Commodity, :count).by(1)
+        end
+
+        it "creates a commodity reference" do
+          expect{
+            post :create, params: { commodity: attributes_for(:generic_commodity) }
+          }.to change(CommodityReference, :count).by(1)
+        end
+
+        it "saves a non generic commodity in the database" do
+          expect{
+            post :create, params: { commodity: attributes_for(:commodity, brand_id: brand.id) }
+          }.to change(Commodity, :count).by(1)
+        end
+      end
+
+      context "with invalid attributes" do
+        it "does not save the new app in the database" do
+          expect{
+            post :create, params: { commodity: attributes_for(:invalid_commodity, brand_id: brand.id)}
+          }.not_to change(Commodity, :count)
+        end
+      end
+    end
+
+    describe "GET #autocomplete" do
+      it "returns 200 http status code" do
+        get :autocomplete
+        expect(response.status).to eq 200
+        # expect(JSON.parse(response.body)).to be_an Array
+      end
+    end
+
+    describe "GET #prefetch" do
+      it "returns 200 http status code" do
+        get :prefetch
+        expect(response.status).to eq 200
+        # expect(JSON.parse(response.body)).to be_an Array
+      end
+    end
+  end
+
+  context "When user not signed in" do
+    describe "GET #index" do
+      it "returns 200 http status code" do
+        get :index
+        expect(response.status).to eq 200
+      end
+    end
+
+    describe "GET #show" do
+      it "returns 200 http status code" do
+        get :show, params: { uuid: commodity.uuid, title: commodity.name.parameterize }
+        expect(response.status).to eq 200
+      end
+    end
+
+    describe "GET #autocomplete" do
+      it "returns 200 http status code" do
+        get :autocomplete
+        expect(response.status).to eq 200
+        # expect(JSON.parse(response.body)).to be_an Array
+      end
+    end
+
+    describe "GET #prefetch" do
+      it "returns 200 http status code" do
+        get :prefetch
+        expect(response.status).to eq 200
+        # expect(JSON.parse(response.body)).to be_an Array
+      end
+    end
+
+    describe "GET #new" do
+      it "redirects to the signin page" do
+        get :new
+
+        expect(response.status).to eq 302
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
+      end
+    end
+
+    describe "GET #edit" do
+      it "redirects to the signin page" do
+        commodity = create(:commodity)
+        get :edit, params: { id: commodity }
+
+        expect(response.status).to eq 302
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
+      end
+    end
+
+    describe "POST #create" do
+      it "redirects to the signin page" do
+        post :create, params: { commodity: attributes_for(:commodity) }
+
+        expect(response.status).to eq 302
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
+      end
+    end
+
+    describe "PATCH #update" do
+      it "redirects to the signin page" do
+        commodity = create(:commodity)
+        patch :update, params: { id: commodity, commodity: commodity.attributes }
+
+        expect(response.status).to eq 302
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
   end

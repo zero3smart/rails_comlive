@@ -24,7 +24,7 @@ RSpec.describe UnspscClass, :type => :model do
     it "is invalid without a unspsc family" do
       unspsc_class = build(:unspsc_class, unspsc_family: nil)
       unspsc_class.valid?
-      expect(unspsc_class.errors[:unspsc_family]).to match_array(["must exist", "can't be blank"])
+      expect(unspsc_class.errors[:unspsc_family]).to include("can't be blank")
     end
     it "is invalid if long code is less than 8 chars" do
       unspsc_class = build(:unspsc_class, long_code: "a"*6)

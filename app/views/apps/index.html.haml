@@ -1,0 +1,5 @@
+%h1= t('app.apps')
+- if @apps.any?
+  = render @apps
+- else
+  %p= t('app.non-found') #{link_to t('app.create'), new_app_path}

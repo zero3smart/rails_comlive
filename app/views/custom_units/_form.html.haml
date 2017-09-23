@@ -1,0 +1,9 @@
+= form_for [@app,@unit] do |f|
+  = errors_for @unit
+  .form-group
+    = f.label :property
+    = f.text_field :property, class: "form-control"
+  .form-group
+    = f.label :uom
+    = f.text_field :uom, class: "form-control"
+  = f.submit class: "btn btn-primary"

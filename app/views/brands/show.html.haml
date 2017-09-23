@@ -1,0 +1,48 @@
+%section.app-content
+  .box.segment.segment-brand.segment-edit.p-sm.m-b-0
+    .row.no-gutter
+      .col-sm-12
+        .table-cell
+          - if @brand.logo?
+            %span.brand-logo
+              = image_tag @brand.logo
+        .table-cell.col-sm-middle
+          %h1.m-t-0= @brand.name
+          - if @brand.official?
+            .col-md-12
+              %i.fa.fa-map-marker.fz-md{"aria-hidden" => "true"}
+              = @brand.location
+          - else
+            .m-t-sm
+              = link_to new_ownership_path(child_id: @brand.id, child_type: "Brand"), class: "btn btn-outline btn-secondary" do
+                %i.fa.fa-gavel.fa-md= t('brands.show.claim')
+
+    .segment-actions
+      - if user_signed_in?
+        = link_to edit_brand_path(@brand), class: "btn-edit" do
+          %i.fa.fa-pencil
+          Edit
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: "Public"
+
+  .row
+    .col-md-12
+      %hr.m-0/
+      .m-b-lg.nav-tabs-horizontal
+        / tabs list
+        .segment-add
+          = render 'tab_menu'
+          / .nav-tabs
+          .segment-actions
+            - if user_signed_in?
+              %a.btn-add.icon.icon-circle.icon-md{"data-target" => "#modalAddBrand", "data-toggle" => "modal", :href => "#", :title => "Add"}
+                %i.fa.fa-plus
+        / Tab panes
+        .tab-content
+          = render 'summary_tab'
+          = render 'commodities_tab'
+          - if @brand.official?
+            = render 'standards_tab'
+
+= render 'add_items'
+= render 'shared/social_share', share_url: slugged_brand_url(@brand.uuid,@brand.name.parameterize)

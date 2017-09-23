@@ -1,0 +1,19 @@
+#tab-2.tab-pane.fade{ role: "tabpanel" }
+  - if @packagings.any?
+    .row
+      .col-md-12
+        %h4.segment-name Packagings
+    .table-responsive.box.p-t-md
+      %table.table.table-striped.no-cellborder.dataTable{ cellspacing: 0}
+        %thead
+          %tr
+            %th Name
+            %th Description
+            %th Quantity
+            %th Uom
+            %th
+        %tbody
+          = render @packagings
+  - else
+    - if user_signed_in?
+      = render 'shared/missing_prompt', title: t("commodities.show.tabs.packagings.title"), description: t("commodities.show.tabs.packagings.description"), anchor: t("commodities.show.tabs.packagings.button"), href: new_app_commodity_reference_packaging_path(current_app,@com_ref)

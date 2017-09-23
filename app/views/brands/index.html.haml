@@ -1,0 +1,5 @@
+%h1 Brands
+- if @brands.any?
+  = render @brands
+- else
+  %p= t('brands.messages.non-found') #{link_to t('brands.new.title'), new_brand_path}

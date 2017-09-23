@@ -1,0 +1,11 @@
+= form_for @app do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: "form-control"
+    = errors_for_field(@app, :name)
+  .form-group
+    = f.label :description
+    = f.text_area :description, rows: 3, class: "form-control"
+    = errors_for_field(@app, :description)
+
+  = f.submit class: "btn btn-primary"

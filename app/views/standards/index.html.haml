@@ -1,0 +1,48 @@
+%section.app-content
+  .box.segment.m-0
+    .row.no-gutter
+      .col-md-12
+        %h1.m-t-0.p-sm.pull-left
+          Standards
+  .row
+    .col-md-12
+      %hr.m-0/
+      .m-b-lg.nav-tabs-horizontal
+        .segment-add
+          / tabs list
+          %ul.nav.nav-tabs.box.m-0{:role => "tablist"}
+            %li.active{:role => "presentation"}
+              = link_to "#tab-1", aria: {controls: "tab-1", expanded: true}, role: "tab", data: {toggle: "tab"} do
+                %span= @standards.count
+                %small= "Standard".pluralize(@standards.count)
+            %li{:role => "presentation"}
+              = link_to "#tab-2", aria: {controls: "tab-2", expanded: false}, role: "tab", data: {toggle: "tab"} do
+                %span 4.325
+                %small Certifiers
+          / .nav-tabs
+          .segment-actions
+            - if @brand
+              = link_to new_brand_standard_path(@brand), class: "btn-add icon icon-circle icon-md", title: "Add" do
+                %i.fa.fa-plus
+        / Tab panes
+        .tab-content
+          #tab-1.tab-pane.in.active.fade{:role => "tabpanel"}
+            .row
+              .col-md-12
+                %h4.segment-name All standards
+                %a.btn.btn-sm.btn-view-type{"data-placement" => "bottom", "data-toggle" => "tooltip", :href => "javascript:;", :title => "Change view"}
+                  %i.fa.fa-th-list
+            .row
+              .col-md-12
+                = render 'gridview', standards: @standards
+                = render 'listview', standards: @standards
+          #tab-2.tab-pane.fade{:role => "tabpanel"}
+            .row
+              .col-md-12
+                %h4.segment-name All Certifiers
+                %a.btn.btn-sm.btn-view-type{"data-placement" => "bottom", "data-toggle" => "tooltip", :href => "javascript:;", :title => "Change view"}
+                  %i.fa.fa-th-list
+            .row
+              .col-md-12
+        / .tab-content
+      / .nav-tabs-horizontal

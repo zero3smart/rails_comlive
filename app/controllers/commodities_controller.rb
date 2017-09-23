@@ -8,6 +8,9 @@ class CommoditiesController < ApplicationController
 
   def show
     @commodity = @app.commodities.find(params[:id])
+    @packaging = Packaging.new
+    @state = @commodity.state ? @commodity.state : State.new
+    @standardization = Standardization.new
   end
 
   def new
@@ -43,6 +46,8 @@ class CommoditiesController < ApplicationController
   end
 
   def commodity_params
-    params.require(:commodity).permit(:short_description, :long_description, :generic)
+    params.require(:commodity).permit(:short_description, :long_description, :generic, :brand_id, :measured_in,
+                                      :hscode_section_id, :hscode_chapter_id, :hscode_heading_id, :hscode_subheading_id,
+                                      :unspsc_commodity_id)
   end
 end

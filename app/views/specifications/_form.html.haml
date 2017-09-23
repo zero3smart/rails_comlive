@@ -1,0 +1,48 @@
+= form_for object_url(@parent, @specification), html: { class: "form-horizontal" } do |f|
+  .form-group.hidden
+    = f.label :property, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_field :property, class: "form-control"
+      = errors_for_field(@specification, :property)
+  #value-min-max.row.m-b-xs.hidden
+    .col-sm-8.col-sm-offset-4
+      .radio.radio-inline.radio-primary.p-t-0
+        = radio_button_tag 'value-opts', 'value', is_checked?(@specification,'value')
+        %label{:for => "value-opts_value"} Set Value
+      .radio.radio-inline.radio-primary.p-t-0
+        = radio_button_tag 'value-opts', 'min-max', is_checked?(@specification, 'min-max')
+        %label{:for => "value-opts_min-max"} Define Min / Max
+  #value-container{:class => "form-group #{is_checked?(@specification, 'value') ? "" : "hidden"}"}
+    = f.label :value, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_field :value, class: "form-control"
+      = errors_for_field(@specification, :value)
+  #min-max-container{:class => "form-group #{is_checked?(@specification, 'min-max') ? "" : "hidden"}"}
+    %label.col-sm-4.control-label{:for => ""} Min / Max Value
+    .col-sm-6
+      .row
+        .col-sm-6
+          = f.number_field :min, class: "form-control", step: "0.01", placeholder: "Minimum"
+          = errors_for_field(@specification, :min)
+        .col-sm-6
+          = f.number_field :max, class: "form-control", step: "0.01", placeholder: "Maximum"
+          = errors_for_field(@specification, :max)
+  .form-group.hidden
+    = f.label :filter_uoms, class: "col-sm-4 control-label"
+    .col-sm-6
+      = select_tag :type_of_measure, grouped_options_for_select(options_for_property(@app), nil, prompt: "Select Type"), class: "form-control select2", data: { url: uoms_path }
+  .form-group
+    = f.label :uom, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :uom, options_for_select(uoms_for_property(@specification.property), @specification.uom), {},  class: "form-control select2"
+      = errors_for_field(@specification, :uom)
+
+  .form-group
+    = f.label :publishing, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :visibility, options_for_visibility(@specification), {}, class: "selectpicker show-tick", data: { width: "fit", header: "Publishing of the data"}
+      = errors_for_field(@specification, :uom)
+  .row
+    .col-sm-8.col-sm-offset-4
+      = f.submit class: "btn btn-primary"
+      = link_to "Cancel", :back, class: "btn btn-default btn-md m-l-sm"

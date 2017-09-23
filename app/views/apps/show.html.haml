@@ -1,0 +1,11 @@
+%body
+  .row
+    .col-md-12
+      .widget
+        %header.widget-header
+          %h4.widget-title.pull-left= @app.name
+          %span.pull-right= link_to t('app.edit'), edit_app_path(@app)
+        %hr.widget-separator/
+        .widget-body
+          = @app.description
+      / .widget

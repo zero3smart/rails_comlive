@@ -1,0 +1,11 @@
+%tr.segment.segment-edit
+  %td= standard.name
+  %td= standard.description
+  %td.segment-actions
+    %span.hidden 2
+    - if policy(standard).edit?
+      = link_to "#", class: "btn-edit" do
+        %i.fa.fa-pencil
+        Edit
+    .segment-state.dropdown
+      = render 'shared/pubmode', mode: standard.visibility_status

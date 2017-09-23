@@ -24,7 +24,7 @@ RSpec.describe UnspscCommodity, :type => :model do
     it "is invalid without a unspsc class" do
       unspsc_commodity = build(:unspsc_commodity, unspsc_class: nil)
       unspsc_commodity.valid?
-      expect(unspsc_commodity.errors[:unspsc_class]).to match_array(["must exist", "can't be blank"])
+      expect(unspsc_commodity.errors[:unspsc_class]).to include("can't be blank")
     end
     it "is invalid if long code is less than 8 chars" do
       unspsc_commodity = build(:unspsc_commodity, long_code: "a"*6)

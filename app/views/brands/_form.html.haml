@@ -1,0 +1,84 @@
+- content_for :js do
+  = javascript_include_tag "//api.filestackapi.com/filestack.js"
+
+= form_for [@app, @brand], html: { class: "form-horizontal" } do |f|
+
+  .form-group
+    = f.label :name, class: "col-sm-4 control-label required"
+    .col-sm-6
+      = f.text_field :name, class: "form-control"
+      = errors_for_field(@brand, :name)
+      %p.help-block Eg. Apple
+  / .form-group
+
+  .form-group
+    = f.label :description, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_area :description, class: "form-control"
+      = errors_for_field(@brand, :description)
+  / .form-group
+
+  .form-group
+    = f.label :brand_logo, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.hidden_field :logo, class: "form-control"
+      = errors_for_field(@brand, :logo)
+      %input{ "data-fp-apikey" => ENV["FILEPICKER_API_KEY"], "data-fp-container" => "modal", "data-fp-mimetypes" => "image/*",
+      "data-fp-store-location" => "s3", "data-fp-crop-ratio" => "1/1", :onchange => "setLogo(event.fpfile.url,'brand_logo')",
+      "data-fp-button-text" => t(".upload_logo"), :type => "filepicker"}/
+
+  - if @brand.official
+    .form-group
+      = f.label :location, class: "col-sm-4 control-label"
+      .col-sm-6
+        .row
+          .col-sm-6
+            = f.text_field :location, class: "form-control"
+            = errors_for_field(@brand, :location)
+          .col-sm-6
+            = f.text_field :phone, class: "form-control", placeholder: t('activerecord.attributes.brand.phone')
+            = errors_for_field(@brand, :phone)
+
+    .form-group
+      = f.label :email, class: "col-sm-4 control-label"
+      .col-sm-6
+        .row
+          .col-sm-6
+            = f.email_field :email, class: "form-control"
+            = errors_for_field(@brand, :email)
+          .col-sm-6
+            = f.text_field :url, class: "form-control", placeholder: t('activerecord.attributes.brand.url')
+            = errors_for_field(@brand, :url)
+
+    .form-group
+      = f.label :skype_username, class: "col-sm-4 control-label"
+      .col-sm-6
+        .row
+          .col-sm-6
+            = f.text_field :skype_username, class: "form-control"
+            = errors_for_field(@brand, :skype_username)
+          .col-sm-6
+            = f.text_field :twitter_handle, class: "form-control", placeholder: t('activerecord.attributes.brand.twitter_handle')
+            = errors_for_field(@brand, :twitter_handle)
+
+    .form-group
+      = f.label :facebook_url, class: "col-sm-4 control-label"
+      .col-sm-6
+        .row
+          .col-sm-6
+            = f.text_field :facebook_address, class: "form-control"
+            = errors_for_field(@brand, :facebook_address)
+          .col-sm-6
+            = f.text_field :open_corporate_url, class: "form-control", placeholder: t('activerecord.attributes.brand.open_corporate_url')
+            = errors_for_field(@brand, :open_corporate_url)
+
+    .form-group
+      = f.label :wipo_url, class: "col-sm-4 control-label"
+      .col-sm-6
+        = f.text_field :wipo_url, class: "form-control"
+        = errors_for_field(@brand, :wipo_url)
+
+  .row
+    .col-sm-8.col-sm-offset-4
+      = f.submit class: "btn btn-primary"
+      = link_to "Cancel", :back, class: "btn btn-default btn-md m-l-sm"

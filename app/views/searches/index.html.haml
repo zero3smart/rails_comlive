@@ -1,0 +1,26 @@
+.panel
+  .panel-body
+    .row.m-b-lg
+      .col-md-4
+        .search-filter.display-table
+          .col-sm-6.col-md-12
+            %h4 You searched for:
+            .search-query
+              = link_to "#" do
+                %i.fa.fa-times
+                = params[:query]
+          .col-sm-6.col-md-12
+            = render 'search_filters'
+
+      .col-md-8
+        .search-summary
+          %p.search-results.text-muted
+            = pluralize @meta["hits"]["total"], "Result"
+            in
+            = pluralize @meta["took"]/1000.0, "Second"
+
+        = render 'search_results'
+
+        / search results navigation
+        %nav.search-results-navigation
+          = will_paginate(@results, renderer: BootstrapPagination::Rails)

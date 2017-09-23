@@ -1,0 +1,31 @@
+.grid-item.grid-item-20
+  .box.segment.segment-edit
+    .row
+      - if standard.logo.present?
+        .col-md-12
+          = image_tag standard.logo, class: "img-responsive p-sm"
+          %hr.m-0/
+      .col-md-12
+        %h5.segment-title
+          = link_to [standard.brand, standard] do
+            %span= standard.code
+            %small= standard.name
+      .col-md-12
+        .standard-row
+          %p.m-0= truncate standard.description, length: 100
+          %span.block.m-t-xs
+            Certifier:
+            %strong= standard.certifier
+            - if standard.certifier_url.present?
+              = link_to standard.certifier_url, target: "_blank" do
+                %i.fa.fa-external-link
+          %span.block.m-t-xs
+            Expires on:
+            %strong 27 Sept 2018
+    .segment-actions
+      = link_to edit_brand_standard_path(standard.brand,standard), class: "btn-edit" do
+        %i.fa.fa-pencil
+        Edit
+
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: "Public"

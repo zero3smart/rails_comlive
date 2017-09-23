@@ -1,0 +1,24 @@
+= form_for [@app, @commodity_reference] do |f|
+  = errors_for @commodity_reference
+  .row
+    .col-md-6
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: "form-control"
+    .col-md-6
+      .form-group
+        = f.label :measured_in
+        = f.select :measured_in, unitwise_atoms, { prompt: "Select Unit" }, class: "form-control select2"
+  .form-group
+    = f.label :short_description
+    = f.text_field :short_description, class: "form-control"
+  .form-group
+    = f.label :long_description
+    = f.text_area :long_description, rows: 5, class: "form-control"
+  .checkbox.checkbox-success
+    = f.check_box :generic, {}, "true", "false"
+    = f.label :generic
+  #commodity-brand.form-group
+    = f.label :brand
+    = f.select :brand_id, Brand.all.map{|b| [b.name, b.id]}, { prompt: "Select Brand" },  class: "form-control select2"
+  = f.submit class: "btn btn-primary"

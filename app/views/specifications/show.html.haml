@@ -1,0 +1,8 @@
+%h1 Specification Details
+%p
+  Property: #{@specification.property}
+%p
+  Value: #{@specification.value ? @specification.value : "Max: #{@specification.max} Min: #{@specification.min}"}
+%p
+  Unit of Measure: #{@specification.uom}
+= link_to "Edit", edit_app_commodity_reference_specification_path(@app, @parent, @specification)

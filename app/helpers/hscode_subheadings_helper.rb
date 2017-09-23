@@ -1,0 +1,2 @@
+module HscodeSubheadingsHelper
+end

@@ -1,0 +1,20 @@
+%tr.segment.segment-edit
+  %td
+    - if standard.logo.present?
+      = image_tag standard.logo
+  %td= standard.code
+  %td= link_to standard.name, [standard.brand, standard]
+  %td
+    = standard.certifier
+    - if standard.certifier_url
+      = link_to standard.certifier_url, target: "_blank" do
+        %i.fa.fa-external-link.fz-sm{ aria: { hidden: true }}
+  %td February 2018
+  %td= truncate standard.description, length: 60
+  %td.segment-actions
+    %span.hidden 2
+    %a.btn-edit{:href => "#"}
+      %i.fa.fa-pencil
+      Edit
+    .segment-state.dropdown.inline-block
+      = render 'shared/pubmode', mode: standard.visibility_status

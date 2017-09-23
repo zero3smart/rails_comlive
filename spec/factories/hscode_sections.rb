@@ -2,7 +2,9 @@
 
 FactoryGirl.define do
   factory :hscode_section do
-    category { ["01-10","11-15", "16-20","21-25"].sample }
+    sequence :category do |i|
+      (1..500).to_a.map{|s| s.to_s.rjust(2,"0") }.in_groups_of(5).map{|x| x[0] + "-" + x[4]}[i]
+    end
     description { Faker::Lorem.sentence }
   end
 end

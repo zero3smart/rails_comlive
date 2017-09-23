@@ -1,0 +1,51 @@
+#tab-0.tab-pane.in.active.fade{role: "tabpanel"}
+  - if @brand.description.present?
+    .row
+      .col-md-12
+        %h4.segment-name= t("brands.show.tabs.summary.header")
+    .box.segment-edit
+      .row.no-gutter
+        .row-height
+          .col-sm-6.col-md-8.col-height.brand-summary
+            %article.p-md{ style: "margin-height: none;"}
+              %p= @brand.description
+          .col-sm-6.col-md-4.col-height
+            .brand-info.p-md
+              - if @brand.official?
+                .m-l-md.m-r-md.p-r-lg
+                  = link_to @brand.url, target: "_blank", class: "m-b-sm" do
+                    = t('brands.show.tabs.summary.website')
+                    %i.fa.fa-external-link.fz-sm{"aria-hidden" => "true"}
+                  .col-md-12.contact-item.m-b-sm
+                    .contact-links.m-t-xs
+                      = link_to @brand.phone, class: "icon icon-circle icon-sm m-b-0", title: t('brands.show.tabs.summary.phone'), data: { placement: "top", toggle: "tooltip" } do
+                        %i.fa.fa-phone
+                      = link_to @brand.email, class: "icon icon-circle icon-sm m-b-0", title: t('brands.show.tabs.summary.email'),  data: { placement: "top", toggle: "tooltip" } do
+                        %i.fa.fa-envelope-o
+                      = link_to @brand.skype, class: "icon icon-circle icon-sm m-b-0", title: t('brands.show.tabs.summary.skype'), data: { placement: "top", toggle: "tooltip" } do
+                        %i.fa.fa-skype
+                      = link_to @brand.facebook, class: "icon icon-circle icon-sm m-b-0", target: "_blank", title: t('brands.show.tabs.summary.facebook'), data: { placement: "top", toggle: "tooltip" } do
+                        %i.fa.fa-facebook
+                      = link_to @brand.twitter, class: "icon icon-circle icon-sm m-b-0", target: "_blank", title: t('brands.show.tabs.summary.twitter'), data: { placement: "top", toggle: "tooltip" } do
+                        %i.fa.fa-twitter
+                  %dl.m-0
+                    - if @brand.open_corporate_url || @brand.wipo_url
+                      %dt.fw-400.m-b-xs.fz-sm= t("brands.show.tabs.summary.recognized")
+                      %dd.m-b-xs
+                        = link_to @brand.open_corp_url, target: "_blank" do
+                          %i.icon-custom.icon-ocs.m-r-xs{"data-original-title" => t('brands.show.tabs.summary.open_corp'), "data-placement" => "bottom", :rel => "tooltip"}
+                          %span= t('brands.show.tabs.summary.open_corp_title')
+                      %dd.m-b-xs
+                        = link_to @brand.wipo_url, target: "_blank" do
+                          %i.icon-custom.icon-wipo.m-r-xs{"data-original-title" => t('brands.show.tabs.summary.wipo'), "data-placement" => "bottom", :rel => "tooltip"}
+                          %span= t('brands.show.tabs.summary.wipo_title')
+      .segment-actions
+        - if user_signed_in?
+          = link_to edit_brand_path(@brand), class: "btn-edit" do
+            %i.fa.fa-pencil
+            Edit
+        .segment-state.dropdown
+          = render 'shared/pubmode', mode: "Public"
+
+  - else
+    = render 'shared/missing_prompt', title: t("brands.show.tabs.summary.title"), description: t("brands.show.tabs.summary.description"), anchor: t("brands.show.tabs.summary.button"), href: "#"

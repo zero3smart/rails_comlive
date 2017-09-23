@@ -1,0 +1,17 @@
+.widget.widget-form
+  %header.widget-header
+    %h4= t(".title")
+    //%p.subheading= @parent.name
+
+  .widget-body
+    = form_for [@app, @invitation], html: { class: "form-horizontal" } do |f|
+      = errors_for @invitation
+      .form-group
+        = f.label :email, class: "col-sm-4 control-label"
+        .col-sm-6
+          = f.email_field :recipient_email, class: "form-control", placeholder: "user@example.com"
+          = errors_for_field(@invitation, :recipient_email)
+      .row
+        .col-sm-8.col-sm-offset-4
+          = f.submit "Send Invitation", class: "btn btn-primary"
+          = link_to "Cancel", :back, class: "btn btn-default btn-md m-l-sm"

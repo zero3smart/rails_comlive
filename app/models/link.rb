@@ -1,7 +1,9 @@
 class Link < ApplicationRecord
-  belongs_to :app
-  belongs_to :commodity
+  include Visibility
 
-  validates_presence_of :url, :description, :app, :commodity
-  validates_format_of :url, with: /\A(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?\z/ix
+  belongs_to :app
+  belongs_to :commodity_reference
+
+  validates_presence_of :url, :description, :app, :commodity_reference
+  validates :url, url: true
 end

@@ -1,0 +1,1 @@
+%p= link_to brand.name, user_signed_in? ? [@app, brand] : slugged_brand_path(brand.uuid, brand.name.parameterize)

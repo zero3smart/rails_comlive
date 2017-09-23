@@ -1,0 +1,57 @@
+%section.app-content
+  .box.m-0.segment-edit
+    .row.no-gutter
+      .row-sm-height
+        .col-sm-6.col-md-8.col-sm-height.col-sm-middle
+          %h1.m-b-0.p-l-md.fz-lg= @classification.name
+          %article.p-md= @classification.description
+
+        .hidden-xs.col-sm-6.col-md-4.col-sm-height.col-sm-top.text-right
+          .p-t-lg.p-b-md
+            - (0...3).each do
+              .hidden-sm.avatar.avatar-md.avatar-circle.m-r-sm
+                = link_to "#" do
+                  = image_tag "http://placehold.it/50x50"
+
+
+        .segment-actions
+          = link_to "#", class: "btn-edit" do
+            %i.fa.fa-pencil
+            Edit
+
+          .segment-state.dropdown.inline-block
+            = render 'visibility'
+
+  %hr.m-0/
+  .nav-tabs-horizontal
+    .segment-add.box
+      %ul.nav.nav-tabs.m-0{ role: "tablist" }
+        %li.active{ role: "presentation"}
+          = link_to "Classification", "#tab-1", aria: { controls: "tab-1" }, role: "tab", data: { toggle: "tab" }
+        %li{ role: "presentation" }
+          = link_to "Commodities", "#tab-2", aria: { controls: "tab-2", role: "tab" }, data: { toggle: "tab" }
+
+      .segment-actions
+        = link_to "#", class: "btn-add icon icon-circle icon-md", data: { toggle: "modal", target: "#modalAdd" } do
+          %i.fa.fa-plus
+
+    .tab-content
+      #tab-1.tab-pane.in.active.fade{ role: "tabpanel" }
+        .segment-edit
+          .box.p-md.m-b-0
+            .row
+              .col-sm-4.col-md-3
+                %span.jqtree-all.jqtree-selected All Levels
+                #levels-tree{ data: { url: app_classification_levels_path(@app,@classification, format: "json") } }
+
+              .col-sm-8.col-md-9
+                %span.classification-unit
+                  %i.fa.fa-exclamation-triangle
+                  Met Requirements
+
+      #tab-2.tab-pane.fade{ role: "tabpanel" }
+        .row
+          .col-md-12
+            %h4.pull-left.segment-name Commodities
+
+= render 'add_items'

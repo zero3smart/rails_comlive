@@ -1,0 +1,15 @@
+- if policy(link).show?
+  %tr.segment.segment-edit
+    %td
+      = link_to link.url, target: "_blank" do
+        = link.url
+        %i.fa.fa-external-link.fz-sm
+    %td= link.description
+    %td.segment-actions
+      %span.hidden 2
+      - if policy(link).edit?
+        = link_to edit_app_commodity_reference_link_path(current_app,link.commodity_reference, link), class: "btn-edit" do
+          %i.fa.fa-pencil
+          Edit
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: link.visibility_status

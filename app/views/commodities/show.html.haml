@@ -1,0 +1,71 @@
+%section.app-content
+  - if @brand
+    .box.commodity-brand.segment-edit.p-sm
+      .row.no-gutter
+        .row-sm-height
+          .col-md-6.col-sm-height.col-sm-middle
+            = link_to @brand, class: "brand-logo" do
+              = image_tag @brand.logo
+            = link_to @brand.name, @brand, class: "brand-title"
+
+          .hidden-xs.col-md-6.col-sm-height.col-sm-middle.text-right
+            - @brand.commodities.limit(3).each do |commodity|
+              .hidden-sm.avatar.avatar-md.avatar-circle.m-r-sm
+                = link_to commodity do
+                  = image_tag commodity.avatar_url
+
+            .summary
+              = link_to "#" do
+                %span= @brand.commodities.count
+                = "Commodity".pluralize(@brand.commodities.count)
+
+      .segment-actions
+        - if user_signed_in?
+          = link_to edit_brand_path(@brand), class: "btn-edit" do
+            %i.fa.fa-pencil
+            Edit
+        .segment-state.dropdown
+          = render 'shared/pubmode', mode: "Official"
+
+  .box.m-0
+    .row
+      .col-md-12
+        .segment.segment-edit.segment-header
+          .commodity-heading
+            %h1.p-md.pull-left= @commodity.name
+          .segment-actions
+            - if user_signed_in?
+              = link_to edit_commodity_path(@commodity), class: "btn-edit" do
+                %i.fa.fa-pencil
+                Edit
+            = link_to "#", class: "btn-share", data: { toggle: "modal", target: "#modalShare" } do
+              %i.fa.fa-share-alt
+              Share
+            .segment-state.dropdown.inline-block
+              = render 'shared/pubmode', mode: @commodity.visibility_status
+
+    - if @state
+      = render @state
+
+  .row
+    .col-md-12
+      %hr.m-0/
+      .m-b-lg.nav-tabs-horizontal
+        .segment-add
+          = render 'tab_menu'
+          .segment-actions
+            = link_to "#", class: "btn-add icon icon-circle icon-md", data: { toggle: "modal", target: "#modalAdd" } do
+              %i.fa.fa-plus
+        .tab-content
+          = render 'summary_tab'
+          = render 'specifications_tab'
+          = render 'packagings_tab'
+          = render 'standards_tab'
+          = render 'barcodes_tab'
+          = render 'references_tab'
+          = render 'classifications_tab'
+          = render 'links_tab'
+
+  = render 'add_items' if user_signed_in?
+  = render 'shared/social_share', share_url: slugged_commodity_url(@commodity.uuid,@commodity.name.parameterize)
+

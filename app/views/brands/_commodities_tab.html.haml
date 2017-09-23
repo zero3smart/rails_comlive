@@ -1,0 +1,16 @@
+#tab-1.tab-pane.fade{:role => "tabpanel"}
+  - if @brand.commodities.any?
+    .row
+      .col-md-12
+        .row
+          .col-md-12
+            %h4.segment-name
+              = @brand.name
+              = t('misc.products')
+            %a.btn.btn-sm.btn-view-type{"data-placement" => "bottom", "data-toggle" => "tooltip", :href => "javascript:;", :title => "Change view"}
+              %i.fa.fa-th-list
+        = render 'commodities/gridview', commodities: @brand.commodities
+        = render 'commodities/listview', commodities: @brand.commodities
+  - else
+    = render 'shared/missing_prompt', title: t("brands.show.tabs.commodities.title"), description: t("brands.show.tabs.commodities.description"), anchor: t("brands.show.tabs.commodities.button"), href: "#"
+

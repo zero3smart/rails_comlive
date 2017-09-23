@@ -5,7 +5,7 @@ FactoryGirl.define do
     url { Faker::Internet.url }
     description { Faker::Lorem.paragraph }
     association :app
-    association :commodity
+    association :commodity_reference
 
     factory :invalid_link do
       url nil

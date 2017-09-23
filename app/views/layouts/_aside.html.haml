@@ -1,0 +1,63 @@
+%body
+  %aside#app-aside.app-aside.left.dark
+    %header.aside-header
+      .animated
+        = link_to root_path, id: "app-brand", class: "app-brand" do
+          %span#brand-icon.brand-icon
+            = image_tag "commodity-live_logo.png"
+          %span#brand-name.brand-icon.foldable commodity.live
+    / #sidebar-header
+    - if user_signed_in?
+      .app-user
+        .media
+          .media-left
+            .avatar.avatar-md.avatar-circle.dropdown
+              = link_to "javascript:void(0)", data: { toggle: "dropdown" } do
+                = gravatar_for current_user.email, 50, "img-responsive"
+              %ul.dropdown-menu.animated.flipInY
+                %li
+                  %a.text-color{:href => "#"}
+                    %span.m-r-xs
+                      %i.fa.fa-user
+                    %span Profile
+                %li
+                  %a.text-color{:href => "#"}
+                    %span.m-r-xs
+                      %i.fa.fa-gear
+                    %span Settings
+                %li.divider{:role => "separator"}
+                %li
+                  = link_to logout_path, method: :delete, class: "text-color", rel: "nofollow" do
+                    %span.m-r-xs
+                      %i.fa.fa-power-off
+                    %span Logout
+          .media-body
+            .foldable
+              .dropdown
+                = link_to "javascript:void(0)", class: "username" do
+                  = current_user.name
+              %ul
+                %li.dropdown
+                  %a.dropdown-toggle.usertitle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "javascript:void(0)"}
+                    My apps
+                    %span.caret
+                  %ul.dropdown-menu.animated.flipInY
+                    - current_user.apps.each do |app|
+                      %li
+                        = link_to app, class: "text-color" do
+                          %span.m-r-xs
+                            %i.zmdi.zmdi-hc-lg.zmdi-pages
+                          %span= app.name
+                    %li.divider{:role => "separator"}
+                    - if current_app
+                      %li
+                        = link_to app_custom_units_path(current_app), class: "text-color" do
+                          %span.m-r-xs
+                            %i.zmdi.zmdi-hc-lg.zmdi-graphic-eq
+                          %span Custom Units
+                    %li
+                      = link_to new_app_path, class: "text-color" do
+                        %span.m-r-xs
+                          %i.zmdi.zmdi-hc-lg.zmdi-collection-add
+                        %span New App
+    = render 'layouts/aside_menu'

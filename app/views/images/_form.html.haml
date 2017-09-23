@@ -1,0 +1,39 @@
+- content_for :js do
+  = javascript_include_tag "//api.filestackapi.com/filestack.js"
+  :javascript
+    filepicker.setKey("#{ENV['FILEPICKER_API_KEY']}")
+    filepicker.makeDropPane($('#dropzone')[0], {
+      multiple: true,
+      mimetype: 'image/*',
+      dragEnter: function() {
+        $("#dropzone h3.m-h-lg").html("Drop to Upload.");
+      },
+      dragLeave: function() {
+        $("#dropzone h3.m-h-lg").html("Drop files here");
+      },
+      onSuccess: function(Blobs) {
+        $("#dropzone h3.m-h-lg").text("Upload Complete!");
+        var urls = $.map(Blobs, function(file){
+          return file.url
+        });
+        $("#image_url").val(urls.join());
+        $("form#new_image").submit();
+      },
+      onError: function(type, message) {
+        $("#statusPanel").html('<p class="text-danger">('+type+') '+ message + '</p>');
+      },
+      onProgress: function(percentage) {
+         $("#dropzone h3.m-h-lg").text("Uploading...");
+         $("#dropzone p.m-b-lg.text-muted").text(percentage + "%");
+      }
+    });
+= form_for [@app,@commodity_reference,@image] do |f|
+  = f.text_field :url, class: "form-control hidden"
+#dropzone.dropzone
+  .dz-message
+    %h3.m-h-lg Drop files here
+    %p.m-b-lg.text-muted Drop one or multiple image files
+
+#statusPanel.m-t-lg.text-center
+
+

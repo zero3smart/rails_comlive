@@ -1,0 +1,14 @@
+- if policy(packaging).show?
+  %tr.segment.segment-edit
+    %td= packaging.name
+    %td= packaging.description
+    %td= packaging.quantity
+    %td= packaging.uom
+    %td.segment-actions
+      %span.hidden 2
+      - if policy(packaging).edit?
+        = link_to edit_app_commodity_reference_packaging_path(packaging.app,packaging.commodity_reference, packaging), class: "btn-edit" do
+          %i.fa.fa-pencil
+          Edit
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: packaging.visibility_status

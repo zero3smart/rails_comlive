@@ -1,0 +1,51 @@
+= javascript_include_tag "https://cdn.auth0.com/js/lock/10.0/lock.min.js"
+:javascript
+  var loginLock = new Auth0Lock("#{ENV["AUTH0_API_KEY"]}", 'ntty.eu.auth0.com', {
+    auth: {
+      redirectUrl: window.location.origin + '/auth/auth0/callback',
+      responseType: 'code',
+      params: {
+        scope: 'openid email offline_access', // Learn about scopes: https://auth0.com/docs/scopes,
+        device: 'api'
+      }
+    },
+    theme: {
+      logo: "#{asset_path("commodity-live_logo.png")}",
+      primaryColor: "#c9ac60"
+    },
+    languageDictionary: {
+      title: "Commodity Live"
+    },
+    initialScreen: "login"
+  });
+
+  var signUpLock = new Auth0Lock("#{ENV["AUTH0_API_KEY"]}", 'ntty.eu.auth0.com', {
+    auth: {
+      redirectUrl: window.location.origin + '/auth/auth0/callback',
+      responseType: 'code',
+      params: {
+        scope: 'openid email offline_access', // Learn about scopes: https://auth0.com/docs/scopes,
+        device: 'api'
+      }
+    },
+    initialScreen: "signUp",
+    allowLogin: false,
+    theme: {
+      logo: "#{asset_path("commodity-live_logo.png")}",
+      primaryColor: "#c9ac60"
+    },
+    languageDictionary: {
+      title: "Commodity Live"
+    }
+  });
+
+  $(document).ready(function(){
+    $("a.auth-btn.login").click(function(e){
+      e.preventDefault();
+      loginLock.show();
+    });
+    $("a.auth-btn.signup").click(function(e){
+      e.preventDefault();
+      signUpLock.show();
+    });
+  });

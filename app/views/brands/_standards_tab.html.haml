@@ -1,0 +1,14 @@
+#tab-2.tab-pane.fade{:role => "tabpanel"}
+  - if @brand.standards.any?
+    .row
+      .col-md-12
+        %h4.segment-name
+          = @brand.name
+          =t('misc.standards')
+        %a.btn.btn-sm.btn-view-type{"data-placement" => "bottom", "data-toggle" => "tooltip", :href => "javascript:;", :title => "Change view"}
+          %i.fa.fa-th-list
+    = render 'standards/gridview', standards: @brand.standards
+    = render 'standards/listview', standards: @brand.standards
+  - else
+    = render 'shared/missing_prompt', title: t("brands.show.tabs.standards.title"), description: t("brands.show.tabs.standards.description"), anchor: t("brands.show.tabs.standards.button"), href: new_standardization_path(referable_type: "Brand", referable_id: @brand.id)
+

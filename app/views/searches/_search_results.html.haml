@@ -1,0 +1,13 @@
+- @results.each do |result|
+  .search-result
+    %h5
+      = link_to result.name, search_url_for(result)
+      - if user_signed_in?
+        %span.pull-right
+          - if result.is_a?(Commodity) && !current_user.list.commodities.include?(result.id.to_s)
+            .text-right
+              = form_for current_user.list do |f|
+                = f.hidden_field :commodity_id, value: result.id
+                = f.submit "Add to List", class: "btn btn-primary"
+    %p.text-muted Type: #{result.class.to_s}
+    %p= search_description(result)

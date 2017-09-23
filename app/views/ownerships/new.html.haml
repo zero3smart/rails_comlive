@@ -1,0 +1,8 @@
+%section.app-content
+  .widget
+    %header.widget-header
+      %span= t(".title")
+    %hr.widget-separator/
+    .widget-body
+      %p= t(".prompt", name: @child.name, type: "Brand").html_safe
+      = render 'form'

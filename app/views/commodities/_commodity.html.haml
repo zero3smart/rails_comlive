@@ -1,0 +1,6 @@
+.media
+  .media-body
+    %h4.media-heading= link_to commodity.name, commodity_url(commodity), class: "search-result"
+    %p
+      %small= commodity.short_description
+    %p= commodity.long_description

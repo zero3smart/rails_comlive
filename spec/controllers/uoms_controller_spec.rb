@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe UomsController, :type => :controller do
+  let!(:user) { create(:user) }
+
   context "when user is authenticated" do
     before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
-      @user = create(:user)
-      sign_in @user
+      sign_in user
     end
 
     describe "GET #index" do
@@ -33,16 +33,16 @@ RSpec.describe UomsController, :type => :controller do
 
       it "redirects to the signin page" do
         get :index
-        expect(response).to redirect_to new_user_session_path
+        expect(response).to redirect_to login_path
       end
     end
   end
+end
 
-  def properties
-    Unitwise::Atom.all.uniq.map {|x| "#{x.property}"}.uniq
-  end
+def properties
+  Unitwise::Atom.all.uniq.map {|x| "#{x.property}"}.uniq
+end
 
-  def uom(property)
-    Unitwise::Atom.all.select{|a| a.property == property }.map {|i| ["#{i.to_s(:names)} (#{i.to_s(:primary_code)})",i.to_s(:primary_code)] }
-  end
+def uom(property)
+  Unitwise::Atom.all.select{|a| a.property == property }.map {|i| ["#{i.to_s(:names)} (#{i.to_s(:primary_code)})",i.to_s(:primary_code)] }
 end

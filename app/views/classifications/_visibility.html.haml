@@ -1,0 +1,21 @@
+%a.btn-state.public.dropdown-toggle{"aria-expanded" => "true", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "javascript:void(0)"}
+  Community
+%ul.dropdown-menu.dropdown-menu-right.dropdown-publishing
+  %li.dropdown-header
+    Privacy of the data
+  %li.divider.m-0
+  %li
+    %strong.public Public
+    %small Anyone who is logged in can CRUD
+  %li
+    %strong.official Moderated
+    %small There is at least one owner, and everybody can suggest CRUD. Owners can approve and execute the suggestions
+  %li.selected
+    %strong.private Community
+    %small Anyone in the community can suggest CRUD. All members of the group can vote no. No answer with 7 days counts for a yes. Over 50% is needed to make the suggested CRUD. Owner counts as two votes if equal votes.
+  %li
+    %strong.public Closed
+    %small Only the owners can CRUD
+  %li
+    %strong.public Closed and private
+    %small Only the owners can CRUD, and the classification is hidden from anyone but the apps the owners allow.

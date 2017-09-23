@@ -1,0 +1,9 @@
+%section.app-content
+  .widget
+    %header.widget-header
+      %span Publishing
+      .dropdown.inline-block
+        = render 'shared/pubmode', mode: "Public", version: 1
+    %hr.widget-separator/
+    .widget-body
+      = render 'form'

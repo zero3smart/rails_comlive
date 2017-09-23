@@ -1,0 +1,30 @@
+= form_for [@app, @commodity_reference, @reference], html: { class: "form-horizontal" } do |f|
+  .form-group
+    = f.label :source_commodity, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :source_commodity_id, options_for_references(@reference), {prompt: "Search commodities"}, data: { url: commodities_path },
+        class: "form-control"
+      = errors_for_field(@reference, :source_commodity_id)
+  .form-group
+    = f.label :kind, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :kind, options_for_kind, {}, class: "form-control"
+      = errors_for_field(@reference, :kind)
+  .form-group
+    = f.label :target_commodity, class: "col-sm-4 control-label"
+    .col-sm-6
+      %p.form-control-static= @commodity_reference.name
+  .form-group
+    = f.label :description, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_area :description, class: "form-control autoresize"
+      = errors_for_field(@reference, :description)
+  .form-group
+    = f.label :publishing, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :visibility, options_for_visibility(@reference), {}, class: "form-control"
+      = errors_for_field(@reference, :visibility)
+  .row
+    .col-sm-8.col-sm-offset-4
+      = f.submit class: "btn btn-primary"
+      = link_to "Cancel", :back, class: "btn btn-default btn-md m-l-sm"

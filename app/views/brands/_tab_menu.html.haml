@@ -1,0 +1,7 @@
+- tabs = %w(summary products standards classifications)
+- tabs = tabs - %w(standards classifications) unless @brand.official?
+
+%ul.nav.nav-tabs.box.m-0{:role => "tablist"}
+  - tabs.each_with_index do |tab,index|
+    %li{:role => "presentation", class: index.zero? ? "active" : "" }
+      = link_to tab, "#tab-#{index}", data: { toggle: "tab" }, aria: { controls: "tab-#{index}"}, role: "tab"

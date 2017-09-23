@@ -1,0 +1,56 @@
+.text-center.m-b-lg
+  .row
+    .col-sm-8.col-sm-push-2
+      %h5.widget-title= t("welcome.dashboard.title")
+.row
+  .row-md-height
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to new_commodity_path do
+          .box-front
+            %h3= t("misc.commodity")
+          .box-back
+            %p= t("welcome.dashboard.commodity.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t("welcome.dashboard.button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to new_commodity_path do
+          .box-front
+            %h3= t("misc.product")
+          .box-back
+            %p= t("welcome.dashboard.product.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t("welcome.dashboard.button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to new_brand_path do
+          .box-front
+            %h3= t("misc.brand")
+          .box-back
+            %p= t("welcome.dashboard.brand.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t("welcome.dashboard.button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to "#" do
+          .box-front
+            %h3= t("misc.standard")
+          .box-back
+            %p= t("welcome.dashboard.standard.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t("welcome.dashboard.button_text")
+    .col-md-2.col-md-height.col-top
+      .box.box-add
+        = link_to "#" do
+          .box-front
+            %h3= t("misc.classification")
+          .box-back
+            %p= t("welcome.dashboard.classification.description")
+          .box-footer
+            .btn-wrapper
+              %span.btn.btn-primary= t("welcome.dashboard.button_text")

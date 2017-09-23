@@ -1,0 +1,13 @@
+#tab-4.tab-pane.fade{:role => "tabpanel"}
+  - if @barcodes.any?
+    .row
+      .col-md-12
+        %h4.segment-name Barcodes
+        %a.btn.btn-sm.btn-view-type{"data-placement" => "bottom", "data-toggle" => "tooltip", :href => "javascript:;", :title => "Change view"}
+          %i.fa.fa-th-list
+    = render 'barcodes/gridview', barcodes: @barcodes
+    = render 'barcodes/listview', barcodes: @barcodes
+  - else
+    - if user_signed_in?
+      = render 'shared/missing_prompt', title: t("commodities.show.tabs.barcodes.title"), description: t("commodities.show.tabs.barcodes.description"), anchor: t("commodities.show.tabs.barcodes.button"), href: new_commodity_barcode_path(@commodity)
+

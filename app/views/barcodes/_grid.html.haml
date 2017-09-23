@@ -1,0 +1,16 @@
+.grid-item.grid-item-20
+  .box.segment.segment-edit
+    .row
+      .col-md-12
+        = image_tag(barcode.output, class: "img-responsive p-sm")
+        %hr.m-0/
+      .col-md-12
+        %h5.segment-title
+          %a{:href => "javascript:void(0)"}
+            %span= barcode.name
+    .segment-actions
+      = link_to "#", class: "btn-edit" do
+        %i.fa.fa-pencil
+        Edit
+      .segment-state.dropdown
+        = render 'shared/pubmode', mode: barcode.visibility_status

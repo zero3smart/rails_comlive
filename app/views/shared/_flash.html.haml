@@ -1,0 +1,3 @@
+- flash.each do |key, value|
+  %div{:class => "text-center #{flash_class(key)}", id: "global-alert" }
+    = value

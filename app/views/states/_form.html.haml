@@ -1,0 +1,21 @@
+= form_for [@app,@commodity_reference,@state], html: { class: "form-horizontal", id: "commodity-state"} do |f|
+  .form-group
+    = f.label :status, class: "col-sm-4 control-label required"
+    .col-sm-6
+      = f.select :status, options_for_states, {},  class: "form-control"
+      = errors_for_field(@state, :status)
+  .form-group
+    = f.label :info,  class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_area :info, class: "form-control", rows: 3
+      = errors_for_field(@state, :info)
+  .form-group
+    = f.label :url, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.text_field :url, class: "form-control"
+      = errors_for_field(@state, :url)
+
+  .row
+    .col-sm-8.col-sm-offset-4
+      = f.submit class: "btn btn-primary"
+      = link_to "Cancel", :back, class: "btn btn-default btn-md m-l-sm"
