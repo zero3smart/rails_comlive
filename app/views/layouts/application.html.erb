@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title><%= yield :title %></title>
-  <meta name="description" content="Admin, Dashboard, Bootstrap" />
+  <meta name="description" content="Admin, Dashboard, Bootstrap"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -33,38 +33,68 @@
           </a>
         </li><!-- .menu-item -->
 
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-label zmdi-hc-lg"></i></span>
-            <span class="menu-text"><%= t('misc.commodities') %></span>
-          </a>
-          <ul>
-            <li><a href="../default/index.html"><%= t('misc.search') %></a></li>
-            <li><a href="../topbar/index.html"><%= t('misc.latest') %></a></li>
-          </ul>
-        </li><!-- .menu-item -->
-
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-city-alt zmdi-hc-lg"></i></span>
-            <span class="menu-text"><%= t('misc.companies') %></span>
-          </a>
-          <ul>
-            <li><a href="../default/index.html"><%= t('misc.search') %></a></li>
-            <li><a href="../topbar/index.html"><%= t('misc.latest') %></a></li>
-          </ul>
-        </li><!-- .menu-item -->
-
-        <li>
-          <a href="javascript:void(0)" class="menu-link">
-            <span class="menu-icon"><i class="zmdi zmdi-layers zmdi-hc-lg"></i></span>
-            <span class="menu-text"><%= t('misc.collections') %></span>
-          </a>
-          <ul>
-            <li><a href="../default/index.html"><%= t('misc.search') %></a></li>
-            <li><a href="../topbar/index.html"><%= t('misc.latest') %></a></li>
-          </ul>
-        </li><!-- .menu-item -->
+        <% if current_app %>
+            <li>
+              <a href="javascript:void(0)" class="menu-link">
+                <span class="menu-icon"><i class="zmdi zmdi-shield-check zmdi-hc-lg"></i></span>
+                <span class="menu-text">Commodities</span>
+              </a>
+              <ul>
+                <li><%= link_to "Commodities", app_commodities_path(current_app) %></li>
+                <li><%= link_to "Add Commodity", new_app_commodity_path(current_app) %></li>
+              </ul>
+            </li><!-- .menu-item -->
+            <li>
+              <a href="javascript:void(0)" class="menu-link">
+                <span class="menu-icon"><i class="zmdi zmdi-city-alt zmdi-hc-lg"></i></span>
+                <span class="menu-text">Brands</span>
+              </a>
+              <ul>
+                <li><%= link_to "Brands", app_brands_path(current_app) %></li>
+                <li><%= link_to "Add Brand", new_app_brand_path(current_app) %></li>
+              </ul>
+            </li><!-- .menu-item -->
+            <li>
+              <a href="javascript:void(0)" class="menu-link">
+                <span class="menu-icon"><i class="zmdi zmdi-ruler zmdi-hc-lg"></i></span>
+                <span class="menu-text">Measurements</span>
+              </a>
+              <ul>
+                <li><%= link_to "Measurements", app_measurements_path(current_app) %></li>
+                <li><%= link_to "Add Measurement", new_app_measurement_path(current_app) %></li>
+              </ul>
+            </li><!-- .menu-item -->
+            <li>
+              <a href="javascript:void(0)" class="menu-link">
+                <span class="menu-icon"><i class="zmdi zmdi-chart zmdi-hc-lg"></i></span>
+                <span class="menu-text">Custom Units</span>
+              </a>
+              <ul>
+                <li><%= link_to "Custom Units", app_custom_units_path(current_app) %></li>
+                <li><%= link_to "Add Custom Unit", new_app_custom_unit_path(current_app) %></li>
+              </ul>
+            </li><!-- .menu-item -->
+            <li>
+              <a href="javascript:void(0)" class="menu-link">
+                <span class="menu-icon"><i class="zmdi zmdi-flag zmdi-hc-lg"></i></span>
+                <span class="menu-text">Standards</span>
+              </a>
+              <ul>
+                <li><%= link_to "Standards", app_standards_path(current_app) %></li>
+                <li><%= link_to "Add Standard", new_app_standard_path(current_app) %></li>
+              </ul>
+            </li><!-- .menu-item -->
+            <li>
+              <a href="javascript:void(0)" class="menu-link">
+                <span class="menu-icon"><i class="zmdi zmdi-labels zmdi-hc-lg"></i></span>
+                <span class="menu-text">References</span>
+              </a>
+              <ul>
+                <li><%= link_to "References", app_references_path(current_app) %></li>
+                <li><%= link_to "Add Reference", new_app_reference_path(current_app) %></li>
+              </ul>
+            </li><!-- .menu-item -->
+        <% end %>
       </ul>
     </div>
     <!-- /aside-menu -->
@@ -75,7 +105,7 @@
         <li class="dropdown">
           <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="avatar avatar-md avatar-circle">
-              <img class="img-responsive" src="http://placehold.it/50x50" alt="avatar"/>
+              <%= gravatar_for(current_user.email, 50, classes = "img-responisve") %>
             </div><!-- .avatar -->
           </a>
           <ul class="dropdown-menu animated flipInY">
@@ -102,6 +132,30 @@
               <%= link_to destroy_user_session_path, method: :delete, class: "text-color" do %>
                   <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
                   <span>Logout</span>
+              <% end %>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="avatar avatar-md avatar-circle">
+              <img class="img-responsive" src="http://placehold.it/50x50" alt="avatar"/>
+            </div><!-- .avatar -->
+          </a>
+          <ul class="dropdown-menu animated flipInY">
+            <% current_user.apps.each do |app| %>
+            <li>
+              <%= link_to app, class: "text-color" do %>
+                  <span class="m-r-xs"><i class="fa fa-bolt"></i></span>
+                  <span><%= app.description %></span>
+              <% end %>
+            </li>
+                <% end %>
+            <li role="separator" class="divider"></li>
+            <li>
+              <%= link_to new_app_path, class: "text-color" do %>
+                  <span class="m-r-xs"><i class="fa fa-plus"></i></span>
+                  <span>New App</span>
               <% end %>
             </li>
           </ul>
