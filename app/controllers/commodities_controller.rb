@@ -3,7 +3,13 @@ class CommoditiesController < ApplicationController
   before_action :set_app
 
   def index
-    @commodities = @app.commodities
+    if params[:q]
+      generic = params[:generic] == "true"
+      @commodities = Commodity.search(params[:q],generic).paginate(page: params[:page], per_page: 10)
+      render json: response_for(@commodities)
+    else
+      @commodities = @app.commodities
+    end
   end
 
   def show
@@ -43,6 +49,16 @@ class CommoditiesController < ApplicationController
 
   def set_app
     @app = current_user.apps.find(params[:app_id])
+  end
+
+  def response_for(commodities)
+    response = {}
+    response[:total_count]  = @commodities.total_entries
+    response[:current_page] = @commodities.current_page.to_i
+    response[:last_page]    = @commodities.total_pages == @commodities.current_page
+    response[:items]        = []
+    commodities.each {|c| response[:items] << c }
+    return response
   end
 
   def commodity_params

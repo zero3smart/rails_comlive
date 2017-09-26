@@ -5,6 +5,7 @@ class PackagingsController < ApplicationController
 
   def new
     @packaging = Packaging.new
+    render layout: !request.xhr?
   end
 
   def create

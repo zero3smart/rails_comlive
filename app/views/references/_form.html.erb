@@ -1,20 +1,20 @@
 <%= form_for [@app, @reference] do |f| %>
     <%= errors_for @reference %>
-    <div>
+    <div class="form-group">
       <%= f.label :kind %><br>
-      <%= f.select :kind, options_for_kind  %>
+      <%= f.select :kind, options_for_kind, {}, class: "form-control"  %>
     </div>
-    <div>
-      <%= f.label :source_commodity %><br>
-      <%= f.select :source_commodity_id, Commodity.generic.map{|c| [c.short_description, c.id]} %>
+    <div class="form-group">
+      <%= f.label :source_commodity %>
+      <%= f.select :source_commodity_id, [], {prompt: "Search commodities"}, data: { url: app_commodities_path(@app, generic: true) },  class: "form-control" %>
     </div>
-    <div>
-      <%= f.label :target_commodity %><br>
-      <%= f.select :target_commodity_id, Commodity.not_generic.map{|c| [c.short_description, c.id]} %>
+    <div class="form-group">
+      <%= f.label :target_commodity %>
+      <%= f.select :target_commodity_id, [], {prompt: "Search commodities"},data: { url: app_commodities_path(@app, generic: false) }, class: "form-control" %>
     </div>
-    <div>
-      <%= f.label :description %><br>
-      <%= f.text_area :description %>
+    <div class="form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "form-control" %>
     </div>
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-primary" %>
 <% end %>

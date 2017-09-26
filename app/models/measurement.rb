@@ -1,5 +1,5 @@
 class Measurement < ApplicationRecord
-  belongs_to :app
+  belongs_to :commodity
 
-  validates_presence_of :app, :property, :value, :uom
+  validates_presence_of :property, :value, :uom
 end

@@ -4,6 +4,7 @@ class LinksController < ApplicationController
 
   def new
     @link = Link.new
+    render layout: !request.xhr?
   end
 
   def create

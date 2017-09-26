@@ -15,6 +15,7 @@ class Commodity < ApplicationRecord
   has_many :packagings
   has_many :standardizations, as: :referable
   has_many :standards, through: :standardizations
+  has_many :measurements
   has_one :state
 
   validates_presence_of :app, :short_description, :long_description, :measured_in
@@ -25,6 +26,16 @@ class Commodity < ApplicationRecord
 
   before_save :set_unspsc_fields
   before_create :set_uuid
+
+
+  def self.search(term, generic)
+    return self.generic.where("short_description iLIKE ?", "%#{term}%") if generic
+    self.not_generic.where("short_description iLIKE ?", "%#{term}%")
+  end
+
+  def as_json(options={})
+    super(:only => [:id,:short_description])
+  end
 
 
   private

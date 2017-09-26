@@ -5,6 +5,7 @@ class StatesController < ApplicationController
 
   def new
     @state = State.new
+    render layout: !request.xhr?
   end
 
   def create

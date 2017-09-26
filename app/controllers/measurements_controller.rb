@@ -1,37 +1,39 @@
 class MeasurementsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_app
+  before_action :set_commodity
 
   def index
-    @measurements = @app.measurements
+    @measurements = @commodity.measurements
   end
 
   def new
     @measurement = Measurement.new
+    render layout: !request.xhr?
   end
 
   def create
-    @measurement = @app.measurements.create(measurement_params)
+    @measurement = @commodity.measurements.create(measurement_params)
     if @measurement.save
-      redirect_to [@app,@measurement], notice: "Measurement successfully created"
+      redirect_to [@app,@commodity], notice: "Measurement successfully created"
     else
       render :new
     end
   end
 
   def show
-    @measurement = @app.measurements.find(params[:id])
+    @measurement = @commodity.measurements.find(params[:id])
   end
 
 
   def edit
-    @measurement = @app.measurements.find(params[:id])
+    @measurement = @commodity.measurements.find(params[:id])
   end
 
   def update
-    @measurement = @app.measurements.find(params[:id])
+    @measurement = @commodity.measurements.find(params[:id])
     if @measurement.update(measurement_params)
-      redirect_to [@app, @measurement], notice: "Measurement updated successfully"
+      redirect_to [@app, @commodity], notice: "Measurement updated successfully"
     else
       render :edit
     end
@@ -43,8 +45,11 @@ class MeasurementsController < ApplicationController
     @app = current_user.apps.find(params[:app_id])
   end
 
+  def set_commodity
+    @commodity = @app.commodities.find(params[:commodity_id])
+  end
+
   def measurement_params
     params.require(:measurement).permit(:property,:value, :uom)
   end
-
 end

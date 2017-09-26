@@ -1,9 +1,5 @@
-<p><%= link_to "Edit", edit_app_commodity_path(@app,@commodity) %> <br />
-<%= link_to "References", app_references_path(@app) %></p>
-
-
 <div class="row">
-  <div class="col-md-12 col-sm-12">
+  <div class="col-md-8">
     <div class="widget stats-widget">
       <header class="widget-header">
         <small class="text-color"><%= t('misc.commodity') %></small>
@@ -13,127 +9,187 @@
         <p class="m-b-lg"><%= @commodity.long_description %></p>
       </div>
       <% if @commodity.generic %>
-        <footer class="widget-footer bg-warning">
-          <h5>THIS IS A GENERIC COMMODITY</h5>
-        </footer>
+          <footer class="widget-footer bg-warning">
+            <h5>THIS IS A GENERIC COMMODITY</h5>
+          </footer>
       <% end %>
     </div><!-- .widget -->
-  </div>
-</div>
 
-<div class="row">
-
-  <div class="col-md-3 col-sm-6">
-    <div class="widget stats-widget">
-      <header class="widget-header">
-        <h4 class="widget-title">Classifications</h4>
-      </header>
-      <hr class="widget-separator"/>
-      <div class="widget-body clearfix">
-        <div class="pull-left">
-          <h3 class="widget-title text-danger"><span class="counter" data-plugin="counterUp">3.490</span>k</h3>
-          <small class="text-color">Total Pending</small>
-        </div>
-        <span class="pull-right big-icon watermark"><i class="fa fa-ban"></i></span>
-      </div>
-      <footer class="widget-footer bg-danger">
-        <small>% charge</small>
-        <span class="small-chart pull-right" data-plugin="sparkline" data-options="[1,2,3,5,4], { type: 'bar', barColor: '#ffffff', barWidth: 5, barSpacing: 2 }"></span>
-      </footer>
-    </div><!-- .widget -->
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-7">
     <div class="widget">
       <header class="widget-header">
-        <h4 class="widget-title pull-left">Links</h4>
-        <span class="pull-right"><%= link_to "Add", new_app_link_path(@app) %></span>
+        <h4 class="widget-title pull-left">Commodity Packagings</h4>
+        <span class="pull-right"><%= link_to "Add Packaging", new_app_commodity_packaging_path(@app,@commodity), class: "load-in-modal" %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
         <div class="table-responsive">
           <table class="table no-cellborder">
             <thead>
-              <tr>
-                <th>Description</th>
-                <th>Link</th>
-                <th></th>
-              </tr>
+            <tr>
+              <th>Name</th>
+              <th width="30%">Description</th>
+              <th>Quantity</th>
+              <th>UOM</th>
+            </tr>
             </thead>
             <tbody>
-            <% if @commodity.links.any? %>
-              <%= render @commodity.links %>
+            <% if @commodity.packagings.any? %>
+                <%= render @commodity.packagings %>
             <% else %>
-              <p>No links found</p>
+                <p>No packagings found</p>
             <% end %>
             </tbody>
           </table>
         </div>
       </div>
     </div><!-- .widget -->
-  </div><!-- END column -->
 
-  <div class="col-md-5">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Links</h4>
+        <span class="pull-right"><%= link_to "Add Link", new_app_link_path(@app), class: "load-in-modal" %></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table no-cellborder">
+            <thead>
+            <tr>
+              <th width="60%">Description</th>
+              <th>Link</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if @commodity.links.any? %>
+                <%= render @commodity.links %>
+            <% else %>
+                <p>No links found</p>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- .widget -->
+
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">References</h4>
+        <span class="pull-right"><%= link_to "Add Reference", new_app_reference_path(@app), class: "load-in-modal" %></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <% if @app.references.any? %>
+            <%= render @app.references %>
+        <% else %>
+            <p>No references found.</p>
+        <% end %>
+      </div>
+    </div><!-- .widget -->
+
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Measurements</h4>
+        <span class="pull-right"><%= link_to "Add Measurement", new_app_commodity_measurement_path(@app,@commodity), class: "load-in-modal" %></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <% if @commodity.measurements.any? %>
+            <%= render @commodity.measurements %>
+        <% else %>
+            <p>No measurements found.</p>
+        <% end %>
+      </div>
+    </div><!-- .widget -->
+  </div>
+
+  <div class="col-md-4">
     <div class="widget todo-widget">
       <header class="widget-header">
-        <h4 class="widget-title">Todo List</h4>
+        <h4 class="widget-title">Commodity State</h4>
+      </header>
+      <hr class="widget-separator">
+      <div class="widget-body p-b-0">
+        <% if @commodity.state %>
+            <p>Status: <%= @state.status.titleize %></p>
+            <p><%= @state.info %></p>
+            <p><%= link_to @state.url, @state.url %></p>
+        <% else %>
+            <p>No state</p>
+        <% end %>
+      </div>
+      <footer class="widget-footer">
+        <%= link_to  @commodity.state ? "Update State" : "Set State", new_app_commodity_state_path(@app, @commodity),
+                     class: "btn btn-sm btn-primary pull-right load-in-modal" %>
+      </footer>
+    </div>
+
+    <div class="widget todo-widget">
+      <header class="widget-header">
+        <h4 class="widget-title">Assign Standard</h4>
+      </header>
+      <hr class="widget-separator">
+      <div class="widget-body p-b-0">
+        <%= render 'standardizations/form', referable: @commodity %>
+      </div>
+      <footer class="widget-footer">
+        <%= link_to "Assign Standard", "#", id: "assign-standard", class: "btn btn-sm btn-primary pull-right" %>
+      </footer>
+    </div>
+
+    <div class="widget todo-widget">
+      <header class="widget-header">
+        <h4 class="widget-title">Standards</h4>
+      </header>
+      <hr class="widget-separator">
+      <div class="widget-body">
+        <% @commodity.standards.each do |standard| %>
+            <p><%= standard.name %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="widget todo-widget">
+      <header class="widget-header">
+        <h4 class="widget-title">Commodity HSCODE</h4>
+      </header>
+      <hr class="widget-separator">
+      <div class="widget-body">
+        <% if @commodity.hscode_subheading %>
+            <p><b><%= @commodity.hscode_subheading.category %>: </b><%= @commodity.hscode_subheading.description %></p>
+        <% elsif @commodity.hscode_heading %>
+            <p><b><%= @commodity.hscode_heading.category %>: </b><%= @commodity.hscode_heading.description %></p>
+        <% elsif @commodity.hscode_chapter %>
+            <p><b><%= @commodity.hscode_chapter.category %>: </b><%= @commodity.hscode_chapter.description %></p>
+        <% elsif @commodity.hscode_section %>
+            <p><b><%= @commodity.hscode_section.category %>: </b><%= @commodity.hscode_section.description %></p>
+        <% else %>
+            <p>No HSCODE assigned</p>
+        <% end %>
+      </div>
+      <footer class="widget-footer">
+        <%= link_to "Assign HSCODE", "#", class: "btn btn-sm btn-default pull-right", data: { toggle: "modal", target: "#hscodeModal" } %>
+      </footer>
+    </div>
+
+    <div class="widget todo-widget">
+      <header class="widget-header">
+        <h4 class="widget-title">Assign UNSPC Code</h4>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body p-b-0">
-        <ul class="todo-list">
-          <li class="todo-item">
-            <div class="checkbox checkbox-default">
-              <input type="checkbox" id="checkbox02"/>
-              <label for="checkbox02">Record The First Episode Of HTML Tutorial</label>
-            </div>
-          </li><!-- .todo-item -->
-
-          <li class="todo-item">
-            <div class="checkbox checkbox-pink">
-              <input type="checkbox" id="checkbox2"/>
-              <label for="checkbox2">Prepare The Conference Schedule</label>
-            </div>
-          </li><!-- .todo-item -->
-
-          <li class="todo-item">
-            <div class="checkbox checkbox-warning">
-              <input type="checkbox" id="checkbox4" checked/>
-              <label for="checkbox4">Decide The Live Discussion Time</label>
-            </div>
-          </li><!-- .todo-item -->
-
-          <li class="todo-item">
-            <div class="checkbox checkbox-success">
-              <input type="checkbox" id="checkbox3" checked/>
-              <label for="checkbox3">Prepare For The Next Project</label>
-            </div>
-          </li><!-- .todo-item -->
-
-          <li class="todo-item">
-            <div class="checkbox checkbox-danger">
-              <input type="checkbox" id="checkbox5" checked/>
-              <label for="checkbox5">Finish Up AngularJs Tutorial</label>
-            </div>
-          </li><!-- .todo-item -->
-
-          <li class="todo-item">
-            <div class="checkbox checkbox-purple">
-              <input type="checkbox" id="checkbox1" checked/>
-              <label for="checkbox1">Finish Infinity Project</label>
-            </div>
-          </li><!-- .todo-item -->
-        </ul><!-- .todo-list -->
-      </div>
-      <div class="new-todo">
-        <input type="text" placeholder="add new task"/>
+        <% if @commodity.unspsc_commodity %>
+            <p><b><%= @commodity.unspsc_commodity.long_code %>: </b><%= @commodity.unspsc_commodity.description %></p>
+        <% else %>
+            <p>No UNSPSC code assigned</p>
+        <% end %>
       </div>
       <footer class="widget-footer">
-        <a href="javascript:void(0)" class="btn btn-sm btn-success m-r-md">All</a>
-        <a href="javascript:void(0)" class="btn btn-sm btn-default">Archive</a>
-        <a href="javascript:void(0)" class="btn btn-sm btn-default pull-right">Clear completed</a>
+        <%= link_to "Assign UNSPSC Code", "#", class: "btn btn-sm btn-default pull-right", data: { toggle: "modal", target: "#unspscModal" } %>
       </footer>
     </div><!-- .widget -->
   </div>
-</div><!-- .row -->
+</div>
+
+<%= render 'hscode_modal' %>
+<%= render 'unspsc_modal' %>

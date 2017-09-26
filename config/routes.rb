@@ -16,11 +16,10 @@ Rails.application.routes.draw do
   resources :apps do
     resources :brands, :standards
     resources :commodities do
-      resources :states, :packagings
+      resources :states, :packagings, :measurements
     end
     resources :links, except: [:index, :show]
     resources :references
-    resources :measurements
     resources :custom_units, path: "custom-units"
   end
   resources :hscode_chapters, :hscode_headings, :hscode_subheadings

@@ -8,6 +8,7 @@ class ReferencesController < ApplicationController
 
   def new
     @reference = Reference.new
+    render layout: !request.xhr?
   end
 
   def show
