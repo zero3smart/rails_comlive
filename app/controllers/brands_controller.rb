@@ -21,7 +21,7 @@ class BrandsController < ApplicationController
 
   def show
     @brand = @app.brands.find(params[:id])
-    # @standardization = Standardization.new
+    @standardization = Standardization.new
   end
 
   def edit
