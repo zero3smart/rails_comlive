@@ -9,16 +9,24 @@ Rails.application.routes.draw do
 
   unauthenticated do
     devise_scope :user do
-      root to: "devise/sessions#new"
+      root to: "welcome#landing"
     end
   end
 
   resources :apps do
-    resources :commodities
+    resources :brands, :standards
+    resources :commodities do
+      resources :states, :packagings
+    end
     resources :links, except: [:index, :show]
     resources :references
     resources :measurements
     resources :custom_units, path: "custom-units"
   end
+  resources :hscode_chapters, :hscode_headings, :hscode_subheadings
+  resources :unspsc_segments, :unspsc_families, :unspsc_classes, :unspsc_commodities
+  resources :ownerships, :standardizations
   resources :uoms, only: [:index]
+
+  get "/", to: "welcome#landing", as: :landing
 end
