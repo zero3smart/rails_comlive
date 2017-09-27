@@ -1,7 +1,91 @@
-<h1>Commodities</h1>
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Commodities</h4>
+        <span class="pull-right"><%= link_to "Add Commodity", new_app_commodity_path(@app) %></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <%= form_tag app_commodities_path(@app), method: :get do %>
+            <div class="input-group stylish-input-group">
+              <%= text_field_tag :query, params[:query], id: "commodity-search", class: "form-control", placeholder: "Search Commodities",
+                                 autocomplete: "off", data: { prefetch_url: prefetch_app_commodities_path(@app), autocomplete_url: autocomplete_app_commodities_path(@app) } %>
+              <span class="input-group-addon">
+            <%= button_tag type: "submit", name: nil, id: "search-btn" do %>
+              <span class="fa fa-search"></span>
+            <% end %>
+          </span>
+            </div>
+        <% end %>
+      </div>
+    </div><!-- .widget -->
+  </div>
+</div>
 
-<% if @commodities.any? %>
-    <%= render @commodities %>
+<% if params[:query] %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget">
+          <header class="widget-header">
+            <h4 class="widget-title pull-left">Search Results</h4>
+            <span class="pull-right"><%= link_to "Clear", app_commodities_path(@app) %></span>
+
+          </header>
+          <hr class="widget-separator"/>
+          <div class="widget-body">
+            <% if @commodities.any? %>
+                <%= render @commodities %>
+            <% else %>
+                <p>No commodities found matching <b><%= params[:query] %></b></p>
+            <% end %>
+          </div>
+        </div><!-- .widget -->
+      </div>
+    </div>
 <% else %>
-    <p>No commodities found</p>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="widget">
+          <header class="widget-header">
+            <h4 class="widget-title pull-left">Recently Added</h4>
+          </header>
+          <hr class="widget-separator"/>
+          <div class="widget-body">
+            <div class="list-group recently-added">
+              <% if @recent_commodities.any? %>
+                  <% @recent_commodities.each do |commodity| %>
+                      <%= link_to [@app, commodity], class: "list-group-item" do %>
+                          <%= commodity.short_description %>
+                      <% end %>
+                  <% end %>
+              <% else %>
+                  <p>No commodities found</p>
+              <% end %>
+            </div>
+          </div>
+        </div><!-- .widget -->
+      </div>
+      <div class="col-md-6">
+        <div class="widget">
+          <header class="widget-header">
+            <h4 class="widget-title pull-left">Recently Visited</h4>
+          </header>
+          <hr class="widget-separator"/>
+          <div class="widget-body">
+            <div class="list-group recently-visited">
+              <% if recent_commodities.any? %>
+                  <% recent_commodities.each do |commodity| %>
+                      <%= link_to [commodity.app, commodity], class: "list-group-item" do %>
+                          <%= commodity.short_description %>
+                      <% end %>
+                  <% end %>
+              <% else %>
+                  <p>No recent commodities visited</p>
+              <% end %>
+            </div>
+          </div>
+        </div><!-- .widget -->
+      </div>
+    </div>
 <% end %>

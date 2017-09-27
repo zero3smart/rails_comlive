@@ -1,4 +1,7 @@
 class Commodity < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :app
   belongs_to :brand, optional: true
   belongs_to :hscode_section, optional: true
@@ -23,18 +26,29 @@ class Commodity < ApplicationRecord
 
   scope :generic, -> { where(generic: true )}
   scope :not_generic, -> { where(generic: false )}
+  scope :recent, -> { order("created_at DESC") }
+
+  searchkick autocomplete: ['short_description']
+
+  # http://stackoverflow.com/questions/1680627/activerecord-findarray-of-ids-preserving-order
+  scope :where_with_order, ->(ids) {
+    order = sanitize_sql_array(
+        ["position((',' || id::text || ',') in ?)", ids.join(',') + ',']
+    )
+    where(:id => ids).order(order)
+  }
 
   before_save :set_unspsc_fields
   before_create :set_uuid
 
 
-  def self.search(term, generic)
+  def self.simple_search(term, generic)
     return self.generic.where("short_description iLIKE ?", "%#{term}%") if generic
     self.not_generic.where("short_description iLIKE ?", "%#{term}%")
   end
 
   def as_json(options={})
-    super(:only => [:id,:short_description])
+    super(:only => [:id,:short_description]).merge(href:  Rails.application.routes.url_helpers.app_commodity_path(self.app,self))
   end
 
 

@@ -5,9 +5,9 @@
   <title><%= yield :title %></title>
   <meta name="description" content="Admin, Dashboard, Bootstrap"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
 </head>
 
 <body class="sb-top">
@@ -56,42 +56,12 @@
             </li><!-- .menu-item -->
             <li>
               <a href="javascript:void(0)" class="menu-link">
-                <span class="menu-icon"><i class="zmdi zmdi-ruler zmdi-hc-lg"></i></span>
-                <span class="menu-text">Measurements</span>
-              </a>
-              <ul>
-                <li><%= link_to "Measurements", app_measurements_path(current_app) %></li>
-                <li><%= link_to "Add Measurement", new_app_measurement_path(current_app) %></li>
-              </ul>
-            </li><!-- .menu-item -->
-            <li>
-              <a href="javascript:void(0)" class="menu-link">
-                <span class="menu-icon"><i class="zmdi zmdi-chart zmdi-hc-lg"></i></span>
-                <span class="menu-text">Custom Units</span>
-              </a>
-              <ul>
-                <li><%= link_to "Custom Units", app_custom_units_path(current_app) %></li>
-                <li><%= link_to "Add Custom Unit", new_app_custom_unit_path(current_app) %></li>
-              </ul>
-            </li><!-- .menu-item -->
-            <li>
-              <a href="javascript:void(0)" class="menu-link">
                 <span class="menu-icon"><i class="zmdi zmdi-flag zmdi-hc-lg"></i></span>
                 <span class="menu-text">Standards</span>
               </a>
               <ul>
                 <li><%= link_to "Standards", app_standards_path(current_app) %></li>
                 <li><%= link_to "Add Standard", new_app_standard_path(current_app) %></li>
-              </ul>
-            </li><!-- .menu-item -->
-            <li>
-              <a href="javascript:void(0)" class="menu-link">
-                <span class="menu-icon"><i class="zmdi zmdi-labels zmdi-hc-lg"></i></span>
-                <span class="menu-text">References</span>
-              </a>
-              <ul>
-                <li><%= link_to "References", app_references_path(current_app) %></li>
-                <li><%= link_to "Add Reference", new_app_reference_path(current_app) %></li>
               </ul>
             </li><!-- .menu-item -->
         <% end %>
@@ -152,9 +122,18 @@
             </li>
                 <% end %>
             <li role="separator" class="divider"></li>
+            <% if current_app %>
+                <li>
+                  <%= link_to app_custom_units_path(current_app), class: "text-color" do %>
+                      <span class="m-r-xs"><i class="fa fa-balance-scale"></i></span>
+
+                      <span>Custom Units</span>
+                  <% end %>
+                </li>
+            <% end %>
             <li>
               <%= link_to new_app_path, class: "text-color" do %>
-                  <span class="m-r-xs"><i class="fa fa-plus"></i></span>
+                  <span class="m-r-xs"><i class="fa fa-anchor"></i></span>
                   <span>New App</span>
               <% end %>
             </li>
@@ -207,6 +186,7 @@
     <div class="wrap">
       <section class="app-content">
         <%= yield %>
+        <%= render 'shared/modal' %>
       </section><!-- .app-content -->
     </div><!-- .wrap -->
     <div class="wrap">
@@ -217,6 +197,6 @@
   </div>
 </main>
 <!--========== END app main -->
-<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application' %>
 </body>
 </html>

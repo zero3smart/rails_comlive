@@ -1,4 +1,6 @@
-<p><b>Short Description:</b> <%= commodity.short_description %></p>
-<p><b>Long Description:</b> <%= commodity.long_description %></p>
-<p><%= link_to "View", [@app, commodity] %> | <%= link_to "Edit", edit_app_commodity_path(@app,commodity) %></p>
-<br>
+<div class="media">
+  <div class="media-body">
+    <h4 class="media-heading"><%= link_to commodity.short_description, [@app, commodity], class: "search-result" %></h4>
+    <%= commodity.long_description %>
+  </div>
+</div>

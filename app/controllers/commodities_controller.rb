@@ -5,10 +5,12 @@ class CommoditiesController < ApplicationController
   def index
     if params[:q]
       generic = params[:generic] == "true"
-      @commodities = Commodity.search(params[:q],generic).paginate(page: params[:page], per_page: 10)
+      @commodities = Commodity.simple_search(params[:q],generic).paginate(page: params[:page], per_page: 10)
       render json: response_for(@commodities)
+    elsif params[:query]
+      @commodities = Commodity.search(params[:query]).records.recent.page(params[:page])
     else
-      @commodities = @app.commodities
+      @recent_commodities = @app.commodities.recent.limit(5)
     end
   end
 
@@ -43,6 +45,14 @@ class CommoditiesController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def autocomplete
+    render json: Commodity.search(params[:query], limit: 10)
+  end
+
+  def prefetch
+    render json: Commodity.page(params[:page])
   end
 
   private

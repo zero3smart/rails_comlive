@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :apps do
     resources :brands, :standards
     resources :commodities do
+      collection do
+        get :autocomplete
+        get :prefetch
+      end
       resources :states, :packagings, :measurements
     end
     resources :links, except: [:index, :show]
