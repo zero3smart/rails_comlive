@@ -1,7 +1,4 @@
 class Commodity < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-
   belongs_to :app
   belongs_to :brand, optional: true
   belongs_to :hscode_section, optional: true
@@ -28,7 +25,7 @@ class Commodity < ApplicationRecord
   scope :not_generic, -> { where(generic: false )}
   scope :recent, -> { order("created_at DESC") }
 
-  searchkick autocomplete: ['short_description']
+  searchkick
 
   # http://stackoverflow.com/questions/1680627/activerecord-findarray-of-ids-preserving-order
   scope :where_with_order, ->(ids) {

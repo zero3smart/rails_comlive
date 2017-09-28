@@ -1,10 +1,5 @@
 class Standard < ApplicationRecord
-  include Uuideable
-  include Visibility
-  include Searchable
-
-  belongs_to :brand
-
+  belongs_to :app
   has_many :memberships, foreign_key: :member_id, as: :member
   has_many :users, through: :memberships
 
@@ -13,13 +8,11 @@ class Standard < ApplicationRecord
 
   has_many :standardizations
   has_many :brands, through: :standardizations, source: :referable, source_type: "Brand"
-  has_many :commodity_references, through: :standardizations, source: :referable, source_type: "CommodityReference"
-  has_many :commodities, through: :commodity_references
+  has_many :commodities, through: :standardizations, source: :referable, source_type: "Commodity"
 
-  validates_presence_of :name, :code, :version, :description, :brand_id
-  validates :certifier_url, url: true, allow_blank: true
+  validates_presence_of :name, :description, :app
 
-  searchkick word_start: [:name, :description]
+  scope :official, -> { where(official: true) }
 
   def parent
     self.class.joins(:ownerships).where('ownerships.child_id = ? AND ownerships.child_type = ?', self.id, "Standard").first
