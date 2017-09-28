@@ -3,4 +3,5 @@ if Rails.env == "production"
       url:  ENV['BONSAI_URL'],
       log: true
   )
+  ENV['ELASTICSEARCH_URL'] = ENV['BONSAI_URL']
 end
