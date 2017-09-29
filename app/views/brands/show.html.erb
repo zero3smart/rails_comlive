@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left"><%= @brand.name %></h4>
+        <span class="pull-right"><%= link_to "Edit", edit_app_brand_path(@app,@brand) %></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <%= @brand.description %>
+      </div>
+    </div><!-- .widget -->
+  </div>
+
+  <div class="col-md-4">
+    <% unless @brand.official? %>
+        <div class="widget todo-widget">
+          <header class="widget-header">
+            <h4 class="widget-title pull-left">Is this your Brand</h4>
+            <span class="pull-right"></span>
+          </header>
+          <hr class="widget-separator"/>
+          <div class="widget-body p-b-0">
+            <p>Claim it now and start interacting with your fans today!</p>
+          </div>
+          <footer class="widget-footer">
+            <%= link_to "Claim This Brand", "#", class: "btn btn-primary", data: {toggle: "modal", target: "#claimModal"} %>
+          </footer>
+        </div><!-- .widget -->
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget todo-widget">
+          <header class="widget-header">
+            <h4 class="widget-title">Assign Standard</h4>
+          </header>
+          <hr class="widget-separator">
+          <div class="widget-body p-b-0">
+            <%= render 'standardizations/form', referable: @brand %>
+          </div>
+          <footer class="widget-footer">
+            <%= link_to "Assign Standard", "#", id: "assign-standard", class: "btn btn-sm btn-primary pull-right" %>
+          </footer>
+        </div>
+
+        <div class="widget todo-widget">
+          <header class="widget-header">
+            <h4 class="widget-title">Standards</h4>
+          </header>
+          <hr class="widget-separator">
+          <div class="widget-body">
+            <% @brand.standards.each do |standard| %>
+              <p><%= standard.name %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="claimModal" tabindex="-1" role="dialog" aria-labelledby="claimModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="claimModalLabel">Claim Brand</h4>
+      </div>
+      <div class="modal-body">
+        <p>You have requested to claim <b><%= @brand.name %></b>. In order to claim this brand, you must work for or
+          be working on behalf of the brand. You must be authorized to claim this brand</p>
+        <%= form_for Ownership.new do |f| %>
+            <%= f.hidden_field :child_id, value: @brand.id %>
+            <%= f.hidden_field :child_type, value: @brand.class.to_s %>
+          <div class="form-group">
+            <%= f.label :owning_brand %>
+            <%= f.select :parent_id, options_for_brands(current_user), {}, class: "form-control" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="claim-brand">Submit Claim</button>
+      </div>
+    </div>
+  </div>
+</div>
