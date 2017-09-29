@@ -162,9 +162,9 @@ ready = function(){
                 select2For(target_commodity);
             }
 
-            var measurementProperty =  $("select#measurement_property");
-            if(measurementProperty.length){
-                measurementPropertyCallbacks();
+            var specificationProperty =  $("select#specification_property");
+            if(specificationProperty.length){
+                specificationPropertyCallbacks();
             }
         });
     });

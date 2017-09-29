@@ -89,15 +89,15 @@
 
     <div class="widget">
       <header class="widget-header">
-        <h4 class="widget-title pull-left">Measurements</h4>
-        <span class="pull-right"><%= link_to "Add Measurement", new_app_commodity_measurement_path(@app,@commodity), class: "load-in-modal" %></span>
+        <h4 class="widget-title pull-left">Specifications</h4>
+        <span class="pull-right"><%= link_to "Add Specification", new_app_commodity_specification_path(@app,@commodity), class: "load-in-modal" %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
-        <% if @commodity.measurements.any? %>
-            <%= render @commodity.measurements %>
+        <% if @commodity.specifications.any? %>
+            <%= render @commodity.specifications %>
         <% else %>
-            <p>No measurements found.</p>
+            <p>No specifications found.</p>
         <% end %>
       </div>
     </div><!-- .widget -->

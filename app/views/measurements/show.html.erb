@@ -1,3 +1,18 @@
-<h1>Measurement Details</h1>
-<p><%= "#{@measurement.property}: #{@measurement.value}#{@measurement.uom}" %></p>
-<%= link_to "Edit", edit_app_commodity_measurement_path(@app, @commodity, @measurement) %>
+<%= form_for [@app,@commodity, @specification] do |f| %>
+    <%= errors_for @specification %>
+    <div class="form-group">
+      <%= f.label :property %><br>
+      <%= f.select :property, grouped_options_for_select(options_for_property(@app), @specification.property), { prompt: "Select Property" }, class: "form-control", data: { url: uoms_path } %>
+    </div>
+    <div class="form-group">
+      <%= f.label :value %><br>
+      <%= f.text_field :value , class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :uom %><br>
+      <%= f.select :uom, options_for_select(uoms_for_property(@specification.property), @specification.uom), {},  class: "form-control"  %>
+    </div>
+
+    <%= f.submit class: "btn btn-primary" %>
+
+<% end %>
