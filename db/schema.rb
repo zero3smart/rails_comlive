@@ -128,16 +128,6 @@ ActiveRecord::Schema.define(version: 20160708065235) do
     t.index ["commodity_id"], name: "index_links_on_commodity_id", using: :btree
   end
 
-  create_table "measurements", force: :cascade do |t|
-    t.string   "property"
-    t.decimal  "value"
-    t.string   "uom"
-    t.integer  "commodity_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["commodity_id"], name: "index_measurements_on_commodity_id", using: :btree
-  end
-
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "member_type"
@@ -180,6 +170,16 @@ ActiveRecord::Schema.define(version: 20160708065235) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.index ["app_id"], name: "index_references_on_app_id", using: :btree
+  end
+
+  create_table "specifications", force: :cascade do |t|
+    t.string   "property"
+    t.decimal  "value"
+    t.string   "uom"
+    t.integer  "commodity_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["commodity_id"], name: "index_specifications_on_commodity_id", using: :btree
   end
 
   create_table "standardizations", force: :cascade do |t|
@@ -290,10 +290,10 @@ ActiveRecord::Schema.define(version: 20160708065235) do
   add_foreign_key "hscode_subheadings", "hscode_headings"
   add_foreign_key "links", "apps"
   add_foreign_key "links", "commodities"
-  add_foreign_key "measurements", "commodities"
   add_foreign_key "memberships", "users"
   add_foreign_key "packagings", "commodities"
   add_foreign_key "references", "apps"
+  add_foreign_key "specifications", "commodities"
   add_foreign_key "standardizations", "standards"
   add_foreign_key "standardizations", "users"
   add_foreign_key "standards", "apps"

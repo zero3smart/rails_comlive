@@ -1,0 +1,7 @@
+<h1>Specifications <small><%= link_to "Add", new_app_commodity_specification_path(@app, @commodity) %></small></h1>
+
+<% if @specifications.any? %>
+    <%= render @specifications %>
+<% else %>
+    <p>No specifications found</p>
+<% end %>
