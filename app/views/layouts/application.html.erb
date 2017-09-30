@@ -116,8 +116,8 @@
             <% current_user.apps.each do |app| %>
             <li>
               <%= link_to app, class: "text-color" do %>
-                  <span class="m-r-xs"><i class="fa fa-bolt"></i></span>
-                  <span><%= app.description %></span>
+                  <span class="m-r-xs"><i class="zmdi zmdi-hc-lg zmdi-pages"></i></span>
+                  <span><%= app.name %></span>
               <% end %>
             </li>
                 <% end %>
@@ -125,7 +125,7 @@
             <% if current_app %>
                 <li>
                   <%= link_to app_custom_units_path(current_app), class: "text-color" do %>
-                      <span class="m-r-xs"><i class="fa fa-balance-scale"></i></span>
+                      <span class="m-r-xs"><i class="zmdi zmdi-hc-lg zmdi-graphic-eq"></i></span>
 
                       <span>Custom Units</span>
                   <% end %>
@@ -133,7 +133,7 @@
             <% end %>
             <li>
               <%= link_to new_app_path, class: "text-color" do %>
-                  <span class="m-r-xs"><i class="fa fa-anchor"></i></span>
+                  <span class="m-r-xs"><i class="zmdi zmdi-hc-lg zmdi-collection-add"></i></span>
                   <span>New App</span>
               <% end %>
             </li>
