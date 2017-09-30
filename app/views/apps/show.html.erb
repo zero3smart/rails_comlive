@@ -1,7 +1,14 @@
-<h1>App</h1>
-<p><%= @app.description %></p>
-<p><%= link_to "Edit App", edit_app_path(@app) %> |
-  <%= link_to "View Commodities", app_commodities_path(@app) %> |
-<%= link_to "Custom Units", app_custom_units_path(@app) %> |
-<%= link_to "Links", app_links_path(@app) %> |
-  <%= link_to "Brands", app_brands_path(@app) %></p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left"><%= @app.name %></h4>
+        <span class="pull-right"><%= link_to "Edit App", edit_app_path(@app) %></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <%= @app.description %>
+      </div>
+    </div><!-- .widget -->
+  </div>
+</div>
