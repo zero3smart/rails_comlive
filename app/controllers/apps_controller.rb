@@ -38,6 +38,6 @@ class AppsController < ApplicationController
   private
 
   def app_params
-    params.require(:app).permit(:description)
+    params.require(:app).permit(:name, :description)
   end
 end
