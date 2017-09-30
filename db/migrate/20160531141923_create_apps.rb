@@ -4,6 +4,7 @@ class CreateApps < ActiveRecord::Migration[5.0]
       t.string :name
       t.text :description
       t.string :uuid
+      t.references :user, foreign_key: true
 
       t.timestamps
     end
