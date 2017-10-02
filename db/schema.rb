@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160708065235) do
   end
 
   create_table "commodities", force: :cascade do |t|
+    t.string   "name"
     t.string   "short_description"
     t.text     "long_description"
     t.string   "measured_in"
