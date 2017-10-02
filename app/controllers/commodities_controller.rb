@@ -5,10 +5,10 @@ class CommoditiesController < ApplicationController
   def index
     if params[:q]
       generic = params[:generic] == "true"
-      @commodities = Commodity.simple_search(params[:q],generic).paginate(page: params[:page], per_page: 10)
+      @commodities = Commodity.search params[:q], where: { generic: generic }, page: params[:page], per_page: 10
       render json: response_for(@commodities)
     elsif params[:query]
-      @commodities = Commodity.search(params[:query]).records.recent.page(params[:page])
+      @commodities = Commodity.search(params[:query], operator: "or", match: :word_start, fields: ["name^10", "short_description", "long_description"]).records.recent.page(params[:page])
     else
       @recent_commodities = @app.commodities.recent.limit(5)
     end
@@ -72,7 +72,7 @@ class CommoditiesController < ApplicationController
   end
 
   def commodity_params
-    params.require(:commodity).permit(:short_description, :long_description, :generic, :brand_id, :measured_in,
+    params.require(:commodity).permit(:name, :short_description, :long_description, :generic, :brand_id, :measured_in,
                                       :hscode_section_id, :hscode_chapter_id, :hscode_heading_id, :hscode_subheading_id,
                                       :unspsc_commodity_id)
   end

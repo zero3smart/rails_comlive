@@ -18,14 +18,14 @@ class Commodity < ApplicationRecord
   has_many :specifications
   has_one :state
 
-  validates_presence_of :app, :short_description, :long_description, :measured_in
+  validates_presence_of :app, :name, :measured_in
   validates_presence_of :brand_id, unless: "generic?"
 
   scope :generic, -> { where(generic: true )}
   scope :not_generic, -> { where(generic: false )}
   scope :recent, -> { order("created_at DESC") }
 
-  searchkick
+  searchkick word_start: [:name, :short_description, :long_description]
 
   # http://stackoverflow.com/questions/1680627/activerecord-findarray-of-ids-preserving-order
   scope :where_with_order, ->(ids) {
@@ -38,14 +38,8 @@ class Commodity < ApplicationRecord
   before_save :set_unspsc_fields
   before_create :set_uuid
 
-
-  def self.simple_search(term, generic)
-    return self.generic.where("short_description iLIKE ?", "%#{term}%") if generic
-    self.not_generic.where("short_description iLIKE ?", "%#{term}%")
-  end
-
   def as_json(options={})
-    super(:only => [:id,:short_description]).merge(href:  Rails.application.routes.url_helpers.app_commodity_path(self.app,self))
+    super(:only => [:id,:name]).merge(href:  Rails.application.routes.url_helpers.app_commodity_path(self.app,self))
   end
 
 

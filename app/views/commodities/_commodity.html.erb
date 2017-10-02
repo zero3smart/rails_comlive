@@ -1,6 +1,7 @@
 <div class="media">
   <div class="media-body">
-    <h4 class="media-heading"><%= link_to commodity.short_description, [@app, commodity], class: "search-result" %></h4>
-    <%= commodity.long_description %>
+    <h4 class="media-heading"><%= link_to commodity.name, [@app, commodity], class: "search-result" %></h4>
+    <p><small><%= commodity.short_description %></small></p>
+    <p><%= commodity.long_description %></p>
   </div>
 </div>

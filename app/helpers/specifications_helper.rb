@@ -2,8 +2,12 @@ module SpecificationsHelper
   def options_for_property(app)
     {
         'Custom Units' => app.custom_units.map(&:property),
-        'Global Units' => Unitwise::Atom.all.uniq.map {|x| "#{x.property}"}.uniq
+        'Global Units' => unitwise_atoms
     }
+  end
+
+  def unitwise_atoms
+    atoms ||= Unitwise::Atom.all.uniq.map { |x| "#{x.property}" }.uniq
   end
 
   def uoms_for_property(property)
