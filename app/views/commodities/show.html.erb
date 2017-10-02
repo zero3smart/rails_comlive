@@ -2,8 +2,9 @@
   <div class="col-md-8">
     <div class="widget stats-widget">
       <header class="widget-header">
-        <small class="text-color"><%= t('misc.commodity') %></small>
-        <h3 class="widget-title"><%= @commodity.short_description %></h3>
+        <h3 class="widget-title"><%= @commodity.name %></h3>
+        <small class="text-color"><%= @commodity.short_description %></small>
+
       </header>
       <div class="widget-body clearfix">
         <p class="m-b-lg"><%= @commodity.long_description %></p>
