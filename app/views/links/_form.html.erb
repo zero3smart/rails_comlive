@@ -1,16 +1,16 @@
 <%= form_for [@app,@link] do |f| %>
     <%= errors_for @link %>
-    <div>
-      <%= f.label :url %><br>
-      <%= f.text_field :url %>
+    <div class="form-group">
+      <%= f.label :url %>
+      <%= f.text_field :url, class: "form-control" %>
     </div>
-    <div>
-      <%= f.label :commodity %><br>
-      <%= f.select :commodity_id, Commodity.all.map {|c| [c.short_description, c.id] } %>
+    <div class="form-group">
+      <%= f.label :commodity %>
+      <%= f.select :commodity_id, Commodity.all.map {|c| [c.name, c.id] }, {}, class: "form-control" %>
     </div>
-    <div>
-      <%= f.label :description %><br>
-      <%= f.text_area :description, rows: 4 %>
+    <div class="form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: 4, class: "form-control" %>
     </div>
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-primary" %>
 <% end %>
