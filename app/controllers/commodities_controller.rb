@@ -8,7 +8,8 @@ class CommoditiesController < ApplicationController
       @commodities = Commodity.search params[:q], where: { generic: generic }, page: params[:page], per_page: 10
       render json: response_for(@commodities)
     elsif params[:query]
-      @commodities = Commodity.search(params[:query], operator: "or", match: :word_start, fields: ["name^10", "short_description", "long_description"]).records.recent.page(params[:page])
+      @commodities = Commodity.search(params[:query], operator: "or", match: :word_start,
+                                      fields: ["name^10", "short_description", "long_description"]).records.recent.page(params[:page]).per_page(10)
     else
       @recent_commodities = @app.commodities.recent.limit(5)
     end

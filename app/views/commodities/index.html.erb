@@ -36,6 +36,7 @@
           <div class="widget-body">
             <% if @commodities.any? %>
                 <%= render @commodities %>
+                <%= will_paginate @commodities, renderer: BootstrapPagination::Rails %>
             <% else %>
                 <p>No commodities found matching <b><%= params[:query] %></b></p>
             <% end %>

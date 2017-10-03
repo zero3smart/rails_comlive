@@ -1,0 +1,42 @@
+<%= form_for [@app,@parent, @specification] do |f| %>
+    <%= errors_for @specification %>
+
+    <div class="form-group">
+      <%= f.label :property %><br>
+      <%= f.select :property, grouped_options_for_select(options_for_property(@app), @specification.property), { prompt: "Select Property" }, class: "form-control", data: { url: uoms_path } %>
+    </div>
+    <div class="form-group">
+      <label class="radio-inline">
+        <input type="radio" name="value-opts" value="value" checked> Set Value
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="value-opts" value="min-max"> Define Min / Max
+      </label>
+    </div>
+    <div class="form-group" id="value-container">
+      <%= f.label :value %>
+      <%= f.number_field :value , class: "form-control", step: "0.01" %>
+    </div>
+    <div  class="row hidden" id="min-max-container">
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :min %>
+          <%= f.number_field :min, class: "form-control", step: "0.01" %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :max %>
+          <%= f.number_field :max, class: "form-control", step: "0.01" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :uom %>
+      <%= f.select :uom, options_for_select(uoms_for_property(@specification.property), @specification.uom), {},  class: "form-control"  %>
+    </div>
+
+    <%= f.submit class: "btn btn-primary" %>
+
+<% end %>

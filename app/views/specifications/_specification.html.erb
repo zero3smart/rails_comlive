@@ -1,3 +1,5 @@
-<p><%= specification.property %>: <%= "#{specification.value}#{specification.uom}" %></p>
-<%= link_to "View", [@app, @commodity, specification] %>
+<p>Property: <%= specification.property %></p>
+<p>Value: <%= specification.value ? specification.value : "Max: #{specification.max} Min: #{specification.min}" %></p>
+<p>Unit of Measure: <%= specification.uom %></p>
+<%= link_to "View", [@app, specification.parent, specification] %>
 <hr>

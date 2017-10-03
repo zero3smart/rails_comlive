@@ -15,7 +15,7 @@ class Commodity < ApplicationRecord
   has_many :packagings
   has_many :standardizations, as: :referable
   has_many :standards, through: :standardizations
-  has_many :specifications
+  has_many :specifications, as: :parent
   has_one :state
 
   validates_presence_of :app, :name, :measured_in

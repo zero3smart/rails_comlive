@@ -177,11 +177,13 @@ ActiveRecord::Schema.define(version: 20160708065235) do
   create_table "specifications", force: :cascade do |t|
     t.string   "property"
     t.decimal  "value"
+    t.decimal  "min"
+    t.decimal  "max"
     t.string   "uom"
-    t.integer  "commodity_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["commodity_id"], name: "index_specifications_on_commodity_id", using: :btree
+    t.integer  "parent_id",   null: false
+    t.string   "parent_type", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "standardizations", force: :cascade do |t|
@@ -295,7 +297,6 @@ ActiveRecord::Schema.define(version: 20160708065235) do
   add_foreign_key "memberships", "users"
   add_foreign_key "packagings", "commodities"
   add_foreign_key "references", "apps"
-  add_foreign_key "specifications", "commodities"
   add_foreign_key "standardizations", "standards"
   add_foreign_key "standardizations", "users"
   add_foreign_key "standards", "apps"

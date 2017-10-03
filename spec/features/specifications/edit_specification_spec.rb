@@ -1,26 +1,24 @@
 require 'rails_helper'
 
 feature 'Updating a specification' do
-  given(:user) { create(:user) }
-  given(:app) { user.default_app }
-  given(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
-  given(:specification) { create(:specification, parent: commodity_reference ) }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app, user_id: user.id) }
+  given!(:commodity) { create(:commodity, app_id: app.id) }
+  given!(:specification) { create(:specification, parent: commodity ) }
 
   background do
     log_in(user)
-    visit edit_app_commodity_reference_specification_path(app, commodity_reference, specification)
+    visit edit_app_commodity_specification_path(app, commodity, specification)
   end
 
   feature "Visiting #edit page" do
-    scenario "should show the current specification's details", js: true do
-      # uom_value = uom(specification.property).select{|u| u[1] == specification.uom }.flatten[0]
-
-      page.execute_script("$('input[value=\"custom\"]').click()") # switch tab
+    scenario "should show the current specification's details" do
+      uom_value = uom(specification.property).select{|u| u[1] == specification.uom }.flatten[0]
 
       expect(page).to have_text("Edit Specification")
-      # expect(find_field('specification[property]').value).to eq specification.property
+      expect(page).to have_select('specification[property]', selected: specification.property)
       expect(find_field('specification[value]').value).to eq specification.value.to_s
-      # expect(page).to have_select('specification[uom]', selected: uom_value)
+      expect(page).to have_select('specification[uom]', selected: uom_value)
     end
 
     feature "with valid details" do
@@ -28,16 +26,11 @@ feature 'Updating a specification' do
         property = properties.sample
         unit_of_measure = uom(property).sample
 
-        page.execute_script("$('input[value=\"custom\"]').click()") # switch tab
-
-        fill_in "specification[property]", with: property
+        select property, from: "specification[property]"
         fill_in "specification[value]", with: "30.87"
-        select property, from: "type_of_measure"
         select unit_of_measure[0], from: "specification[uom]"
 
         click_button "Update Specification"
-
-        page.execute_script("$('a[href=\"#tab-1\"]').tab('show')")
 
         expect(page).to have_text("Specification updated successfully")
         expect(page).to have_text(property)
@@ -52,7 +45,7 @@ feature 'Updating a specification' do
         click_button "Update Specification"
 
         expect(page).to have_text("Edit Specification")
-        expect(page).to have_text("can't be blank")
+        expect(page).to have_text("Value can't be blank")
       end
     end
   end

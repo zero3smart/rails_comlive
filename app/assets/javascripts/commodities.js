@@ -33,7 +33,7 @@ var select2For = function(select){
                 return {
                     results: $.map(data.items, function(item){
                         return {
-                            text: item.short_description,
+                            text: item.name,
                             id: item.id
                         }
                     }),
@@ -53,15 +53,22 @@ ready = function(){
     // fix for selec2 inside bootstrap modal
     $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
+    // init select2
+    $('.select2').select2();
+
     $("input#commodity_generic").change(function(){
-        var checked = $(this).is(":checked");
+        var checkbox = $(this);
+        var checked = checkbox.is(":checked");
         var select = $("select#commodity_brand_id");
+        var div = $("div#commodity-brand");
 
         if(checked){
             select.prop("selectedIndex", 0);
-            select.hide();
+            div.hide();
+            checkbox.parent().css("margin-bottom","40px");
         } else {
-            select.show();
+            checkbox.parent().css("margin-bottom","10px");
+            div.show();
         }
     });
 
@@ -195,7 +202,7 @@ ready = function(){
         engine = new Bloodhound({
             identify: function(o) { return o.id; },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('short_description'),
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
             dupDetector: function(a, b) { return a.id === b.id; },
             prefetch: {
                 url: prefetch_url
@@ -212,10 +219,10 @@ ready = function(){
             hint: true
         }, {
             source: engine,
-            displayKey: 'short_description',
+            displayKey: 'name',
             templates:{
                 suggestion:function(data) {
-                    return "<a href=" + data.href + ">"+ data.short_description +"</a>";
+                    return "<a href=" + data.href + ">"+ data.name +"</a>";
                 }
             }
         });
@@ -242,6 +249,22 @@ $(document).on("click","a.assign-unspsc", function(e){
         url: url,
         data: { commodity: { unspsc_commodity_id: unspsc_commodity_id } }
     });
-})
+});
+
+$(document).on("change", "input[name='value-opts']", function(){
+    var radio = $(this);
+    if(radio.is(":checked"))
+        var value = radio.val();
+        if(value == "value"){
+            $("#min-max-container").addClass('hidden');
+            $("#value-container").removeClass('hidden');
+            $('#min-max-container').find('input[type="number"]').val('');
+        }
+        if(value == "min-max"){
+            $("#value-container").addClass('hidden');
+            $("#min-max-container").removeClass('hidden');
+            $("#value-container").find('input[type="number"]').val('');
+        }
+});
 
 $(document).ready(ready);

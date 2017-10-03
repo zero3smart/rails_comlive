@@ -1,3 +1,6 @@
 <h1>Specification Details</h1>
-<p><%= "#{@specification.property}: #{@specification.value}#{@specification.uom}" %></p>
-<%= link_to "Edit", edit_app_commodity_specification_path(@app, @commodity, @specification) %>
+<p>Property: <%= @specification.property %></p>
+<p>Value: <%= @specification.value ? @specification.value : "Max: #{@specification.max} Min: #{@specification.min}" %></p>
+<p>Unit of Measure: <%= @specification.uom %></p>
+
+<%= link_to "Edit", edit_app_commodity_specification_path(@app, @parent, @specification) %>

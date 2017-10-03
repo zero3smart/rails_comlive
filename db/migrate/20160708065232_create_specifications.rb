@@ -3,8 +3,11 @@ class CreateSpecifications < ActiveRecord::Migration[5.0]
     create_table :specifications do |t|
       t.string :property
       t.decimal :value
+      t.decimal :min
+      t.decimal :max
       t.string :uom
-      t.references :commodity, foreign_key: true
+      t.integer :parent_id,  null: false
+      t.string :parent_type, null: false
 
       t.timestamps
     end

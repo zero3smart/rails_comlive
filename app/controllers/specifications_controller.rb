@@ -1,10 +1,10 @@
 class SpecificationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_app
-  before_action :set_commodity
+  before_action :set_parent
 
   def index
-    @specifications = @commodity.specifications
+    @specifications = @parent.specifications
   end
 
   def new
@@ -13,27 +13,27 @@ class SpecificationsController < ApplicationController
   end
 
   def create
-    @specification = @commodity.specifications.create(specification_params)
+    @specification = @parent.specifications.create(specification_params)
     if @specification.save
-      redirect_to [@app,@commodity], notice: "Specification successfully created"
+      redirect_to [@app,@parent], notice: "Specification successfully created"
     else
       render :new
     end
   end
 
   def show
-    @specification = @commodity.specifications.find(params[:id])
+    @specification = @parent.specifications.find(params[:id])
   end
 
 
   def edit
-    @specification = @commodity.specifications.find(params[:id])
+    @specification = @parent.specifications.find(params[:id])
   end
 
   def update
-    @specification = @commodity.specifications.find(params[:id])
+    @specification = @parent.specifications.find(params[:id])
     if @specification.update(specification_params)
-      redirect_to [@app, @commodity], notice: "Specification updated successfully"
+      redirect_to [@app, @parent], notice: "Specification updated successfully"
     else
       render :edit
     end
@@ -45,11 +45,14 @@ class SpecificationsController < ApplicationController
     @app = current_user.apps.find(params[:app_id])
   end
 
-  def set_commodity
-    @commodity = @app.commodities.find(params[:commodity_id])
+  def set_parent
+    filtered = params.select{|p| p =~ /.+_id/ }
+    key      = filtered.keys.last
+    name,id  = key.match(/(.+)_id$/)[1] ,filtered[key]
+    @parent  = name.classify.constantize.find(id)
   end
 
   def specification_params
-    params.require(:specification).permit(:property,:value, :uom)
+    params.require(:specification).permit(:property,:value, :uom, :min, :max)
   end
 end

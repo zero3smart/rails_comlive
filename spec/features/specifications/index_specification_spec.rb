@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Visiting #index page' do
-  given(:user) { create(:user) }
-  given(:app) { user.default_app }
-  given(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app, user_id: user.id) }
+  given!(:commodity) { create(:commodity, app_id: app.id) }
 
   background do
     log_in(user)
@@ -11,9 +11,9 @@ feature 'Visiting #index page' do
 
   context "With specifications present" do
     scenario "it should list available specifications" do
-      @specifications = create_list(:specification, 2, parent: commodity_reference)
+      @specifications = create_list(:specification, 2, parent: commodity)
 
-      visit app_commodity_reference_specifications_path(app, commodity_reference)
+      visit app_commodity_specifications_path(app, commodity)
 
       @specifications.each do |specification|
         expect(page).to have_text(specification.property)
@@ -25,7 +25,7 @@ feature 'Visiting #index page' do
 
   context "With no specifications" do
     scenario "it should display no specifications found" do
-      visit app_commodity_reference_specifications_path(app, commodity_reference)
+      visit app_commodity_specifications_path(app, commodity)
 
       expect(page).to have_text("No specifications found")
     end
