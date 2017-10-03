@@ -17,6 +17,10 @@ class PackagingsController < ApplicationController
     end
   end
 
+  def show
+    @packaging = @commodity.packagings.find(params[:id])
+  end
+
   def edit
     @packaging = @commodity.packagings.find(params[:id])
   end

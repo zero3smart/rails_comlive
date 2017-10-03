@@ -25,3 +25,5 @@
 # Rubymine files
 .idea/
 
+# Custom scripts
+*.sh

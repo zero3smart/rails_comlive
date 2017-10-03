@@ -10,6 +10,24 @@ module SpecificationsHelper
     atoms ||= Unitwise::Atom.all.uniq.map { |x| "#{x.property}" }.uniq
   end
 
+  def object_url(model, specification = Specification.new)
+    case model
+      when Commodity
+        [model.app, model, specification]
+      when Packaging
+        [model.commodity.app, model.commodity, model, specification]
+    end
+  end
+
+  def is_checked?(specification, type)
+    return true if specification.new_record?
+    if type == 'value'
+      specification.value.present? ?  true : false
+    elsif type == 'min-max'
+      specification.min.present? || specification.max.present? ? true : false
+    end
+  end
+
   def uoms_for_property(property)
     return [] if property.nil?
     uoms = Unitwise::Atom.all.select{|a| a.property == property }.map {|i| ["#{i.to_s(:names)} (#{i.to_s(:primary_code)})",i.to_s(:primary_code)] }

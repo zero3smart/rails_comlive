@@ -15,7 +15,7 @@ class SpecificationsController < ApplicationController
   def create
     @specification = @parent.specifications.create(specification_params)
     if @specification.save
-      redirect_to [@app,@parent], notice: "Specification successfully created"
+      redirect_to parent_url, notice: "Specification successfully created"
     else
       render :new
     end
@@ -33,7 +33,7 @@ class SpecificationsController < ApplicationController
   def update
     @specification = @parent.specifications.find(params[:id])
     if @specification.update(specification_params)
-      redirect_to [@app, @parent], notice: "Specification updated successfully"
+      redirect_to parent_url, notice: "Specification updated successfully"
     else
       render :edit
     end
@@ -50,6 +50,16 @@ class SpecificationsController < ApplicationController
     key      = filtered.keys.last
     name,id  = key.match(/(.+)_id$/)[1] ,filtered[key]
     @parent  = name.classify.constantize.find(id)
+  end
+
+  def parent_url
+    model = @parent
+    case model
+      when Commodity
+        [model.app, model]
+      when Packaging
+        [model.commodity.app, model.commodity, model]
+    end
   end
 
   def specification_params
