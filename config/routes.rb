@@ -20,7 +20,10 @@ Rails.application.routes.draw do
         get :autocomplete
         get :prefetch
       end
-      resources :states, :packagings, :specifications
+      resources :states, :specifications
+      resources :packagings do
+        resources :specifications
+      end
     end
     resources :links, except: [:index, :show]
     resources :references

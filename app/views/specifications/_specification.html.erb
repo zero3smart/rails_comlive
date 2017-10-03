@@ -2,5 +2,5 @@
   <td><%= specification.property %></td>
   <td><%= specification.value ? specification.value : "Max: #{specification.max} Min: #{specification.min}" %></td>
   <td> <%= specification.uom %></td>
-  <td><%= link_to "View", [@app, specification.parent, specification] %></td>
+  <td><%= link_to "View", object_url(specification.parent, specification) %></td>
 </tr>
