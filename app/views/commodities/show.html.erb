@@ -95,11 +95,23 @@
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
-        <% if @commodity.specifications.any? %>
-            <%= render @commodity.specifications %>
-        <% else %>
-            <p>No specifications found.</p>
-        <% end %>
+        <table class="table no-cellborder">
+          <thead>
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Unit of Measure</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @commodity.specifications.any? %>
+              <%= render @commodity.specifications %>
+          <% else %>
+              <p>No specifications found.</p>
+          <% end %>
+          </tbody>
+        </table>
       </div>
     </div><!-- .widget -->
   </div>
