@@ -3,7 +3,10 @@
 FactoryGirl.define do
   factory :commodity do
     name { Faker::Team.name }
+    short_description nil
+    long_description nil
     measured_in { %w(length time mass temparature number fraction).sample }
+    association :app
     association :brand
 
     factory :invalid_commodity do
@@ -17,16 +20,6 @@ FactoryGirl.define do
 
     factory :non_generic_commodity do
       generic false
-    end
-
-    ignore do
-      ref_app_id nil
-    end
-
-    trait :with_reference do
-      after(:create) do |commodity, evaluator|
-        create(:commodity_reference, commodity: commodity, app_id: evaluator.ref_app_id)
-      end
     end
   end
 end
