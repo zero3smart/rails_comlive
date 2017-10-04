@@ -20,8 +20,8 @@ module SpecificationsHelper
   end
 
   def is_checked?(specification, type)
-    return true if specification.new_record?
     if type == 'value'
+      return true if specification.new_record?
       specification.value.present? ?  true : false
     elsif type == 'min-max'
       specification.min.present? || specification.max.present? ? true : false

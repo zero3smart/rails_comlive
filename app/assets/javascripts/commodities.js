@@ -169,7 +169,7 @@ ready = function(){
                 select2For(target_commodity);
             }
 
-            var specificationProperty =  $("select#specification_property");
+            var specificationProperty =  $("select#type_of_measure");
             if(specificationProperty.length){
                 specificationPropertyCallbacks();
             }
