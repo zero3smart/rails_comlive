@@ -3,20 +3,16 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'pundit/rspec'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
-require 'support/controllers/request_helpers'
+require 'devise'
 require 'support/features/session_helpers'
 require 'support/features/input_helpers'
-require 'support/features/ajax_helpers'
-require 'support/omniauth/macros'
 
 Capybara.javascript_driver = :poltergeist
-Capybara.default_max_wait_time = 10
 
 options = {
-    js_errors: false,
+    js_errors: true,
     timeout: 60,
     debug: true,
     phantomjs_logger: File.open("log/browser-console.log", "w"),
@@ -50,9 +46,6 @@ end
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-# set omniauth to test mode
-OmniAuth.config.test_mode = true
-
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -60,18 +53,14 @@ RSpec.configure do |config|
   # Include Factory Girl syntax to simplify calls to factories
   config.include FactoryGirl::Syntax::Methods
 
+  # Devise helpers
+  config.include Devise::TestHelpers, :type => :controller
+
   # Session helpers
   config.include Features::SessionHelpers, type: :feature
-  config.include Controllers::RequestHelpers, type: :controller
 
   # Input helpers
   config.include Features::InputHelpers, type: :feature
-
-  # Ajax helpers
-  config.include Features::AjaxHelpers, type: :feature
-
-  # Omniauth macro
-  config.include Omniauth::Macros
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -80,18 +69,18 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
-  #  if config.use_transactional_fixtures?
-  #    raise(<<-MSG)
-  #      Delete line `config.use_transactional_fixtures = true` from rails_helper.rb
-  #      (or set it to false) to prevent uncommitted transactions being used in
-  #      JavaScript-dependent specs.
+    if config.use_transactional_fixtures?
+      raise(<<-MSG)
+        Delete line `config.use_transactional_fixtures = true` from rails_helper.rb
+        (or set it to false) to prevent uncommitted transactions being used in
+        JavaScript-dependent specs.
 
-  #      During testing, the app-under-test that the browser driver connects to
-  #      uses a different database connection to the database connection used by
-  #      the spec. The app's database connection would not be able to access
-  #      uncommitted transaction data setup over the spec's database connection.
-  #    MSG
-  #  end
+        During testing, the app-under-test that the browser driver connects to
+        uses a different database connection to the database connection used by
+        the spec. The app's database connection would not be able to access
+        uncommitted transaction data setup over the spec's database connection.
+      MSG
+    end
     DatabaseCleaner.clean_with(:truncation)
   end
 
@@ -118,16 +107,6 @@ RSpec.configure do |config|
 
   config.append_after(:each) do
     DatabaseCleaner.clean
-  end
-
-  # don't load external fonts
-  config.before(:each, js: true) do
-    page.driver.browser.url_blacklist = ["https://fonts.gstatic.com"]
-  end
-
-  # set default locale
-  config.before(:each, type: :feature) do
-    default_url_options[:locale] = I18n.default_locale
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
