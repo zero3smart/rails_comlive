@@ -35,14 +35,14 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <%= f.label :type_of_measure %>
-          <%= select_tag :type_of_measure, grouped_options_for_select(options_for_property(@app), nil, prompt: "Select Type"), class: "form-control", data: { url: uoms_path } %>
+          <%= f.label :filter_uoms %>
+          <%= select_tag :type_of_measure, grouped_options_for_select(options_for_property(@app), nil, prompt: "Select Type"), class: "form-control select2", data: { url: uoms_path } %>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <%= f.label :uom %>
-          <%= f.select :uom, options_for_select(uoms_for_property(@specification.property), @specification.uom), {},  class: "form-control"  %>
+          <%= f.select :uom, options_for_select(uoms_for_property(@specification.property), @specification.uom), {},  class: "form-control select2"  %>
         </div>
       </div>
     </div>

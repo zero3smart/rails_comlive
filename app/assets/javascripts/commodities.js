@@ -54,7 +54,9 @@ ready = function(){
     $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
     // init select2
-    $('.select2').select2();
+    $('.select2').select2({
+        width: '100%'
+    });
 
     $("input#commodity_generic").change(function(){
         var checkbox = $(this);
@@ -172,6 +174,13 @@ ready = function(){
             var specificationProperty =  $("select#type_of_measure");
             if(specificationProperty.length){
                 specificationPropertyCallbacks();
+                allUoms();
+            }
+
+            if($("#sharedModal select.select2").length){
+                $("#sharedModal select.select2").select2({
+                    width: "100%"
+                });
             }
         });
     });

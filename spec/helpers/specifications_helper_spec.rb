@@ -16,22 +16,22 @@ RSpec.describe SpecificationsHelper, :type => :helper do
     include Rails.application.routes.url_helpers
 
     before(:each) do
-      @comm_ref = create(:commodity_reference)
+      @commodity = create(:commodity)
       @specification = Specification.new
     end
 
     context "Given a commodity" do
       it "returns path for commodity specification" do
-        expect(polymorphic_path(helper.object_url(@comm_ref))).to eq polymorphic_path([@comm_ref.app,@comm_ref,@specification])
-        expect(new_polymorphic_path(helper.object_url(@comm_ref))).to eq new_polymorphic_path([@comm_ref.app,@comm_ref,@specification])
+        expect(polymorphic_path(helper.object_url(@commodity))).to eq polymorphic_path([@commodity.app,@commodity,@specification])
+        expect(new_polymorphic_path(helper.object_url(@commodity))).to eq new_polymorphic_path([@commodity.app,@commodity,@specification])
       end
     end
 
     context "Given a packaging" do
       it "returns path  for packaging specification" do
-        @packaging = create(:packaging, commodity_reference_id: @comm_ref.id)
-        expect(polymorphic_path(helper.object_url(@packaging))).to eq polymorphic_path([@comm_ref.app,@comm_ref,@packaging, @specification])
-        expect(new_polymorphic_path(helper.object_url(@packaging))).to eq new_polymorphic_path([@comm_ref.app,@comm_ref,@packaging, @specification])
+        @packaging = create(:packaging, commodity_id: @commodity.id)
+        expect(polymorphic_path(helper.object_url(@packaging))).to eq polymorphic_path([@commodity.app,@commodity,@packaging, @specification])
+        expect(new_polymorphic_path(helper.object_url(@packaging))).to eq new_polymorphic_path([@commodity.app,@commodity,@packaging, @specification])
       end
     end
   end
