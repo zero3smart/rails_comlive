@@ -20,6 +20,7 @@ gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'will_paginate', '~> 3.1.0'
 gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'devise_invitable', '~> 1.7.0'
 gem 'searchkick'
 
 group :development, :test do
