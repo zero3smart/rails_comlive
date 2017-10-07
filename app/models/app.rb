@@ -7,6 +7,8 @@ class App < ApplicationRecord
   has_many :custom_units
   has_many :brands
   has_many :standards
+  has_many :members
+  has_many :users, through: :members
 
   before_create :assign_uuid
 

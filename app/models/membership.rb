@@ -1,6 +1,6 @@
-class Membership < ApplicationRecord
+class Member < ApplicationRecord
   belongs_to :user
-  belongs_to :member, :polymorphic => true
+  belongs_to :app
 
-  validates_presence_of :user, :member
+  validates_presence_of :user, :app
 end
