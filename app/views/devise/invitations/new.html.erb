@@ -1,0 +1,8 @@
+<%= form_tag app_invitations_path(@app) do %>
+    <%= errors_for @user %>
+    <div class="form-group">
+      <%= label_tag :email %>
+      <%= email_field_tag :email, nil, class: "form-control", placeholder: "user@example.com" %>
+    </div>
+    <%= submit_tag "Send Invitation", class: "btn btn-default" %>
+<% end %>
