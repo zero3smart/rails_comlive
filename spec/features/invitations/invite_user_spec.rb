@@ -1,51 +1,39 @@
 require 'rails_helper'
 
 feature 'Invitations' do
-  given(:user) { create(:user) }
+  given!(:user) { create(:user, email: 'user@example.com', password: 'secretpass') }
+  given!(:app) { create(:app, user_id: user.id) }
 
-  context "When current user is owner of the app" do
-    given(:app) { user.default_app }
-
-    background do
-      log_in(user)
-    end
-
-    feature 'User can invite another user to an app' do
-      background do
-        visit app_path(app)
-        click_link "Invite Users"
-      end
-
-      context "With a valid email" do
-        scenario "It should successfully save the user" do
-          fill_in "invitation[recipient_email]", with: "user@example.com"
-          click_button "Send Invitation"
-
-          expect(page).to have_text("Invitation sent to user@example.com")
-        end
-      end
-
-      context "With an invalid email" do
-        scenario "It should display email invalid error" do
-          fill_in "invitation[recipient_email]", with: "userexample.com"
-          click_button "Send Invitation"
-
-          expect(page).to have_text("Recipient email is invalid")
-        end
-      end
-    end
+  background do
+    log_in(user)
+    visit app_path(app)
   end
 
-  context "When current user is not owner of the app" do
-    given(:app) { create(:app) }
-
+  feature 'User can invite another user to an app', js: true do
     background do
-      log_in(user)
+      click_link "Invite Users"
     end
 
-    scenario "User should not be able to invite users to the app" do
-      visit new_app_invitation_path(app)
-      expect(page).to have_text("You are not authorized to perform this action.")
+    context "With a valid email" do
+      scenario "It should successfully save the user" do
+        within("div#sharedModal") do
+          fill_in "email", with: "user@example.com"
+
+          click_button "Submit"
+        end
+        expect(page).to have_text("Invitation sent to user@example.com")
+      end
+    end
+
+    context "With an invalid email" do
+      scenario "It should display email invalid error" do
+        within("div#sharedModal") do
+          fill_in "email", with: "userexample.com"
+
+          click_button "Submit"
+        end
+        expect(page).to have_text("Email is invalid")
+      end
     end
   end
 end

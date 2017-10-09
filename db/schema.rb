@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708065235) do
+ActiveRecord::Schema.define(version: 20160818153256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,15 @@ ActiveRecord::Schema.define(version: 20160708065235) do
     t.datetime "updated_at",   null: false
     t.index ["app_id"], name: "index_links_on_app_id", using: :btree
     t.index ["commodity_id"], name: "index_links_on_commodity_id", using: :btree
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "app_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_members_on_app_id", using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -271,7 +280,18 @@ ActiveRecord::Schema.define(version: 20160708065235) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "token"
+    t.string   "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer  "invitation_limit"
+    t.string   "invited_by_type"
+    t.integer  "invited_by_id"
+    t.integer  "invitations_count",      default: 0
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
+    t.index ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["token"], name: "index_users_on_token", unique: true, using: :btree
   end
@@ -294,6 +314,8 @@ ActiveRecord::Schema.define(version: 20160708065235) do
   add_foreign_key "hscode_subheadings", "hscode_headings"
   add_foreign_key "links", "apps"
   add_foreign_key "links", "commodities"
+  add_foreign_key "members", "apps"
+  add_foreign_key "members", "users"
   add_foreign_key "memberships", "users"
   add_foreign_key "packagings", "commodities"
   add_foreign_key "references", "apps"

@@ -1,8 +1,8 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :membership do
+  factory :member do
     association :user
-    association :member, factory: :brand
+    association :app
   end
 end

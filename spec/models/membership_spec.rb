@@ -1,38 +1,33 @@
 require 'rails_helper'
 
-RSpec.describe Membership, :type => :model do
+RSpec.describe Member, :type => :model do
   describe "Validations" do
     it "has a valid factory" do
-      membership = build(:membership)
-      expect(membership).to be_valid
+      member = build(:member)
+      expect(member).to be_valid
     end
 
-    it "is invalid without a user_id" do
-      membership = build(:membership, user: nil)
-      membership.valid?
-      expect(membership.errors[:user]).to include("can't be blank")
+    it "is invalid without a user" do
+      member = build(:member, user: nil)
+      member.valid?
+      expect(member.errors[:user]).to include("can't be blank")
     end
 
-    it "is invalid without a member" do
-      membership = build(:membership, member: nil)
-      membership.valid?
-      expect(membership.errors[:member]).to include("can't be blank")
-    end
-
-    it "initializes owner to false by default" do
-      membership = build(:membership)
-      expect(membership.owner).to eq false
+    it "is invalid without an app" do
+      member = build(:member, app: nil)
+      member.valid?
+      expect(member.errors[:app]).to include("can't be blank")
     end
   end
 
   describe "Associations" do
-    it "belongs to user" do
-      assoc = Membership.reflect_on_association(:user)
+    it "belongs to an app" do
+      assoc = Member.reflect_on_association(:app)
       expect(assoc.macro).to eq :belongs_to
     end
 
-    it "belongs to member" do
-      assoc = Membership.reflect_on_association(:member)
+    it "belongs to a user" do
+      assoc = Member.reflect_on_association(:user)
       expect(assoc.macro).to eq :belongs_to
     end
   end

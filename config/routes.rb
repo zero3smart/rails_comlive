@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {
+      :invitations => 'users/invitations'
+  }
 
   authenticated :user do
     devise_scope :user do
@@ -14,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :apps do
-    resources :brands, :standards
+    resources :brands, :standards, :invitations
     resources :commodities do
       collection do
         get :autocomplete

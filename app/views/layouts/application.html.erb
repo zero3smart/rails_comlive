@@ -64,6 +64,12 @@
                 <li><%= link_to "Add Standard", new_app_standard_path(current_app) %></li>
               </ul>
             </li><!-- .menu-item -->
+            <li>
+              <%= link_to new_app_invitation_path(current_app), class: "menu-link load-in-modal"  do %>
+                  <span class="menu-icon"><i class="zmdi zmdi-accounts-add zmdi-hc-lg"></i></span>
+                  <span class="menu-text">Invite Users</span>
+              <% end %>
+            </li><!-- .menu-item -->
         <% end %>
       </ul>
     </div>
