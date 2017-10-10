@@ -1,5 +1,5 @@
 class AppsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :logged_in_using_omniauth?
 
   def index
     @apps = current_user.apps
