@@ -1,5 +1,5 @@
 class SpecificationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :logged_in_using_omniauth?
   before_action :set_app
   before_action :set_parent
 

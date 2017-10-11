@@ -1,5 +1,5 @@
 class StandardizationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :logged_in_using_omniauth?
 
   def new
     @standardization = Standardization.new
