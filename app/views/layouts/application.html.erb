@@ -105,7 +105,7 @@
             </li>
             <li role="separator" class="divider"></li>
             <li>
-              <%= link_to destroy_user_session_path, method: :delete, class: "text-color" do %>
+              <%= link_to "https://ntty.eu.auth0.com/v2/logout?returnTo=" + request.base_url + "/", class: "text-color" do %>
                   <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
                   <span>Logout</span>
               <% end %>

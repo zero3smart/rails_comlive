@@ -1,19 +1,22 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {
-      :invitations => 'users/invitations'
-  }
+  get "/auth/auth0/callback" => "auth0#callback"
+  get "/auth/failure" => "auth0#failure"
 
-  authenticated :user do
-    devise_scope :user do
-      root to: "apps#index"
-    end
-  end
+  #devise_for :users, :controllers => {
+  #    :invitations => 'users/invitations'
+  #}
 
-  unauthenticated do
-    devise_scope :user do
-      root to: "welcome#landing"
-    end
-  end
+  #authenticated :user do
+  #  devise_scope :user do
+  #    root to: "apps#index"
+  #  end
+  #end
+
+  #unauthenticated do
+  #  devise_scope :user do
+  root to: "welcome#landing"
+  #  end
+  #end
 
   resources :apps do
     resources :brands, :standards, :invitations
