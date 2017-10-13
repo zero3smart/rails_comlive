@@ -1,5 +1,5 @@
 class ReferencesController < ApplicationController
-  before_action :logged_in_using_omniauth?
+  before_action :authenticate_user!
   before_action :set_app
 
   def index
@@ -44,6 +44,6 @@ class ReferencesController < ApplicationController
   end
 
   def reference_params
-    params.require(:reference).permit(:kind, :source_commodity_id, :target_commodity_id, :description)
+    params.require(:reference).permit(:kind, :source_commodity_reference_id, :target_commodity_reference_id, :description)
   end
 end

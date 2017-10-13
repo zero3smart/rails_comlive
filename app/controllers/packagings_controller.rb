@@ -1,7 +1,7 @@
 class PackagingsController < ApplicationController
-  before_action :logged_in_using_omniauth?
+  before_action :authenticate_user!
   before_action :set_app
-  before_action :set_commodity
+  before_action :set_commodity_reference
 
   def new
     @packaging = Packaging.new
@@ -9,26 +9,26 @@ class PackagingsController < ApplicationController
   end
 
   def create
-    @packaging = @commodity.packagings.create(packaging_params)
+    @packaging = @commodity_reference.packagings.create(packaging_params)
     if @packaging.save
-      redirect_to [@app, @commodity], notice: "Packaging successfully saved"
+      redirect_to [@app, @commodity_reference], notice: "Packaging successfully saved"
     else
       render :new
     end
   end
 
   def show
-    @packaging = @commodity.packagings.find(params[:id])
+    @packaging = @commodity_reference.packagings.find(params[:id])
   end
 
   def edit
-    @packaging = @commodity.packagings.find(params[:id])
+    @packaging = @commodity_reference.packagings.find(params[:id])
   end
 
   def update
-    @packaging = @commodity.packagings.find(params[:id])
+    @packaging = @commodity_reference.packagings.find(params[:id])
     if @packaging.update(packaging_params)
-      redirect_to  [@app, @commodity], notice: "Packaging successfully updated"
+      redirect_to  [@app, @commodity_reference], notice: "Packaging successfully updated"
     else
       render :edit
     end
@@ -40,8 +40,8 @@ class PackagingsController < ApplicationController
     @app = App.find(params[:app_id])
   end
 
-  def set_commodity
-    @commodity = @app.commodities.find(params[:commodity_id])
+  def set_commodity_reference
+    @commodity_reference = @app.commodity_references.find(params[:commodity_reference_id])
   end
 
   def packaging_params
