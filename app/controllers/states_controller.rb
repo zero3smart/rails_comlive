@@ -1,7 +1,7 @@
 class StatesController < ApplicationController
-  before_action :logged_in_using_omniauth?
+  before_action :authenticate_user!
   before_action :set_app
-  before_action :set_commodity
+  before_action :set_commodity_reference
 
   def new
     @state = State.new
@@ -9,22 +9,22 @@ class StatesController < ApplicationController
   end
 
   def create
-    @state = @commodity.create_state(state_params)
+    @state = @commodity_reference.create_state(state_params)
     if @state.save
-      redirect_to [@app,@commodity], notice: "State successfully created"
+      redirect_to [@app,@commodity_reference], notice: "State successfully created"
     else
       render :new
     end
   end
 
   def edit
-    @state = @commodity.state
+    @state = @commodity_reference.state
   end
 
   def update
-    @state = @commodity.state
+    @state = @commodity_reference.state
     if @state.update(state_params)
-      redirect_to [@app,@commodity], notice: "State successfully updated"
+      redirect_to [@app,@commodity_reference], notice: "State successfully updated"
     else
       render :edit
     end
@@ -36,8 +36,8 @@ class StatesController < ApplicationController
     @app = App.find(params[:app_id])
   end
 
-  def set_commodity
-    @commodity = @app.commodities.find(params[:commodity_id])
+  def set_commodity_reference
+    @commodity_reference = @app.commodity_references.find(params[:commodity_reference_id])
   end
 
   def state_params

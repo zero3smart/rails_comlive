@@ -6,6 +6,6 @@ module CommoditiesHelper
   def recent_commodities
     return [] if cookies[:recent_commodities].nil?
     commodity_ids =  cookies[:recent_commodities].split(",")
-    Commodity.where_with_order(commodity_ids)
+    CommodityReference.where_with_order(commodity_ids)
   end
 end

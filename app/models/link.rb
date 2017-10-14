@@ -1,6 +1,4 @@
 class Link < ApplicationRecord
-  include Visibility
-
   belongs_to :app
   belongs_to :commodity_reference
 

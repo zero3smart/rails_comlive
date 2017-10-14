@@ -1,6 +1,6 @@
 class App < ApplicationRecord
   belongs_to :user
-  has_many :commodities
+  has_many :commodity_references
   has_many :links
   has_many :references
   has_many :measurements

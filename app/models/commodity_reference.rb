@@ -1,6 +1,4 @@
 class CommodityReference < ApplicationRecord
-  include Searchable
-
   belongs_to :app
   belongs_to :commodity
   belongs_to :brand, optional: true
@@ -13,16 +11,16 @@ class CommodityReference < ApplicationRecord
   belongs_to :unspsc_family, optional: true
   belongs_to :unspsc_segment, optional: true
 
-  has_many :links, dependent: :destroy
-  has_many :references, dependent: :destroy
-  has_many :packagings, dependent: :destroy
-  has_many :images, dependent: :destroy
-  has_many :standardizations, as: :referable, dependent: :destroy
-  has_many :standards, through: :standardizations, dependent: :destroy
-  has_many :specifications, as: :parent, dependent: :destroy
+  has_many :commodity_references
+  has_many :links
+  has_many :references
+  has_many :packagings
+  has_many :standardizations, as: :referable
+  has_many :standards, through: :standardizations
+  has_many :specifications, as: :parent
   has_one :state
 
-  validates_presence_of :app, :commodity, :measured_in
+  validates_presence_of :app, :commodity, :name, :measured_in
   validates_presence_of :brand_id, unless: "generic?"
 
   before_create :set_uuid
@@ -31,6 +29,8 @@ class CommodityReference < ApplicationRecord
   scope :generic, -> { where(generic: true )}
   scope :not_generic, -> { where(generic: false )}
   scope :recent, -> { order("created_at DESC") }
+
+  searchkick word_start: [:name, :short_description, :long_description]
 
   # http://stackoverflow.com/questions/1680627/activerecord-findarray-of-ids-preserving-order
   scope :where_with_order, ->(ids) {

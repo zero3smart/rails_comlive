@@ -13,10 +13,10 @@ module SpecificationsHelper
 
   def object_url(model, specification = Specification.new)
     case model
-      when Commodity
+      when CommodityReference
         [model.app, model, specification]
       when Packaging
-        [model.commodity.app, model.commodity, model, specification]
+        [model.commodity_reference.app, model.commodity_reference, model, specification]
     end
   end
 

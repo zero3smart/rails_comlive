@@ -1,5 +1,5 @@
 class SpecificationsController < ApplicationController
-  before_action :logged_in_using_omniauth?
+  before_action :authenticate_user!
   before_action :set_app
   before_action :set_parent
 
@@ -55,10 +55,10 @@ class SpecificationsController < ApplicationController
   def parent_url
     model = @parent
     case model
-      when Commodity
+      when CommodityReference
         [model.app, model]
       when Packaging
-        [model.commodity.app, model.commodity, model]
+        [model.commodity_reference.app, model.commodity_reference, model]
     end
   end
 

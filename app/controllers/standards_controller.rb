@@ -1,9 +1,8 @@
 class StandardsController < ApplicationController
-  before_action :logged_in_using_omniauth?
-  before_action :set_app
+  before_action :authenticate_user!
 
   def index
-    @standards = @app.standards
+    @standards = Standard.all
   end
 
   def new
@@ -11,11 +10,11 @@ class StandardsController < ApplicationController
   end
 
   def show
-    @standard = @app.standards.find(params[:id])
+    @standard = Standard.find(params[:id])
   end
 
   def create
-    @standard = @app.standards.create(standard_params)
+    @standard = Standard.create(standard_params)
     if @standard.save
       redirect_to [@app,@standard], notice: "Standard successfully created"
     else
@@ -24,11 +23,11 @@ class StandardsController < ApplicationController
   end
 
   def edit
-    @standard = @app.standards.find(params[:id])
+    @standard = Standard.find(params[:id])
   end
 
   def update
-    @standard = @app.standards.find(params[:id])
+    @standard = Standard.find(params[:id])
     if @standard.update(standard_params)
       redirect_to [@app,@standard], notice: "Standard successfully updated"
     else
@@ -37,10 +36,6 @@ class StandardsController < ApplicationController
   end
 
   private
-
-  def set_app
-    @app = App.find(params[:app_id])
-  end
 
   def standard_params
     params.require(:standard).permit(:name, :description, :logo)

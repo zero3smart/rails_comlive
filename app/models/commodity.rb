@@ -1,24 +1,8 @@
 class Commodity < ApplicationRecord
-  belongs_to :app
   belongs_to :brand, optional: true
-  belongs_to :hscode_section, optional: true
-  belongs_to :hscode_chapter, optional: true
-  belongs_to :hscode_heading, optional: true
-  belongs_to :hscode_subheading, optional: true
-  belongs_to :unspsc_class, optional: true
-  belongs_to :unspsc_commodity, optional: true
-  belongs_to :unspsc_family, optional: true
-  belongs_to :unspsc_segment, optional: true
+  has_many :commodity_references
 
-  has_many :links
-  has_many :references
-  has_many :packagings
-  has_many :standardizations, as: :referable
-  has_many :standards, through: :standardizations
-  has_many :specifications, as: :parent
-  has_one :state
-
-  validates_presence_of :app, :name, :measured_in
+  validates_presence_of :name, :measured_in
   validates_presence_of :brand_id, unless: "generic?"
 
   scope :generic, -> { where(generic: true )}
@@ -35,25 +19,10 @@ class Commodity < ApplicationRecord
     where(:id => ids).order(order)
   }
 
-  before_save :set_unspsc_fields
   before_create :set_uuid
 
   def as_json(options={})
     super(:only => [:id,:name]).merge(href:  Rails.application.routes.url_helpers.app_commodity_path(self.app,self))
-  end
-
-
-  private
-
-  def set_unspsc_fields
-    return unless self.unspsc_commodity_id
-    unspsc_commodity = UnspscCommodity.find(unspsc_commodity_id)
-    unspsc_class = unspsc_commodity.unspsc_class
-    unspsc_family = unspsc_class.unspsc_family
-    unspsc_segment = unspsc_family.unspsc_segment
-    self.unspsc_commodity, self.unspsc_class, self.unspsc_family, self.unspsc_segment = [
-        unspsc_commodity, unspsc_class, unspsc_family, unspsc_segment
-    ]
   end
 
   private
