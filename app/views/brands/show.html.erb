@@ -3,7 +3,7 @@
     <div class="widget">
       <header class="widget-header">
         <h4 class="widget-title pull-left"><%= @brand.name %></h4>
-        <span class="pull-right"><%= link_to "Edit", edit_app_brand_path(@app,@brand) %></span>
+        <span class="pull-right"><%= link_to "Edit", edit_brand_path(@brand) %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
@@ -76,7 +76,7 @@
             <%= f.hidden_field :child_type, value: @brand.class.to_s %>
           <div class="form-group">
             <%= f.label :owning_brand %>
-            <%= f.select :parent_id, options_for_brands(current_user), {}, class: "form-control" %>
+            <%= f.select :parent_id, options_for_brands, {}, class: "form-control" %>
           </div>
         <% end %>
       </div>

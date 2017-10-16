@@ -1,5 +1,4 @@
 class Standard < ApplicationRecord
-  belongs_to :app
   has_many :memberships, foreign_key: :member_id, as: :member
   has_many :users, through: :memberships
 
@@ -8,9 +7,9 @@ class Standard < ApplicationRecord
 
   has_many :standardizations
   has_many :brands, through: :standardizations, source: :referable, source_type: "Brand"
-  has_many :commodities, through: :standardizations, source: :referable, source_type: "Commodity"
+  has_many :commodity_references, through: :standardizations, source: :referable, source_type: "CommodityReference"
 
-  validates_presence_of :name, :description, :app
+  validates_presence_of :name, :description
 
   scope :official, -> { where(official: true) }
 
