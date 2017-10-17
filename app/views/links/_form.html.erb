@@ -6,7 +6,7 @@
     </div>
     <div class="form-group">
       <%= f.label :commodity %>
-      <%= f.select :commodity_id, Commodity.all.map {|c| [c.name, c.id] }, {}, class: "form-control" %>
+      <%= f.select :commodity_reference_id, @app.commodity_references.map {|c| [c.name, c.id] }, {}, class: "form-control" %>
     </div>
     <div class="form-group">
       <%= f.label :description %>

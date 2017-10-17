@@ -1,26 +1,25 @@
 Rails.application.routes.draw do
-  get "/auth/auth0/callback" => "auth0#callback"
-  get "/auth/failure" => "auth0#failure"
+  devise_for :users, :controllers => {
+      :invitations => 'users/invitations'
+  }
 
-  #devise_for :users, :controllers => {
-  #    :invitations => 'users/invitations'
-  #}
+  authenticated :user do
+    devise_scope :user do
+      root to: "apps#index"
+    end
+  end
 
-  #authenticated :user do
-  #  devise_scope :user do
-  #    root to: "apps#index"
-  #  end
-  #end
+  unauthenticated do
+    devise_scope :user do
+      root to: "welcome#landing"
+    end
+  end
 
-  #unauthenticated do
-  #  devise_scope :user do
-  root to: "welcome#landing"
-  #  end
-  #end
+  resources :commodities, :brands, :standards
 
   resources :apps do
-    resources :brands, :standards, :invitations
-    resources :commodities do
+    resources :invitations
+    resources :commodity_references, path: "commodities" do
       collection do
         get :autocomplete
         get :prefetch
@@ -30,10 +29,12 @@ Rails.application.routes.draw do
         resources :specifications
       end
     end
+
     resources :links, except: [:index, :show]
     resources :references
     resources :custom_units, path: "custom-units"
   end
+
   resources :hscode_chapters, :hscode_headings, :hscode_subheadings
   resources :unspsc_segments, :unspsc_families, :unspsc_classes, :unspsc_commodities
   resources :ownerships, :standardizations

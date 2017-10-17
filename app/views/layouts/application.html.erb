@@ -32,38 +32,38 @@
             <span class="menu-text">Dashboard</span>
           </a>
         </li><!-- .menu-item -->
+        <li>
+          <a href="javascript:void(0)" class="menu-link">
+            <span class="menu-icon"><i class="zmdi zmdi-shield-check zmdi-hc-lg"></i></span>
+            <span class="menu-text">Commodities</span>
+          </a>
+          <ul>
+            <li><%= link_to "Commodities", current_app ? app_commodity_references_path(current_app) : "#" %></li>
+            <li><%= link_to "Add Commodity", new_commodity_path %></li>
+          </ul>
+        </li><!-- .menu-item -->
+        <li>
+          <a href="javascript:void(0)" class="menu-link">
+            <span class="menu-icon"><i class="zmdi zmdi-flag zmdi-hc-lg"></i></span>
+            <span class="menu-text">Standards</span>
+          </a>
+          <ul>
+            <li><%= link_to "Standards", "#" %></li>
+            <li><%= link_to "Add Standard", new_standard_path %></li>
+          </ul>
+        </li><!-- .menu-item -->
+        <li>
+          <a href="javascript:void(0)" class="menu-link">
+            <span class="menu-icon"><i class="zmdi zmdi-city-alt zmdi-hc-lg"></i></span>
+            <span class="menu-text">Brands</span>
+          </a>
+          <ul>
+            <li><%= link_to "Brands", brands_path %></li>
+            <li><%= link_to "Add Brand", new_brand_path %></li>
+          </ul>
+        </li><!-- .menu-item -->
 
         <% if current_app %>
-            <li>
-              <a href="javascript:void(0)" class="menu-link">
-                <span class="menu-icon"><i class="zmdi zmdi-shield-check zmdi-hc-lg"></i></span>
-                <span class="menu-text">Commodities</span>
-              </a>
-              <ul>
-                <li><%= link_to "Commodities", app_commodities_path(current_app) %></li>
-                <li><%= link_to "Add Commodity", new_app_commodity_path(current_app) %></li>
-              </ul>
-            </li><!-- .menu-item -->
-            <li>
-              <a href="javascript:void(0)" class="menu-link">
-                <span class="menu-icon"><i class="zmdi zmdi-city-alt zmdi-hc-lg"></i></span>
-                <span class="menu-text">Brands</span>
-              </a>
-              <ul>
-                <li><%= link_to "Brands", app_brands_path(current_app) %></li>
-                <li><%= link_to "Add Brand", new_app_brand_path(current_app) %></li>
-              </ul>
-            </li><!-- .menu-item -->
-            <li>
-              <a href="javascript:void(0)" class="menu-link">
-                <span class="menu-icon"><i class="zmdi zmdi-flag zmdi-hc-lg"></i></span>
-                <span class="menu-text">Standards</span>
-              </a>
-              <ul>
-                <li><%= link_to "Standards", app_standards_path(current_app) %></li>
-                <li><%= link_to "Add Standard", new_app_standard_path(current_app) %></li>
-              </ul>
-            </li><!-- .menu-item -->
             <li>
               <%= link_to new_app_invitation_path(current_app), class: "menu-link load-in-modal"  do %>
                   <span class="menu-icon"><i class="zmdi zmdi-accounts-add zmdi-hc-lg"></i></span>
@@ -105,7 +105,7 @@
             </li>
             <li role="separator" class="divider"></li>
             <li>
-              <%= link_to "https://ntty.eu.auth0.com/v2/logout?returnTo=" + request.base_url + "/", class: "text-color" do %>
+              <%= link_to destroy_user_session_path, method: :delete, class: "text-color" do %>
                   <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
                   <span>Logout</span>
               <% end %>

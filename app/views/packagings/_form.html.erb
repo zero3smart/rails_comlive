@@ -1,42 +1,20 @@
-<%= form_for object_url(@parent, @specification) do |f| %>
-    <%= errors_for @specification %>
-
+<%= form_for [@app,@commodity_reference,@packaging] do |f| %>
+    <%= errors_for @packaging %>
     <div class="form-group">
-      <%= f.label :property %><br>
-      <%= f.select :property, grouped_options_for_select(options_for_property(@app), @specification.property), { prompt: "Select Property" }, class: "form-control", data: { url: uoms_path } %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
     </div>
     <div class="form-group">
-      <label class="radio-inline">
-        <%= radio_button_tag 'value-opts', 'value', is_checked?(@specification,'value') %> Set Value
-      </label>
-      <label class="radio-inline">
-        <%= radio_button_tag 'value-opts', 'min-max', is_checked?(@specification, 'min-max') %> Define Min / Max
-      </label>
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "form-control" %>
     </div>
-    <div class="form-group <%= is_checked?(@specification, 'value') ? "" : "hidden" %>" id="value-container">
-      <%= f.label :value %>
-      <%= f.number_field :value, class: "form-control", step: "0.01" %>
-    </div>
-    <div  class="row  <%= is_checked?(@specification, 'min-max') ? "" : "hidden" %>" id="min-max-container">
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :min %>
-          <%= f.number_field :min, class: "form-control", step: "0.01" %>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <%= f.label :max %>
-          <%= f.number_field :max, class: "form-control", step: "0.01" %>
-        </div>
-      </div>
-    </div>
-
     <div class="form-group">
-      <%= f.label :uom %>
-      <%= f.select :uom, options_for_select(uoms_for_property(@specification.property), @specification.uom), {},  class: "form-control"  %>
+      <%= f.label :quantity %>
+      <%= f.number_field :quantity, class: "form-control", step: 0.01 %>
     </div>
-
+    <div class="form-group">
+      <%= f.label :unit_of_measure %>
+      <%= f.text_field :uom, class: "form-control" %>
+    </div>
     <%= f.submit class: "btn btn-primary" %>
-
 <% end %>

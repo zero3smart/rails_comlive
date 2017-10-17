@@ -6,11 +6,11 @@
     </div>
     <div class="form-group">
       <%= f.label :source_commodity %>
-      <%= f.select :source_commodity_id, [], {prompt: "Search commodities"}, data: { url: app_commodities_path(@app, generic: true) },  class: "form-control" %>
+      <%= f.select :source_commodity_reference_id, [], {prompt: "Search commodities"}, data: { url: app_commodity_references_path(@app, generic: true) },  class: "form-control" %>
     </div>
     <div class="form-group">
       <%= f.label :target_commodity %>
-      <%= f.select :target_commodity_id, [], {prompt: "Search commodities"},data: { url: app_commodities_path(@app, generic: false) }, class: "form-control" %>
+      <%= f.select :target_commodity_reference_id, [], {prompt: "Search commodities"},data: { url: app_commodity_references_path(@app, generic: false) }, class: "form-control" %>
     </div>
     <div class="form-group">
       <%= f.label :description %>

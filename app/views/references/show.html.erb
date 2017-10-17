@@ -1,7 +1,7 @@
 <h1>Reference</h1>
 
-<p>Source Commodity: <%= @reference.source_commodity.short_description %></p>
+<p>Source Commodity: <%= @reference.source_commodity_reference.name %></p>
 <p>Kind: <%= @reference.kind %></p>
-<p>Target Commodity: <%= @reference.target_commodity.short_description %></p>
+<p>Target Commodity: <%= @reference.target_commodity_reference.name %></p>
 <p>Description: <%= @reference.description %> </p>
 <%= link_to "Edit", edit_app_reference_path(@app, @reference) %>

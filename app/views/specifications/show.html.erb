@@ -3,4 +3,4 @@
 <p>Value: <%= @specification.value ? @specification.value : "Max: #{@specification.max} Min: #{@specification.min}" %></p>
 <p>Unit of Measure: <%= @specification.uom %></p>
 
-<%= link_to "Edit", edit_app_commodity_specification_path(@app, @parent, @specification) %>
+<%= link_to "Edit", edit_app_commodity_reference_specification_path(@app, @parent, @specification) %>
