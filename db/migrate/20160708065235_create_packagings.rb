@@ -6,11 +6,9 @@ class CreatePackagings < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :description
       t.string :uuid
-      t.integer :visibility, default: 0
       t.references :commodity_reference, foreign_key: true
 
       t.timestamps
     end
-    add_index :packagings, :uuid, unique: true
   end
 end
