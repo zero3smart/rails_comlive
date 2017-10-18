@@ -5,7 +5,7 @@ FactoryGirl.define do
     name { Faker::Team.name }
     short_description { Faker::Company.catch_phrase }
     long_description { Faker::Lorem.paragraph }
-    measured_in { %w(length time mass temperature number fraction).sample }
+    measured_in { %w(length time mass temparature number fraction).sample }
     moderated false
     association :brand
     association :app
@@ -13,6 +13,15 @@ FactoryGirl.define do
 
     factory :invalid_commodity_reference do
       name nil
+    end
+
+    factory :generic_commodity_reference do
+      generic true
+      brand nil
+    end
+
+    factory :non_generic_commodity_reference do
+      generic false
     end
   end
 end

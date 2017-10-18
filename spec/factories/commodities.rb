@@ -6,7 +6,6 @@ FactoryGirl.define do
     short_description nil
     long_description nil
     measured_in { %w(length time mass temparature number fraction).sample }
-    association :app
     association :brand
 
     factory :invalid_commodity do
