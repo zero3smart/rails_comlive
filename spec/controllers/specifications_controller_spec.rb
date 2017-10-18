@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SpecificationsController, :type => :controller do
   let!(:user) { create(:user) }
   let!(:app) { create(:app, user_id: user.id) }
-  let!(:commodity) { create(:commodity, app_id: app.id) }
+  let!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
 
   context "As an authenticated user" do
     before(:each) do
@@ -13,22 +13,22 @@ RSpec.describe SpecificationsController, :type => :controller do
 
     describe "GET #index" do
       it "returns 200 http status code" do
-        get :index, params: { app_id: app.id, commodity_id: commodity.id }
+        get :index, params: { app_id: app.id, commodity_reference_id: commodity_reference.id }
         expect(response.status).to eq 200
       end
     end
 
     describe "GET #show" do
       it "returns 200 http status code" do
-        specification =  create(:specification, parent: commodity)
-        get :show, params: { app_id: app.id, commodity_id: commodity.id, id: specification.id }
+        specification =  create(:specification, parent: commodity_reference)
+        get :show, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: specification.id }
         expect(response.status).to eq 200
       end
     end
 
     describe "GET #new" do
       it "returns 200 http status code" do
-        get :new, params: { app_id: app.id, commodity_id: commodity.id }
+        get :new, params: { app_id: app.id, commodity_reference_id: commodity_reference.id }
         expect(response.status).to eq 200
       end
     end
@@ -38,7 +38,7 @@ RSpec.describe SpecificationsController, :type => :controller do
         context "providing only value" do
           it "saves the new specification in the database" do
             expect{
-              post :create, params: { app_id: app.id, commodity_id: commodity.id, specification: attributes_for(:specification) }
+              post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, specification: attributes_for(:specification) }
             }.to change(Specification, :count).by(1)
           end
         end
@@ -46,11 +46,11 @@ RSpec.describe SpecificationsController, :type => :controller do
         context "providing either a min or max" do
           it "saves the new specification in the database" do
             expect{
-              post :create, params: { app_id: app.id, commodity_id: commodity.id, specification: attributes_for(:spec_with_min_max, min: nil) }
+              post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, specification: attributes_for(:spec_with_min_max, min: nil) }
             }.to change(Specification, :count).by(1)
 
             expect{
-              post :create, params: { app_id: app.id, commodity_id: commodity.id, specification: attributes_for(:spec_with_min_max, max: nil) }
+              post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, specification: attributes_for(:spec_with_min_max, max: nil) }
             }.to change(Specification, :count).by(1)
           end
         end
@@ -59,19 +59,19 @@ RSpec.describe SpecificationsController, :type => :controller do
       context "with invalid attributes" do
         it "does not save the new specification in the database" do
           expect{
-            post :create, params: { app_id: app.id, commodity_id: commodity.id, specification: attributes_for(:invalid_specification)}
+            post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, specification: attributes_for(:invalid_specification)}
           }.not_to change(Specification, :count)
         end
       end
     end
 
     describe "PATCH #update" do
-      let!(:specification){  create(:specification, parent: commodity, value: 6.9000) }
+      let!(:specification){  create(:specification, parent: commodity_reference, value: 6.9000) }
 
       context "with valid attributes" do
         it "updates the specification in the database" do
           specification.value = 5.0004
-          patch :update, params: { app_id: app.id, commodity_id: commodity.id, id: specification.id, specification: specification.attributes }
+          patch :update, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: specification.id, specification: specification.attributes }
           specification.reload
           expect(specification.value).to eq  BigDecimal.new("5.0004")
         end
@@ -80,7 +80,7 @@ RSpec.describe SpecificationsController, :type => :controller do
       context "with invalid attributes" do
         it "does not update the specification" do
           specification.value = ""
-          patch :update, params: { app_id: app.id, commodity_id: commodity.id, id: specification.id, specification: specification.attributes }
+          patch :update, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: specification.id, specification: specification.attributes }
           specification.reload
           expect(specification.value).to eq BigDecimal.new("6.9000")
         end
@@ -92,7 +92,7 @@ RSpec.describe SpecificationsController, :type => :controller do
 
     describe "GET #index" do
       it "redirects to the signin page" do
-        get :index, params: { app_id: app.id, commodity_id: commodity.id }
+        get :index, params: { app_id: app.id, commodity_reference_id: commodity_reference.id }
 
         expect(response.status).to eq 302
         expect(response).to redirect_to(new_user_session_path)
@@ -102,7 +102,7 @@ RSpec.describe SpecificationsController, :type => :controller do
 
     describe "GET #new" do
       it "redirects to the signin page" do
-        get :new, params: { app_id: app.id, commodity_id: commodity.id }
+        get :new, params: { app_id: app.id, commodity_reference_id: commodity_reference.id }
 
         expect(response.status).to eq 302
         expect(response).to redirect_to(new_user_session_path)
@@ -112,7 +112,7 @@ RSpec.describe SpecificationsController, :type => :controller do
 
     describe "POST #create" do
       it "redirects to the signin page" do
-        post :create, params: { app_id: app.id, commodity_id: commodity.id, specification: attributes_for(:specification) }
+        post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, specification: attributes_for(:specification) }
 
         expect(response.status).to eq 302
         expect(response).to redirect_to(new_user_session_path)
@@ -122,7 +122,7 @@ RSpec.describe SpecificationsController, :type => :controller do
 
     describe "GET #show" do
       it "redirects to the signin page" do
-        get :show, params: { app_id: app.id, commodity_id: commodity.id, id: 1 }
+        get :show, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: 1 }
 
         expect(response.status).to eq 302
         expect(response).to redirect_to(new_user_session_path)
@@ -132,7 +132,7 @@ RSpec.describe SpecificationsController, :type => :controller do
 
     describe "GET #edit" do
       it "redirects to the signin page" do
-        get :edit, params: { app_id: app.id, commodity_id: commodity.id, id: 1 }
+        get :edit, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: 1 }
 
         expect(response.status).to eq 302
         expect(response).to redirect_to(new_user_session_path)
@@ -142,7 +142,7 @@ RSpec.describe SpecificationsController, :type => :controller do
 
     describe "PATCH #update" do
       it "redirects to the signin page" do
-        patch :update, params: { app_id: app.id, commodity_id: commodity.id, id: 1, specification: attributes_for(:specification) }
+        patch :update, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: 1, specification: attributes_for(:specification) }
 
         expect(response.status).to eq 302
         expect(response).to redirect_to(new_user_session_path)
