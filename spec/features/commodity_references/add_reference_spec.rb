@@ -1,45 +1,38 @@
 require 'rails_helper'
 
 feature 'Adding a reference to commodity reference' do
-  given(:user) { create(:user) }
-  given(:app) { user.default_app }
-  given(:commodity) { create(:commodity) }
-  given!(:commodity_reference) { create(:commodity_reference, commodity: commodity, app_id: app.id) }
-  given(:reference) { build(:reference, app: app, commodity_reference: commodity_reference) }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app, user_id: user.id) }
+  given(:reference) { build(:reference, app: app) }
 
-  given(:commodities) { create_list(:commodity, 3) }
+  given(:generic_commodity_references) { create_list(:generic_commodity_reference, 3, app_id: app.id) }
+  given(:non_generic_commodity_references) { create_list(:non_generic_commodity_reference, 3, app_id: app.id) }
 
-  given(:sample_commodity) { commodities.first }
-  given(:search_term) { sample_commodity.name.split(" ").first }
+  given(:generic_commodity_reference) { generic_commodity_references.first }
+  given(:non_generic_commodity_reference) { non_generic_commodity_references.first }
+  given(:generic_search_term) { generic_commodity_reference.name.split(" ").first }
+  given(:non_generic_search_term) { non_generic_commodity_reference.name.split(" ").first }
 
   background do
     log_in(user)
-    visit commodity_path(commodity)
+    visit app_commodity_reference_path(app, generic_commodity_reference)
   end
 
   scenario 'User can add reference to a commodity', js: true do
-    find(".btn-add.icon.icon-circle.icon-md").click
-    within("#modalAdd") do
-      click_link "Reference"
+    click_link "Add Reference"
+
+    within("div#sharedModal") do
+      select reference.kind, from: 'reference[kind]'
+      select2("reference_source_commodity_reference_id",generic_search_term, generic_commodity_reference.id,generic_commodity_reference.name)
+      select2("reference_target_commodity_reference_id",non_generic_search_term, non_generic_commodity_reference.id,non_generic_commodity_reference.name)
+      fill_in 'reference[description]', with: reference.description
+
+      click_button 'Submit'
     end
 
-    select reference.kind.titleize, from: 'reference[kind]'
-    select2("reference_source_commodity_id",search_term, sample_commodity.id,sample_commodity.name)
-    select 'Private', from: 'reference[visibility]'
-    # page.execute_script("$('#reference_visibility').selectpicker('val','privatized')")
-
-    fill_in 'reference[description]', with: reference.description
-
-    click_button 'Create Reference'
-
-    page.execute_script("$('a[href=\"#tab-5\"]').tab('show')")
-
-    within("#tab-5") do
-      expect(page).to have_content(sample_commodity.name)
-      expect(page).to have_content(reference.kind)
-      expect(page).to have_content(/Private/i)
-      expect(page).to have_content(commodity.name)
-    end
+    expect(page).to have_content(generic_commodity_reference.name)
+    expect(page).to have_content(reference.kind)
+    expect(page).to have_content(non_generic_commodity_reference.name)
   end
 
 end
