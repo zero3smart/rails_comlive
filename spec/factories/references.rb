@@ -3,11 +3,10 @@
 FactoryGirl.define do
   factory :reference do
     kind { %w(specific_of variation_of alternative_to).sample }
-    source_commodity_id { create(:generic_commodity).id }
-    target_commodity_id { create(:non_generic_commodity).id }
+    source_commodity_reference_id { create(:generic_commodity_reference).id }
+    target_commodity_reference_id { create(:non_generic_commodity_reference).id }
     description { Faker::Lorem.paragraph }
     association :app
-    association :commodity_reference
 
     factory :invalid_reference do
       description nil
