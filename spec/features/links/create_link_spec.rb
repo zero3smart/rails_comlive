@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 feature 'Create Link' do
-  given(:user) { create(:user) }
-  given(:app) { user.default_app }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app, user_id: user.id) }
   given!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
   given(:link) { build(:link) }
 
   background do
     log_in(user)
-    visit new_app_commodity_reference_link_path(app,commodity_reference)
+    visit new_app_link_path(app)
   end
 
   feature "Visiting #new page" do
@@ -16,11 +16,12 @@ feature 'Create Link' do
 
       fill_in "link[url]", with: link.url
       fill_in "link[description]", with: link.description
+      select commodity_reference.name, from: "link[commodity_reference_id]"
 
       click_button "Create Link"
 
       expect(page).to have_text("link successfully created")
-      expect(page).to have_link(link.url, href: link.url)
+      expect(page).to have_link("Open Link", href: link.url)
       expect(page).to have_text(link.description)
     end
 
@@ -28,6 +29,7 @@ feature 'Create Link' do
 
       fill_in "link[url]", with: ""
       fill_in "link[description]", with: ""
+      select commodity_reference.name, :from => "link[commodity_reference_id]"
 
       click_button "Create Link"
 
