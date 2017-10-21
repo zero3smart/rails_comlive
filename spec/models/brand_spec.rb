@@ -13,32 +13,10 @@ RSpec.describe Brand, :type => :model do
       expect(brand.errors[:name]).to include("can't be blank")
     end
 
-    context "With optional fields present" do
-      it "is invalid with an invalid url" do
-        brand = build(:brand, url: "fake//url")
-        brand.valid?
-        expect(brand.errors[:url]).to include("is invalid")
-      end
-      it "is invalid with an invalid facebook address" do
-        brand = build(:brand, facebook_address: "fake//url")
-        brand.valid?
-        expect(brand.errors[:facebook_address]).to include("is invalid")
-      end
-      it "is invalid with an invalid open corporate url" do
-        brand = build(:brand, open_corporate_url: "fake//url")
-        brand.valid?
-        expect(brand.errors[:open_corporate_url]).to include("is invalid")
-      end
-      it "is invalid with an invalid wipo" do
-        brand = build(:brand, wipo_url: "fake//url")
-        brand.valid?
-        expect(brand.errors[:wipo_url]).to include("is invalid")
-      end
-      it "is invalid with an invalid url" do
-        brand = build(:brand, email: "invalid.email")
-        brand.valid?
-        expect(brand.errors[:email]).to include("is invalid")
-      end
+    it "is invalid without a description" do
+      brand = build(:brand, description: nil)
+      brand.valid?
+      expect(brand.errors[:description]).to include("can't be blank")
     end
   end
 
@@ -50,11 +28,6 @@ RSpec.describe Brand, :type => :model do
 
     it "has many children" do
       assoc = Brand.reflect_on_association(:children)
-      expect(assoc.macro).to eq :has_many
-    end
-
-    it "has many commodities" do
-      assoc = Brand.reflect_on_association(:commodities)
       expect(assoc.macro).to eq :has_many
     end
 

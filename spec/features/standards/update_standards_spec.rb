@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 feature 'Updating a Standard' do
-  given(:user){ create(:user) }
-  given(:brand) { create(:brand)}
-  given(:standard) { create(:standard, brand: brand) }
+  given!(:user){ create(:user) }
+  given!(:standard) { create(:standard) }
   given(:new_standard) { build(:standard) }
 
   background do
     log_in(user)
-    visit edit_brand_standard_path(standard, brand)
+    visit edit_standard_path(standard)
   end
 
   feature "Visiting #edit page" do
@@ -39,7 +38,7 @@ feature 'Updating a Standard' do
         click_button "Update Standard"
 
         expect(page).to have_text("Edit Standard")
-        expect(page).to have_text("can't be blank")
+        expect(page).to have_text("Name can't be blank")
       end
     end
   end

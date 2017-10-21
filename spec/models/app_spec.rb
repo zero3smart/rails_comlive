@@ -31,8 +31,8 @@ RSpec.describe App, :type => :model do
       expect(assoc.macro).to eq :belongs_to
     end
 
-    it "has many commodities" do
-      assoc = App.reflect_on_association(:commodities)
+    it "has many commodity references" do
+      assoc = App.reflect_on_association(:commodity_references)
       expect(assoc.macro).to eq :has_many
     end
 
@@ -66,7 +66,7 @@ RSpec.describe App, :type => :model do
       expect(assoc.macro).to eq :has_many
     end
 
-    it "has many apps" do
+    it "has many users" do
       assoc = App.reflect_on_association(:users)
       expect(assoc.macro).to eq :has_many
     end

@@ -7,16 +7,10 @@ RSpec.describe Commodity, :type => :model do
       expect(commodity).to be_valid
     end
 
-    it "is invalid without short description" do
-      commodity = build(:commodity, short_description: nil)
+    it "is invalid without a name" do
+      commodity = build(:commodity, name: nil)
       commodity.valid?
-      expect(commodity.errors[:short_description]).to include("can't be blank")
-    end
-
-    it "is invalid without long description" do
-      commodity = build(:commodity, long_description: nil)
-      commodity.valid?
-      expect(commodity.errors[:long_description]).to include("can't be blank")
+      expect(commodity.errors[:name]).to include("can't be blank")
     end
 
     it "is generic field is false by default" do
@@ -28,12 +22,6 @@ RSpec.describe Commodity, :type => :model do
       commodity = build(:commodity, measured_in: nil)
       commodity.valid?
       expect(commodity.errors[:measured_in]).to include("can't be blank")
-    end
-
-    it "is invalid without an app" do
-      commodity = build(:commodity, app_id: nil)
-      commodity.valid?
-      expect(commodity.errors[:app]).to include("can't be blank")
     end
 
     it "validates presence of brand if commodity is not generic" do
@@ -49,67 +37,37 @@ RSpec.describe Commodity, :type => :model do
   end
 
   describe "Associations" do
-    it "belongs to an app" do
-      assoc = Commodity.reflect_on_association(:app)
-      expect(assoc.macro).to eq :belongs_to
-    end
     it "belongs to a brand" do
       assoc = Commodity.reflect_on_association(:brand)
       expect(assoc.macro).to eq :belongs_to
     end
-    it "belongs to hscode section" do
-      assoc = Commodity.reflect_on_association(:hscode_section)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to hscode chapter" do
-      assoc = Commodity.reflect_on_association(:hscode_chapter)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to hscode heading" do
-      assoc = Commodity.reflect_on_association(:hscode_heading)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to hscode sub-heading" do
-      assoc = Commodity.reflect_on_association(:hscode_subheading)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to unspsc family" do
-      assoc = Commodity.reflect_on_association(:unspsc_family)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to unspsc segment" do
-      assoc = Commodity.reflect_on_association(:unspsc_segment)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to unspsc class" do
-      assoc = Commodity.reflect_on_association(:unspsc_class)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "belongs to unspsc commodity" do
-      assoc = Commodity.reflect_on_association(:unspsc_commodity)
-      expect(assoc.macro).to eq :belongs_to
-    end
-    it "has many links" do
-      assoc = Commodity.reflect_on_association(:links)
-      expect(assoc.macro).to eq :has_many
-    end
-    it "has many references" do
-      assoc = Commodity.reflect_on_association(:references)
-      expect(assoc.macro).to eq :has_many
-    end
-    it "has one state" do
-      assoc = Commodity.reflect_on_association(:state)
-      expect(assoc.macro).to eq :has_one
-    end
 
-    it "has many packagings" do
-      assoc = Commodity.reflect_on_association(:packagings)
+    it "has many commodity references" do
+      assoc = Commodity.reflect_on_association(:commodity_references)
       expect(assoc.macro).to eq :has_many
     end
+  end
 
-    it "has many standards" do
-      assoc = Commodity.reflect_on_association(:standards)
-      expect(assoc.macro).to eq :has_many
+  describe "Class Methods" do
+    describe ".search" do
+      it "returns commodities matching the query" do
+        generic_commodity = create(:generic_commodity, name: "Western Digital")
+        non_generic_commodity = create(:non_generic_commodity, name: "Dell Inc")
+
+        Commodity.reindex
+
+        generic_search = Commodity.search("western").records
+        non_generic_search = Commodity.search("inc").records
+        no_results_search = Commodity.search("remote").records
+
+        expect(generic_search).to match_array([generic_commodity])
+        expect(generic_search).not_to match_array([non_generic_commodity])
+
+        expect(non_generic_search).to match_array([non_generic_commodity])
+        expect(non_generic_search).not_to match_array([generic_commodity])
+
+        expect(no_results_search).to be_empty
+      end
     end
   end
 end
