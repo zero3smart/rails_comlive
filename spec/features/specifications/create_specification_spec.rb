@@ -3,13 +3,13 @@ require 'rails_helper'
 feature 'Creating a specification' do
   given!(:user) { create(:user) }
   given!(:app) { create(:app, user_id: user.id) }
-  given!(:commodity) { create(:commodity, app_id: app.id) }
+  given!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
   given!(:custom_units) { create_list(:custom_unit, 4, app_id: app.id) }
 
   feature "Visiting #new page" do
     background do
       log_in(user)
-      visit new_app_commodity_specification_path(app, commodity)
+      visit new_app_commodity_reference_specification_path(app, commodity_reference)
     end
 
     feature "With valid details" do
@@ -17,9 +17,11 @@ feature 'Creating a specification' do
         scenario "User should successfully create a specification", js: true do
           custom_unit = custom_units.sample
 
-          select custom_unit.property, from: "specification[property]"
+          fill_in "specification[property]", with: custom_unit.property
           fill_in "specification[value]", with: "10.56"
+          select custom_unit.property, from: "type_of_measure"
           select custom_unit.uom, from: "specification[uom]"
+
 
           click_button "Create Specification"
 
@@ -35,9 +37,10 @@ feature 'Creating a specification' do
           property = properties.sample
           unit_of_measure = uom(property).sample
 
-          select property, :from => "specification[property]"
+          fill_in "specification[property]", with: property
           fill_in "specification[value]", with: "5.67"
-          select unit_of_measure[0], :from => "specification[uom]"
+          select property, from: "type_of_measure"
+          select unit_of_measure[0], from: "specification[uom]"
 
           click_button "Create Specification"
 
