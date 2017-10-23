@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_app
 
+  def logout
+    session.delete(:userinfo)
+    redirect_to "https://ntty.eu.auth0.com/v2/logout?returnTo=" + request.base_url + "/"
+  end
+
   private
 
     def current_user
