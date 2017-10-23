@@ -10,7 +10,7 @@ feature 'Updating a commodity Reference' do
     visit edit_app_commodity_reference_path(app, commodity_reference)
   end
 
-  scenario "It should show the current commodity reference's details", js: true do
+  scenario "It should show the current commodity reference's details" do
     expect(page).to have_text("Edit Commodity")
     expect(find_field('commodity_reference[name]').value).to eq commodity_reference.name
     expect(find_field('commodity_reference[short_description]').value).to eq commodity_reference.short_description
