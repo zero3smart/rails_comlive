@@ -33,7 +33,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "faker", "~> 1.4.3"
+  gem "faker", git: "https://github.com/stympy/faker"
   gem "capybara", git: "https://github.com/jnicklas/capybara"
   gem "database_cleaner", "~> 1.3.0"
   gem "launchy", "~> 2.4.2"
@@ -54,7 +54,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'omniauth', '~> 1.3.1'
 gem 'omniauth-auth0', '~> 1.4.1'
 gem 'knock', '~> 1.4.2'
-
-# API
-gem 'active_model_serializers'
-gem 'versionist'

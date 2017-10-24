@@ -1,8 +1,9 @@
 class BrandsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_app
 
   def index
-    @brands = Brand.all
+    @brands = @app.brands
   end
 
   def new
@@ -10,33 +11,37 @@ class BrandsController < ApplicationController
   end
 
   def create
-    @brand = Brand.create(brand_params)
+    @brand = @app.brands.create(brand_params)
     if @brand.save
-      redirect_to @brand, notice: "Brand Successfully created"
+      redirect_to [@app, @brand], notice: "Brand Successfully created"
     else
       render :new
     end
   end
 
   def show
-    @brand = Brand.find(params[:id])
+    @brand = @app.brands.find(params[:id])
     @standardization = Standardization.new
   end
 
   def edit
-    @brand = Brand.find(params[:id])
+    @brand = @app.brands.find(params[:id])
   end
 
   def update
-    @brand = Brand.find(params[:id])
+    @brand = @app.brands.find(params[:id])
     if @brand.update(brand_params)
-      redirect_to @brand, notice: "brand successfully updated"
+      redirect_to [@app,@brand], notice: "brand successfully updated"
     else
       render :edit
     end
   end
 
   private
+
+  def set_app
+    @app = App.find(params[:app_id])
+  end
 
   def brand_params
     params.require(:brand).permit(:name, :logo, :description)

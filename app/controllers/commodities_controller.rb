@@ -1,5 +1,6 @@
 class CommoditiesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_app
 
   def index
     if params[:q]
@@ -10,13 +11,14 @@ class CommoditiesController < ApplicationController
       @commodities = Commodity.search(params[:query], operator: "or", match: :word_start,
                                       fields: ["name^10", "short_description", "long_description"]).records.recent.page(params[:page]).per_page(10)
     else
-      @recent_commodities = Commodity.recent.limit(5)
+      @recent_commodities = @app.commodities.recent.limit(5)
     end
   end
 
   def show
-    @commodity = Commodity.find(params[:id])
+    @commodity = @app.commodities.find(params[:id])
     @packaging = Packaging.new
+    @state = @commodity.state ? @commodity.state : State.new
     @standardization = Standardization.new
   end
 
@@ -25,28 +27,20 @@ class CommoditiesController < ApplicationController
   end
 
   def create
-    @commodity = Commodity.create(commodity_params)
+    @commodity = @app.commodities.create(commodity_params)
     if @commodity.save
-      app = App.create!(name: "Untitled App", user: current_user)
-      attributes = Commodity.attribute_names.reject{|a|
-        ["id","created_at","updated_at","uuid"].include?(a)
-      }
-      attributes = attributes.each_with_object({}) do |attribute,hash|
-        hash[attribute] = @commodity.send(attribute)
-      end
-      commodity_ref = @commodity.commodity_references.create!(attributes.merge(app_id: app.id))
-      redirect_to [commodity_ref.app,commodity_ref], notice: "commodity successfully created"
+      redirect_to [@app,@commodity], notice: "commodity successfully created"
     else
       render :new
     end
   end
 
   def edit
-    @commodity = Commodity.find(params[:id])
+    @commodity = @app.commodities.find(params[:id])
   end
 
   def update
-    @commodity = Commodity.find(params[:id])
+    @commodity = @app.commodities.find(params[:id])
     if @commodity.update(commodity_params)
       redirect_to [@app,@commodity], notice: "commodity successfully updated"
     else
@@ -63,6 +57,10 @@ class CommoditiesController < ApplicationController
   end
 
   private
+
+  def set_app
+    @app = current_user.apps.find(params[:app_id])
+  end
 
   def response_for(commodities)
     response = {}
