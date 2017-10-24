@@ -1,8 +1,9 @@
 class StandardsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_app
 
   def index
-    @standards = Standard.all
+    @standards = @app.standards
   end
 
   def new
@@ -10,11 +11,11 @@ class StandardsController < ApplicationController
   end
 
   def show
-    @standard = Standard.find(params[:id])
+    @standard = @app.standards.find(params[:id])
   end
 
   def create
-    @standard = Standard.create(standard_params)
+    @standard = @app.standards.create(standard_params)
     if @standard.save
       redirect_to [@app,@standard], notice: "Standard successfully created"
     else
@@ -23,11 +24,11 @@ class StandardsController < ApplicationController
   end
 
   def edit
-    @standard = Standard.find(params[:id])
+    @standard = @app.standards.find(params[:id])
   end
 
   def update
-    @standard = Standard.find(params[:id])
+    @standard = @app.standards.find(params[:id])
     if @standard.update(standard_params)
       redirect_to [@app,@standard], notice: "Standard successfully updated"
     else
@@ -36,6 +37,10 @@ class StandardsController < ApplicationController
   end
 
   private
+
+  def set_app
+    @app = App.find(params[:app_id])
+  end
 
   def standard_params
     params.require(:standard).permit(:name, :description, :logo)

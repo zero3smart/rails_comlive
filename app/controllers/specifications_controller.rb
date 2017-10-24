@@ -55,10 +55,10 @@ class SpecificationsController < ApplicationController
   def parent_url
     model = @parent
     case model
-      when CommodityReference
+      when Commodity
         [model.app, model]
       when Packaging
-        [model.commodity_reference.app, model.commodity_reference, model]
+        [model.commodity.app, model.commodity, model]
     end
   end
 

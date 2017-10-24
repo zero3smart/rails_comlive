@@ -1,5 +1,5 @@
 class UomsController < ApplicationController
-  before_action :logged_in_using_omniauth?
+  before_action :authenticate_user!
 
   def index
     property = params[:property]
