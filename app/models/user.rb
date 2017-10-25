@@ -14,6 +14,18 @@ class User < ApplicationRecord
   has_many :members
   has_many :invited_apps, through: :members, source: :app
 
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+      user.provider     = auth.provider
+      user.uid          = auth.uid
+      user.email        = auth.info.email
+      user.first_name   = auth.info.first_name
+      user.last_name    = auth.info.last_name
+      user.oauth_token  = auth.credentials.token
+      user.save!
+    end
+  end
+
   private
 
   #def assign_token

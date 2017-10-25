@@ -22,11 +22,7 @@
         <li><a href="#contact">CONTACT</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <% if session[:userinfo].present? %>
-        <li><%= button_to "RETURN TO DASHBOARD", apps_path, class: "btn btn-success", method: :get %></li>
-        <% else %>
-        <li><%= button_to "LOGIN", "javascript:lock.show()", class: "btn btn-brand", method: :get %></li>
-        <% end %>
+        <li><%= button_to "LOGIN", login_path, class: "btn btn-brand", method: :get %></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container -->
