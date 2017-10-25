@@ -12,7 +12,7 @@ module Omniauth
               "last_name": user.last_name,
           },
           "credentials": {
-              "token": "XKLjnkKJj7hkHKJkk",
+              "token": user.oauth_token,
               "expires": true,
               "id_token": "eyJ0eXAiOiJK1VveHkwaTFBNXdTek41dXAiL.Wz8bwniRJLQ4Fqx_omnGDCX1vrhHjzw",
               "token_type": "Bearer"
