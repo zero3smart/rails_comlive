@@ -61,11 +61,13 @@ ready = function(){
     $("input#commodity_reference_generic,  input#commodity_generic").change(function(){
         var checkbox = $(this);
         var checked = checkbox.is(":checked");
-        var select = $("select#commodity_reference_brand_id");
+        var ref_select = $("select#commodity_reference_brand_id");
+        var com_select = $("select#commodity_brand_id");
         var div = $("div#commodity-brand");
 
         if(checked){
-            select.prop("selectedIndex", 0);
+            ref_select.prop("selectedIndex", 0);
+            com_select.prop("selectedIndex", 0);
             div.hide();
             checkbox.parent().css("margin-bottom","40px");
         } else {
