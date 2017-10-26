@@ -8,7 +8,7 @@ RSpec.describe Invitation, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("You have been invited to be an admin of #{invitation.app.name} app on Commodity Live")
       expect(mail.to).to eq([invitation.recipient_email])
-      expect(mail.from).to eq(["info@ntty.com"])
+      expect(mail.from).to eq(["from@example.com"])
     end
 
     it "renders the body" do

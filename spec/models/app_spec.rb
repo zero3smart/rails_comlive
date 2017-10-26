@@ -23,11 +23,6 @@ RSpec.describe App, :type => :model do
       app = create(:app)
       expect(app.uuid).not_to be_nil
     end
-
-    it "is not default by default" do
-      app = build(:app)
-      expect(app.default).to eq false
-    end
   end
 
   describe "Associations" do
@@ -73,6 +68,12 @@ RSpec.describe App, :type => :model do
 
     it "has many users" do
       assoc = App.reflect_on_association(:users)
+      expect(assoc.macro).to eq :has_many
+      expect(assoc.options[:through]).to eq :memberships
+    end
+
+    it "has many invitations" do
+      assoc = App.reflect_on_association(:invitations)
       expect(assoc.macro).to eq :has_many
     end
   end
