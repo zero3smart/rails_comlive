@@ -58,7 +58,7 @@ ready = function(){
         width: '100%'
     });
 
-    $("input#commodity_reference_generic,  input#commodity_generic").change(function(){
+    $("input#commodity_reference_generic, input#commodity_generic").change(function(){
         var checkbox = $(this);
         var checked = checkbox.is(":checked");
         var ref_select = $("select#commodity_reference_brand_id");

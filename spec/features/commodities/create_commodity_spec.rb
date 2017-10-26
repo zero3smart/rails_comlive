@@ -16,7 +16,8 @@ feature 'Commodity creation' do
       fill_in "commodity[name]", with: commodity.name
       select "area", from: "commodity[measured_in]"
 
-      check('commodity[generic]')
+      find('label[for="commodity_generic"]').click
+      # check('commodity[generic]')
 
       click_button "Create Commodity"
 
@@ -31,7 +32,8 @@ feature 'Commodity creation' do
       fill_in "commodity[short_description]", with: commodity.short_description
       fill_in "commodity[long_description]", with: commodity.long_description
 
-      check('commodity[generic]')
+      # check('commodity[generic]')
+      find('label[for="commodity_generic"]').click
 
       click_button "Create Commodity"
 
