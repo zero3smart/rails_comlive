@@ -6,10 +6,14 @@
           redirectUrl: window.location.origin + '/auth/auth0/callback',
           responseType: 'code',
           params: {
-            scope: 'openid email' // Learn about scopes: https://auth0.com/docs/scopes
+            scope: 'openid email', // Learn about scopes: https://auth0.com/docs/scopes
+            state: '<%= @invitation.token %>'
           }
         },
-        closable: false
+        closable: false,
+        initialScreen: 'signUp',
+        allowLogin: false,
+        prefill: { email: "<%= @invitation.recipient_email %>" }
       });
       lock.show();
     </script>

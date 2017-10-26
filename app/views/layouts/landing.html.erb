@@ -23,8 +23,9 @@
 </head>
 <body>
 
-<%= render 'layouts/landing/navbar' unless current_page?(controller: "sessions", action: "new") %>
-
+<% unless current_page?(controller: "sessions", action: "new") || params[:token] %>
+    <%= render 'layouts/landing/navbar' %>
+<% end %>
 <%= yield %>
 
 </body>

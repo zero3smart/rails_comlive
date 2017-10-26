@@ -65,7 +65,7 @@
 
         <% if current_app %>
             <li>
-              <%= link_to "#", class: "menu-link"  do %>
+              <%= link_to new_app_invitation_path(current_app), class: "menu-link"  do %>
                   <span class="menu-icon"><i class="zmdi zmdi-accounts-add zmdi-hc-lg"></i></span>
                   <span class="menu-text">Invite Users</span>
               <% end %>

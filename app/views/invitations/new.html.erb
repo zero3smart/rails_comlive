@@ -1,0 +1,8 @@
+<%= form_for [@app, @invitation] do |f| %>
+    <%= errors_for @invitation %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :recipient_email, class: "form-control", placeholder: "user@example.com" %>
+    </div>
+    <%= f.submit "Send Invitation", class: "btn btn-default" %>
+<% end %>
