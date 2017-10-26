@@ -20,7 +20,6 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'searchkick'
-gem "faker", git: "https://github.com/stympy/faker"
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
@@ -32,6 +31,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "faker", git: "https://github.com/stympy/faker"
   gem "capybara", git: "https://github.com/jnicklas/capybara"
   gem "database_cleaner", "~> 1.3.0"
   gem "launchy", "~> 2.4.2"
@@ -45,6 +45,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "better_errors"
   gem "binding_of_caller"
+  gem "letter_opener"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

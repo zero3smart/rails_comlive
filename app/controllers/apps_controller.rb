@@ -3,6 +3,7 @@ class AppsController < ApplicationController
 
   def index
     @apps = current_user.apps
+    @invited_apps = current_user.invited_apps
   end
 
   def new
@@ -19,7 +20,7 @@ class AppsController < ApplicationController
   end
 
   def show
-    @app = current_user.apps.find(params[:id])
+    @app = App.find(params[:id])
   end
 
   def edit
