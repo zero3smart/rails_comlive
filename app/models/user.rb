@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :members
   has_many :invited_apps, through: :members, source: :app
 
+  after_create :create_app
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
       user.provider     = auth.provider
@@ -26,7 +28,15 @@ class User < ApplicationRecord
     end
   end
 
+  def default_app
+    App.where(user_id: self.id, default: true).first
+  end
+
   private
+
+  def create_app
+    self.apps.create(name: Faker::App.name, description: "App description", default: true)
+  end
 
   #def assign_token
   #  loop do

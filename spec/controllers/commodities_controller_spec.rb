@@ -6,7 +6,6 @@ RSpec.describe CommoditiesController, :type => :controller do
   let!(:brand) { create(:brand) }
 
   before(:each) do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
     sign_in user
   end
 
@@ -37,12 +36,6 @@ RSpec.describe CommoditiesController, :type => :controller do
         expect{
           post :create, params: { commodity: attributes_for(:generic_commodity) }
         }.to change(Commodity, :count).by(1)
-      end
-
-      it "creates an app for the commodity reference" do
-        expect{
-          post :create, params: { commodity: attributes_for(:generic_commodity) }
-        }.to change(App, :count).by(1)
       end
 
       it "creates a commodity reference" do

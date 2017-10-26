@@ -23,6 +23,11 @@ RSpec.describe App, :type => :model do
       app = create(:app)
       expect(app.uuid).not_to be_nil
     end
+
+    it "is not default by default" do
+      app = build(:app)
+      expect(app.default).to eq false
+    end
   end
 
   describe "Associations" do
