@@ -58,10 +58,10 @@ ready = function(){
         width: '100%'
     });
 
-    $("input#commodity_generic").change(function(){
+    $("input#commodity_reference_generic,  input#commodity_generic").change(function(){
         var checkbox = $(this);
         var checked = checkbox.is(":checked");
-        var select = $("select#commodity_brand_id");
+        var select = $("select#commodity_reference_brand_id");
         var div = $("div#commodity-brand");
 
         if(checked){
@@ -164,8 +164,8 @@ ready = function(){
             $("#sharedModal").modal();
 
             // additional scripts
-            var source_commodity = $("#reference_source_commodity_id");
-            var target_commodity = $("#reference_target_commodity_id");
+            var source_commodity = $("#reference_source_commodity_reference_id");
+            var target_commodity = $("#reference_target_commodity_reference_id");
             if(source_commodity.length && target_commodity.length){
                 select2For(source_commodity);
                 select2For(target_commodity);
@@ -192,9 +192,9 @@ ready = function(){
         form.submit();
     });
 
-    // additional scripts
-    var source_commodity = $("#reference_source_commodity_id");
-    var target_commodity = $("#reference_target_commodity_id");
+    // on page load
+    var source_commodity = $("#reference_source_commodity_reference_id");
+    var target_commodity = $("#reference_target_commodity_reference_id");
     if(source_commodity.length && target_commodity.length){
         select2For(source_commodity);
         select2For(target_commodity);
