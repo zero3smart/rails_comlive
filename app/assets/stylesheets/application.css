@@ -20,5 +20,6 @@
  *= require select2.min
  *= require app
  *= require commodities
+ *= require barcodes
  *= require_self
  */

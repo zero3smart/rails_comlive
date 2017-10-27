@@ -74,6 +74,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (7.1.1)
+    barby (0.6.4)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -84,6 +85,13 @@ GEM
     blankslate (3.1.3)
     builder (3.2.2)
     byebug (9.0.5)
+    carrierwave (0.11.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+      mimemagic (>= 0.3.0)
+    chunky_png (1.3.7)
     cliver (0.3.2)
     coderay (1.1.1)
     coffee-rails (4.1.1)
@@ -160,8 +168,6 @@ GEM
       rails (>= 4.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.4.1)
-      launchy (~> 2.2)
     liner (0.2.4)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -177,6 +183,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.2)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
@@ -254,6 +261,8 @@ GEM
     roo (2.0.1)
       nokogiri (~> 1)
       rubyzip (~> 1.1, < 2.0.0)
+    rqrcode (0.10.1)
+      chunky_png (~> 1.0)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -336,10 +345,12 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  barby
   better_errors
   binding_of_caller
   byebug
   capybara!
+  carrierwave
   coffee-rails (~> 4.1.0)
   database_cleaner (~> 1.3.0)
   elasticsearch-model!
@@ -354,7 +365,6 @@ DEPENDENCIES
   jquery-rails
   knock (~> 1.4.2)
   launchy (~> 2.4.2)
-  letter_opener
   listen (~> 3.0.5)
   omniauth (~> 1.3.1)
   omniauth-auth0 (~> 1.4.1)
@@ -364,6 +374,7 @@ DEPENDENCIES
   rails (>= 5.0.0.beta4, < 5.1)
   rails-controller-testing
   roo (~> 2.0.0)
+  rqrcode
   rspec-rails (~> 3.1.0)
   sass-rails (~> 5.0)
   searchkick

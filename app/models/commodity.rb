@@ -1,6 +1,7 @@
 class Commodity < ApplicationRecord
   belongs_to :brand, optional: true
   has_many :commodity_references
+  has_many :barcodes, as: :barcodeable
 
   validates_presence_of :name, :measured_in
   validates_presence_of :brand_id, unless: "generic?"

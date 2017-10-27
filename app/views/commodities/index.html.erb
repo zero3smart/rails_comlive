@@ -3,14 +3,14 @@
     <div class="widget">
       <header class="widget-header">
         <h4 class="widget-title pull-left">Commodities</h4>
-        <span class="pull-right"><%= link_to "Add Commodity", new_app_commodity_path(@app) %></span>
+        <span class="pull-right"><%= link_to "Add Commodity", new_commodity_path %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
-        <%= form_tag app_commodities_path(@app), method: :get do %>
+        <%= form_tag commodities_path, method: :get do %>
             <div class="input-group stylish-input-group">
               <%= text_field_tag :query, params[:query], id: "commodity-search", class: "form-control", placeholder: "Search Commodities",
-                                 autocomplete: "off", data: { prefetch_url: prefetch_app_commodities_path(@app), autocomplete_url: autocomplete_app_commodities_path(@app) } %>
+                                 autocomplete: "off", data: { prefetch_url: "#", autocomplete_url: "#" } %>
               <span class="input-group-addon">
             <%= button_tag type: "submit", name: nil, id: "search-btn" do %>
               <span class="fa fa-search"></span>

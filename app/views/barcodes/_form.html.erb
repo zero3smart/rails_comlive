@@ -1,0 +1,15 @@
+<%= form_for object_url(@parent, @barcode) do |f| %>
+    <%= errors_for @barcode %>
+
+    <div class="form-group">
+      <%= f.label :format %>
+      <%= f.select :format, options_for_barcodes, {}, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :content %>
+      <%= f.text_field :content, class: "form-control" %>
+    </div>
+
+    <%= f.submit class: "btn btn-primary" %>
+<% end %>

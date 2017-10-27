@@ -18,8 +18,8 @@
 
     <div class="widget">
       <header class="widget-header">
-        <h4 class="widget-title pull-left">Commodity Packagings</h4>
-        <span class="pull-right"><%= link_to "Add Packaging", new_app_commodity_packaging_path(@app,@commodity), class: "load-in-modal" %></span>
+        <h4 class="widget-title pull-left">Commodity Barcodes</h4>
+        <span class="pull-right"><%= link_to "Add Barcode", new_commodity_barcode_path(@commodity), class: "load-in-modal" %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
@@ -27,181 +27,21 @@
           <table class="table no-cellborder">
             <thead>
             <tr>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>UOM</th>
+              <th>Format</th>
+              <th>Data</th>
+              <th>Barcode</th>
             </tr>
             </thead>
             <tbody>
-            <% if @commodity.packagings.any? %>
-                <%= render @commodity.packagings %>
-            <% else %>
-                <p>No packagings found</p>
-            <% end %>
+            <%= render @commodity.barcodes %>
             </tbody>
           </table>
         </div>
       </div>
     </div><!-- .widget -->
 
-    <div class="widget">
-      <header class="widget-header">
-        <h4 class="widget-title pull-left">Links</h4>
-        <span class="pull-right"><%= link_to "Add Link", new_app_link_path(@app), class: "load-in-modal" %></span>
-      </header>
-      <hr class="widget-separator"/>
-      <div class="widget-body">
-        <div class="table-responsive">
-          <table class="table no-cellborder">
-            <thead>
-            <tr>
-              <th width="60%">Description</th>
-              <th>Link</th>
-              <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <% if @commodity.links.any? %>
-                <%= render @commodity.links %>
-            <% else %>
-                <p>No links found</p>
-            <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div><!-- .widget -->
-
-    <div class="widget">
-      <header class="widget-header">
-        <h4 class="widget-title pull-left">References</h4>
-        <span class="pull-right"><%= link_to "Add Reference", new_app_reference_path(@app), class: "load-in-modal" %></span>
-      </header>
-      <hr class="widget-separator"/>
-      <div class="widget-body">
-        <% if @app.references.any? %>
-            <%= render @app.references %>
-        <% else %>
-            <p>No references found.</p>
-        <% end %>
-      </div>
-    </div><!-- .widget -->
-
-    <div class="widget">
-      <header class="widget-header">
-        <h4 class="widget-title pull-left">Specifications</h4>
-        <span class="pull-right"><%= link_to "Add Specification", new_app_commodity_specification_path(@app,@commodity), class: "load-in-modal" %></span>
-      </header>
-      <hr class="widget-separator"/>
-      <div class="widget-body">
-        <table class="table no-cellborder">
-          <thead>
-          <tr>
-            <th>Property</th>
-            <th>Value</th>
-            <th>Unit of Measure</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <% if @commodity.specifications.any? %>
-              <%= render @commodity.specifications %>
-          <% else %>
-              <p>No specifications found.</p>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div><!-- .widget -->
   </div>
 
   <div class="col-md-4">
-    <div class="widget todo-widget">
-      <header class="widget-header">
-        <h4 class="widget-title">Commodity State</h4>
-      </header>
-      <hr class="widget-separator">
-      <div class="widget-body p-b-0">
-        <% if @commodity.state %>
-            <p>Status: <%= @state.status.titleize %></p>
-            <p><%= @state.info %></p>
-            <p><%= link_to @state.url, @state.url %></p>
-        <% else %>
-            <p>No state</p>
-        <% end %>
-      </div>
-      <footer class="widget-footer">
-        <%= link_to  @commodity.state ? "Update State" : "Set State", new_app_commodity_state_path(@app, @commodity),
-                     class: "btn btn-sm btn-primary pull-right load-in-modal" %>
-      </footer>
-    </div>
-
-    <div class="widget todo-widget">
-      <header class="widget-header">
-        <h4 class="widget-title">Assign Standard</h4>
-      </header>
-      <hr class="widget-separator">
-      <div class="widget-body p-b-0">
-        <%= render 'standardizations/form', referable: @commodity %>
-      </div>
-      <footer class="widget-footer">
-        <%= link_to "Assign Standard", "#", id: "assign-standard", class: "btn btn-sm btn-primary pull-right" %>
-      </footer>
-    </div>
-
-    <div class="widget todo-widget">
-      <header class="widget-header">
-        <h4 class="widget-title">Standards</h4>
-      </header>
-      <hr class="widget-separator">
-      <div class="widget-body">
-        <% @commodity.standards.each do |standard| %>
-            <p><%= standard.name %></p>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="widget todo-widget">
-      <header class="widget-header">
-        <h4 class="widget-title">Commodity HSCODE</h4>
-      </header>
-      <hr class="widget-separator">
-      <div class="widget-body">
-        <% if @commodity.hscode_subheading %>
-            <p><b><%= @commodity.hscode_subheading.category %>: </b><%= @commodity.hscode_subheading.description %></p>
-        <% elsif @commodity.hscode_heading %>
-            <p><b><%= @commodity.hscode_heading.category %>: </b><%= @commodity.hscode_heading.description %></p>
-        <% elsif @commodity.hscode_chapter %>
-            <p><b><%= @commodity.hscode_chapter.category %>: </b><%= @commodity.hscode_chapter.description %></p>
-        <% elsif @commodity.hscode_section %>
-            <p><b><%= @commodity.hscode_section.category %>: </b><%= @commodity.hscode_section.description %></p>
-        <% else %>
-            <p>No HSCODE assigned</p>
-        <% end %>
-      </div>
-      <footer class="widget-footer">
-        <%= link_to "Assign HSCODE", "#", class: "btn btn-sm btn-default pull-right", data: { toggle: "modal", target: "#hscodeModal" } %>
-      </footer>
-    </div>
-
-    <div class="widget todo-widget">
-      <header class="widget-header">
-        <h4 class="widget-title">Assign UNSPC Code</h4>
-      </header>
-      <hr class="widget-separator"/>
-      <div class="widget-body p-b-0">
-        <% if @commodity.unspsc_commodity %>
-            <p><b><%= @commodity.unspsc_commodity.long_code %>: </b><%= @commodity.unspsc_commodity.description %></p>
-        <% else %>
-            <p>No UNSPSC code assigned</p>
-        <% end %>
-      </div>
-      <footer class="widget-footer">
-        <%= link_to "Assign UNSPSC Code", "#", class: "btn btn-sm btn-default pull-right", data: { toggle: "modal", target: "#unspscModal" } %>
-      </footer>
-    </div><!-- .widget -->
   </div>
 </div>
-
-<%= render 'hscode_modal' %>
-<%= render 'unspsc_modal' %>

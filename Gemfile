@@ -20,6 +20,11 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'searchkick'
+gem 'carrierwave'
+gem 'barby'
+gem 'rqrcode' # dependency for barby
+
+# gem 'semacode', '~> 0.7.4' # dependency for barby
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
@@ -45,7 +50,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "better_errors"
   gem "binding_of_caller"
-  gem "letter_opener"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

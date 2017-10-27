@@ -1,13 +1,15 @@
 class Barcode < ApplicationRecord
-  include Visibility
-
   belongs_to :barcodeable, polymorphic: true
 
-  validates_presence_of :format, :content, :barcodeable, :name
+  validates_presence_of :format, :content, :barcodeable
   validates_inclusion_of :format, in: BARCODE_FORMATS, message: " is not a valid barcode"
-  validates_with BarcodeValidator
 
-  def output
-    BarcodeGenerator.new(format, content).generate.html_safe
+  def html_output
+    begin
+      generator = BarcodeGenerator.new(self)
+      generator.generate.html_safe
+    rescue Exception => e
+      e.message
+    end
   end
 end

@@ -11,12 +11,14 @@ module SpecificationsHelper
     properties ||= atoms.map{|a| [a, a.titleize.split(' ').join.underscore] }
   end
 
-  def object_url(model, specification = Specification.new)
-    case model
+  def object_url(parent, record = Specification.new)
+    case parent
       when CommodityReference
-        [model.app, model, specification]
+        [parent.app, parent, record]
       when Packaging
-        [model.commodity_reference.app, model.commodity_reference, model, specification]
+        [parent.commodity_reference.app, parent.commodity_reference, parent, record]
+      when Commodity
+        [parent, record]
     end
   end
 
