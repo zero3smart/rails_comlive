@@ -2,8 +2,7 @@
 
 FactoryGirl.define do
   factory :barcode do
-    name { Faker::Hacker.noun }
-    format "bookland"
+    format { BARCODE_FORMATS.sample }
     content { Faker::Code.isbn  }
     association :barcodeable, factory: :commodity
 

@@ -46,6 +46,11 @@ RSpec.describe Commodity, :type => :model do
       assoc = Commodity.reflect_on_association(:commodity_references)
       expect(assoc.macro).to eq :has_many
     end
+
+    it "has many barcodes" do
+      assoc = Commodity.reflect_on_association(:barcodes)
+      expect(assoc.macro).to eq :has_many
+    end
   end
 
   describe "Class Methods" do

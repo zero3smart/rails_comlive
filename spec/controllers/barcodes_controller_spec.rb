@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe BarcodesController, :type => :controller do
-  let(:user) { create(:user) }
-  let(:app) { user.default_app }
-  let(:commodity_reference){ create(:commodity_reference, app: app) }
+  let!(:user) { create(:user) }
+  let!(:app) { create(:app, user: user) }
+  let!(:commodity_reference){ create(:commodity_reference, app: app) }
   let(:packaging) { create(:packaging, commodity_reference_id: commodity_reference.id) }
-  let(:barcode) { create(:barcode, barcodeable: packaging) }
+  let!(:barcode) { create(:barcode, format: "ean_13", content: "5463", barcodeable: packaging) }
 
   context "As an authenticated user" do
     before(:each) do
@@ -77,7 +77,7 @@ RSpec.describe BarcodesController, :type => :controller do
               app_id: app.id, commodity_reference_id: commodity_reference.id, packaging_id: packaging.id, id: barcode,
               barcode: barcode.attributes }
           barcode.reload
-          expect(barcode.format).to eq 'bookland'
+          expect(barcode.format).to eq 'ean_13'
         end
       end
     end

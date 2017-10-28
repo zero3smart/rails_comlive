@@ -7,12 +7,6 @@ RSpec.describe Barcode, :type => :model do
       expect(barcode).to be_valid
     end
 
-    it "is invalid without a name" do
-      barcode = build(:barcode, name: nil)
-      barcode.valid?
-      expect(barcode.errors[:name]).to include("can't be blank")
-    end
-
     it "is invalid without a format" do
       barcode = build(:barcode, format: nil)
       barcode.valid?
