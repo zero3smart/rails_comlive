@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :provider, null: false
       t.string :uid, null: false
       t.string :oauth_token
+      t.string :auth0_refresh_token
 
       t.timestamps
     end

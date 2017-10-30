@@ -10,33 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902071041) do
+ActiveRecord::Schema.define(version: 20160818153256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.string   "uuid"
-    t.boolean  "default",     default: false
     t.integer  "user_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["user_id"], name: "index_apps_on_user_id", using: :btree
     t.index ["uuid"], name: "index_apps_on_uuid", unique: true, using: :btree
-  end
-
-  create_table "barcodes", force: :cascade do |t|
-    t.string   "format"
-    t.string   "content"
-    t.string   "image"
-    t.string   "barcodeable_type"
-    t.integer  "barcodeable_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["barcodeable_type", "barcodeable_id"], name: "index_barcodes_on_barcodeable_type_and_barcodeable_id", using: :btree
   end
 
   create_table "brands", force: :cascade do |t|
@@ -142,18 +129,6 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.datetime "updated_at",        null: false
     t.index ["category"], name: "index_hscode_subheadings_on_category", unique: true, using: :btree
     t.index ["hscode_heading_id"], name: "index_hscode_subheadings_on_hscode_heading_id", using: :btree
-  end
-
-  create_table "invitations", force: :cascade do |t|
-    t.integer  "sender_id"
-    t.string   "recipient_email"
-    t.string   "token"
-    t.boolean  "accepted",        default: false
-    t.integer  "app_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["app_id"], name: "index_invitations_on_app_id", using: :btree
-    t.index ["token"], name: "index_invitations_on_token", unique: true, using: :btree
   end
 
   create_table "links", force: :cascade do |t|
@@ -304,12 +279,13 @@ ActiveRecord::Schema.define(version: 20160902071041) do
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "email",       null: false
-    t.string   "provider",    null: false
-    t.string   "uid",         null: false
+    t.string   "email",               null: false
+    t.string   "provider",            null: false
+    t.string   "uid",                 null: false
     t.string   "oauth_token"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "auth0_refresh_token"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["oauth_token"], name: "index_users_on_oauth_token", unique: true, using: :btree
   end
@@ -331,7 +307,6 @@ ActiveRecord::Schema.define(version: 20160902071041) do
   add_foreign_key "hscode_chapters", "hscode_sections"
   add_foreign_key "hscode_headings", "hscode_chapters"
   add_foreign_key "hscode_subheadings", "hscode_headings"
-  add_foreign_key "invitations", "apps"
   add_foreign_key "links", "apps"
   add_foreign_key "links", "commodity_references"
   add_foreign_key "members", "apps"
