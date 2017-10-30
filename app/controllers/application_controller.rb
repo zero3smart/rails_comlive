@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if user_signed_in?
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
   def user_signed_in?
@@ -45,5 +45,6 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     redirect_to login_path, alert: "You need to sign in or sign up before continuing." unless session[:user_id].present?
+    redirect_to login_path, alert: "You need to sign in or sign up before continuing." unless current_user.present?
   end
 end

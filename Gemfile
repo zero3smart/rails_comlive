@@ -20,11 +20,6 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'searchkick'
-gem 'carrierwave'
-gem 'barby'
-gem 'rqrcode' # dependency for barby
-
-# gem 'semacode', '~> 0.7.4' # dependency for barby
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
@@ -62,4 +57,3 @@ gem 'knock', '~> 1.4.2'
 
 # API
 gem 'active_model_serializers'
-gem 'versionist'
