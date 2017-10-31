@@ -13,12 +13,6 @@ RSpec.describe App, :type => :model do
       expect(app.errors[:name]).to include("can't be blank")
     end
 
-    it "is invalid without a user_id" do
-      app = build(:app, user_id: nil)
-      app.valid?
-      expect(app.errors[:user]).to include("can't be blank")
-    end
-
     it "has a uuid" do
       app = create(:app)
       expect(app.uuid).not_to be_nil
@@ -26,11 +20,6 @@ RSpec.describe App, :type => :model do
   end
 
   describe "Associations" do
-    it "belongs to a user" do
-      assoc = App.reflect_on_association(:user)
-      expect(assoc.macro).to eq :belongs_to
-    end
-
     it "has many commodity references" do
       assoc = App.reflect_on_association(:commodity_references)
       expect(assoc.macro).to eq :has_many
