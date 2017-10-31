@@ -2,8 +2,6 @@
 
 <% if @apps.any? %>
     <%= render @apps %>
-<% elsif @invited_apps.any? %>
-    <%= render @invited_apps %>
 <% else %>
     <p>No apps found. <%= link_to "Create First App", new_app_path %></p>
 <% end %>

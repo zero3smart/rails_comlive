@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AppsController, :type => :controller do
   let!(:user) { create(:user) }
-  let(:app) { create(:app, user: user) }
+  let(:app) { create(:app) }
 
   context "As an authenticated user" do
     before(:each) do
@@ -36,6 +36,12 @@ RSpec.describe AppsController, :type => :controller do
           expect{
             post :create, params: { app: attributes_for(:app) }
           }.to change(App, :count).by(1)
+        end
+
+        it "creates a membership for the user" do
+          expect{
+            post :create, params: { app: attributes_for(:app) }
+          }.to change(Membership, :count).by(1)
         end
       end
 

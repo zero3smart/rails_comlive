@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe CustomUnitsController, :type => :controller do
-  let(:user) { create(:user) }
-  let(:app) { user.default_app }
+  let!(:user) { create(:user) }
+  let!(:app) { create(:app) }
 
   context "As an authenticated user" do
     before(:each) do
