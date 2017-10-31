@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Recently Visited Commodity References' do
   let!(:user) { create(:user) }
-  let!(:app) { create(:app, user_id: user.id) }
+  let!(:app) { create(:app) }
   let!(:commodity_references){ create_list(:commodity_reference, 10, app_id: app.id) }
 
   background do

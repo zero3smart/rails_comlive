@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Viewing an app' do
-  given(:user) { create(:user) }
-  given(:app) { user.default_app }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app) }
 
   background do
     log_in(user)

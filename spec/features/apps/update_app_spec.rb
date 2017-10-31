@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Updating app' do
-  given(:user) { create(:user) }
-  given(:app) { user.default_app }
+  given!(:user) { create(:user) }
+  given!(:app){ create(:app) }
 
   background do
     log_in(user)
@@ -24,6 +24,6 @@ feature 'Updating app' do
     click_button "Update App"
 
     expect(page).to have_text("Name can't be blank")
-    expect(page).to have_text("update Teams/Apps")
+    expect(page).to have_text("Update App")
   end
 end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Adding packaging to a commodity' do
-  given!(:user) { create(:user, email: 'user@example.com', password: 'secretpass') }
-  given!(:app) { create(:app, user_id: user.id) }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app) }
   given!(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
   given(:packaging) { build(:packaging) }
 
