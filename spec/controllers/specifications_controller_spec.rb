@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.describe SpecificationsController, :type => :controller do
   let!(:user) { create(:user) }
-  let!(:app) { create(:app, user_id: user.id) }
+  let!(:app) { create(:app) }
   let!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
 
   context "As an authenticated user" do
     before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user
     end
 
@@ -95,7 +94,7 @@ RSpec.describe SpecificationsController, :type => :controller do
         get :index, params: { app_id: app.id, commodity_reference_id: commodity_reference.id }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -105,7 +104,7 @@ RSpec.describe SpecificationsController, :type => :controller do
         get :new, params: { app_id: app.id, commodity_reference_id: commodity_reference.id }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -115,7 +114,7 @@ RSpec.describe SpecificationsController, :type => :controller do
         post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, specification: attributes_for(:specification) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -125,7 +124,7 @@ RSpec.describe SpecificationsController, :type => :controller do
         get :show, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: 1 }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -135,7 +134,7 @@ RSpec.describe SpecificationsController, :type => :controller do
         get :edit, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: 1 }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -145,7 +144,7 @@ RSpec.describe SpecificationsController, :type => :controller do
         patch :update, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: 1, specification: attributes_for(:specification) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end

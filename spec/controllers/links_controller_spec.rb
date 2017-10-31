@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.describe LinksController, :type => :controller do
   let!(:user) { create(:user) }
-  let!(:app) { create(:app, user: user) }
+  let!(:app) { create(:app) }
   let!(:commodity_reference) { create(:commodity_reference, app: app) }
   let!(:link){  create(:link, app_id: app.id) }
 
   before(:each) do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
     sign_in user
   end
 

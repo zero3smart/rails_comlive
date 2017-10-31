@@ -2,13 +2,12 @@ require 'rails_helper'
 
 RSpec.describe PackagingsController, :type => :controller do
   let!(:user) { create(:user) }
-  let!(:app) { create(:app, user_id: user.id) }
+  let!(:app) { create(:app) }
   let!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
   let(:packaging) { create(:packaging, commodity_reference_id: commodity_reference.id, name: "Milk Packaging", uom: "packets") }
 
   context "As an authenticated user" do
     before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user
     end
 
@@ -74,7 +73,7 @@ RSpec.describe PackagingsController, :type => :controller do
         post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, packaging: attributes_for(:packaging) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -84,7 +83,7 @@ RSpec.describe PackagingsController, :type => :controller do
         patch :update, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: packaging.id, packaging: attributes_for(:packaging) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end

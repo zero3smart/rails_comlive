@@ -2,13 +2,12 @@ require 'rails_helper'
 
 RSpec.describe StatesController, :type => :controller do
   let!(:user) { create(:user) }
-  let!(:app) { create(:app, user: user) }
+  let!(:app) { create(:app) }
   let!(:commodity_reference){ create(:commodity_reference, app: app) }
   let!(:state) { create(:state, commodity_reference: commodity_reference, status: "recall", url: "https://www.youtube.com/watch?v=lhkslaPN-4") }
 
   context "As an authenticated user" do
     before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user
     end
 
@@ -59,7 +58,7 @@ RSpec.describe StatesController, :type => :controller do
         post :create, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, state: attributes_for(:state) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -69,7 +68,7 @@ RSpec.describe StatesController, :type => :controller do
         patch :update, params: { app_id: app.id, commodity_reference_id: commodity_reference.id, id: state.id, state: attributes_for(:state) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
