@@ -10,7 +10,7 @@ class LinksController < ApplicationController
   def create
     @link = @app.links.create(link_params)
     if @link.save
-      redirect_to [@app,@link.commodity], notice: "link successfully created"
+      redirect_to [@app,@link.commodity_reference], notice: "link successfully created"
     else
       render :new
     end
@@ -23,7 +23,7 @@ class LinksController < ApplicationController
   def update
     @link = @app.links.find(params[:id])
     if @link.update(link_params)
-      redirect_to [@app, @link.commodity], notice: "link successfully updated"
+      redirect_to [@app, @link.commodity_reference], notice: "link successfully updated"
     else
       render :edit
     end
@@ -32,10 +32,10 @@ class LinksController < ApplicationController
   private
 
   def set_app
-    @app = current_user.apps.find(params[:app_id])
+    @app = App.find(params[:app_id])
   end
 
   def link_params
-    params.require(:link).permit(:url,:description, :commodity_id)
+    params.require(:link).permit(:url,:description, :commodity_reference_id)
   end
 end

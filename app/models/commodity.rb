@@ -1,7 +1,6 @@
 class Commodity < ApplicationRecord
   belongs_to :brand, optional: true
   has_many :commodity_references
-  has_many :barcodes, as: :barcodeable
 
   validates_presence_of :name, :measured_in
   validates_presence_of :brand_id, unless: "generic?"
@@ -21,6 +20,17 @@ class Commodity < ApplicationRecord
   }
 
   before_create :set_uuid
+
+  def create_reference(user)
+    app = user.apps.create!(name: "Untitled App")
+    attributes = self.class.attribute_names.reject{|a|
+      ["id","created_at","updated_at","uuid"].include?(a)
+    }
+    attributes = attributes.each_with_object({}) do |attribute,hash|
+      hash[attribute] = self.send(attribute)
+    end
+    self.commodity_references.create!(attributes.merge(app_id: app.id))
+  end
 
   def as_json(options={})
     super(:only => [:id,:name]).merge(href:  Rails.application.routes.url_helpers.app_commodity_path(self.app,self))

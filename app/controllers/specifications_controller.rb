@@ -42,7 +42,7 @@ class SpecificationsController < ApplicationController
   private
 
   def set_app
-    @app = current_user.apps.find(params[:app_id])
+    @app = App.find(params[:app_id])
   end
 
   def set_parent
@@ -55,10 +55,10 @@ class SpecificationsController < ApplicationController
   def parent_url
     model = @parent
     case model
-      when Commodity
+      when CommodityReference
         [model.app, model]
       when Packaging
-        [model.commodity.app, model.commodity, model]
+        [model.commodity_reference.app, model.commodity_reference, model]
     end
   end
 
