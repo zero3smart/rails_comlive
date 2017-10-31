@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Adding specification to a packaging' do
-  given!(:user) { create(:user, email: 'user@example.com', password: 'secretpass') }
-  given!(:app) { create(:app, user_id: user.id) }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app) }
   given!(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
   given!(:packaging) { create(:packaging, commodity_reference_id: commodity_reference.id) }
   given(:specification) { build(:spec_with_min_max, value: 34.90) }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Invitations' do
   given!(:user) { create(:user) }
-  given!(:app) { create(:app, user_id: user.id) }
+  given!(:app) { create(:app) }
 
   background do
     log_in(user)

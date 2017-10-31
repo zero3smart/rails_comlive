@@ -1,26 +1,25 @@
 require 'rails_helper'
 
 feature 'Custom units View' do
-  given(:user) { create(:user) }
-  given(:app) { user.default_app }
-
   background do
-    log_in(user)
+    @user = create(:user)
+    @app = create(:app)
+    log_in(@user)
   end
 
   feature "Visiting #index page" do
     scenario "With units present, it should list available units" do
-      unit_1 = create(:custom_unit, app_id: app.id)
-      unit_2 = create(:custom_unit, app_id: app.id)
+      unit_1 = create(:custom_unit, app_id: @app.id)
+      unit_2 = create(:custom_unit, app_id: @app.id)
 
-      visit app_custom_units_path(app)
+      visit app_custom_units_path(@app)
 
       expect(page).to have_text("Property: #{unit_1.property} Uom: #{unit_1.uom}")
       expect(page).to have_text("Property: #{unit_2.property} Uom: #{unit_2.uom}")
     end
 
     scenario "With no units present, it should display no custom units found" do
-      visit app_custom_units_path(app)
+      visit app_custom_units_path(@app)
 
       expect(page).to have_text("No custom units found")
     end
@@ -28,7 +27,7 @@ feature 'Custom units View' do
 
   feature "Visiting #new page" do
     background do
-      visit new_app_custom_unit_path(app)
+      visit new_app_custom_unit_path(@app)
     end
 
     scenario "With correct details, user should successfully create a custom unit" do
@@ -57,8 +56,8 @@ feature 'Custom units View' do
 
   feature "Visiting #show page" do
     scenario "It should show the custom unit's details" do
-      custom_unit = create(:custom_unit, app_id: app.id)
-      visit app_custom_unit_path(app, custom_unit)
+      custom_unit = create(:custom_unit, app_id: @app.id)
+      visit app_custom_unit_path(@app, custom_unit)
 
       expect(page).to have_text("Custom Unit Details")
       expect(page).to have_text("Property: #{custom_unit.property} Uom: #{custom_unit.uom}")
@@ -67,8 +66,8 @@ feature 'Custom units View' do
 
   feature "Visiting #edit page" do
     background do
-      @custom_unit = create(:custom_unit, app_id: app.id)
-      visit edit_app_custom_unit_path(app, @custom_unit)
+      @custom_unit = create(:custom_unit, app_id: @app.id)
+      visit edit_app_custom_unit_path(@app, @custom_unit)
     end
 
     scenario "should show the current unit's details" do

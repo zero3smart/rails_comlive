@@ -1,39 +1,38 @@
 require 'rails_helper'
 
-feature 'Invitations' do
+feature 'Show Commodity Reference' do
   given!(:user) { create(:user) }
-  given!(:app) { create(:app, user_id: user.id) }
+  given!(:app) { create(:app) }
+  given!(:commodity_reference) { create(:commodity_reference, app: app) }
 
   background do
     log_in(user)
-    visit app_path(app)
   end
 
-  feature 'User can invite another user to an app', js: true do
-    background do
-      click_link "Invite Users"
+  feature "Visiting #show page" do
+    scenario "It should show the commodity reference's details" do
+      visit app_commodity_reference_path(app,commodity_reference)
+
+      expect(page).to have_text(commodity_reference.name)
+      expect(page).to have_text(commodity_reference.short_description)
+      expect(page).to have_text(commodity_reference.long_description)
     end
 
-    context "With a valid email" do
-      scenario "It should successfully save the user" do
-        within("div#sharedModal") do
-          fill_in "email", with: "user@example.com"
+    scenario "With links present" do
+      links = create_list(:link, 2, app_id: app.id, commodity_reference_id: commodity_reference.id )
 
-          click_button "Submit"
-        end
-        expect(page).to have_text("Invitation sent to user@example.com")
+      visit app_commodity_reference_path(app,commodity_reference)
+
+      links.each do |link|
+        expect(page).to have_text(link.description)
+        expect(page).to have_link('Open Link', href: link.url)
       end
     end
 
-    context "With an invalid email" do
-      scenario "It should display email invalid error" do
-        within("div#sharedModal") do
-          fill_in "email", with: "userexample.com"
+    scenario "Without any links" do
+      visit app_commodity_reference_path(app,commodity_reference)
 
-          click_button "Submit"
-        end
-        expect(page).to have_text("Email is invalid")
-      end
+      expect(page).to have_text("No links found")
     end
   end
 end
