@@ -3,7 +3,6 @@ class AppsController < ApplicationController
 
   def index
     @apps = current_user.apps
-    @invited_apps = current_user.invited_apps
   end
 
   def new
@@ -13,6 +12,7 @@ class AppsController < ApplicationController
   def create
     @app = current_user.apps.create(app_params)
     if @app.save
+      @app.memberships.find_by(user_id: current_user.id).update(owner: true)
       redirect_to @app, notice: "app created successfully"
     else
       render :new
@@ -24,11 +24,11 @@ class AppsController < ApplicationController
   end
 
   def edit
-    @app = current_user.apps.find(params[:id])
+    @app = App.find(params[:id])
   end
 
   def update
-    @app = current_user.apps.find(params[:id])
+    @app = App.find(params[:id])
     if @app.update(app_params)
       redirect_to @app, notice: "app updated successfully"
     else

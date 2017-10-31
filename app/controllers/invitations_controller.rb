@@ -35,6 +35,6 @@ class InvitationsController < ApplicationController
   end
 
   def set_app
-    @app = current_user.apps.find(params[:app_id])
+    @app = App.find(params[:app_id])
   end
 end

@@ -27,13 +27,14 @@ class CommoditiesController < ApplicationController
   def create
     @commodity = Commodity.create(commodity_params)
     if @commodity.save
+      app = current_user.apps.create!(name: "Untitled App")
       attributes = Commodity.attribute_names.reject{|a|
         ["id","created_at","updated_at","uuid"].include?(a)
       }
       attributes = attributes.each_with_object({}) do |attribute,hash|
         hash[attribute] = @commodity.send(attribute)
       end
-      commodity_ref = @commodity.commodity_references.create!(attributes.merge(app_id: current_user.default_app.id))
+      commodity_ref = @commodity.commodity_references.create!(attributes.merge(app_id: app.id))
       redirect_to [commodity_ref.app,commodity_ref], notice: "commodity successfully created"
     else
       render :new
