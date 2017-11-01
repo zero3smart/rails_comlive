@@ -5,7 +5,7 @@ FactoryGirl.define do
     name { Faker::Team.name }
     short_description { Faker::Company.catch_phrase }
     long_description { Faker::Lorem.paragraph }
-    measured_in { %w(length time mass temparature number fraction).sample }
+    measured_in { %w(length time mass temperature number fraction).sample }
     moderated false
     association :brand
     association :app

@@ -29,6 +29,6 @@ feature 'App Creation' do
     click_button "Create App"
 
     expect(page).to have_text("Create App")
-    expect(page).to have_text("can't be blank")
+    expect(page).to have_text("Name can't be blank")
   end
 end
