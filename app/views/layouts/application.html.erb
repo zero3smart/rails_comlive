@@ -64,12 +64,14 @@
         </li><!-- .menu-item -->
 
         <% if current_app %>
-            <li>
-              <%= link_to new_app_invitation_path(current_app), class: "menu-link"  do %>
-                  <span class="menu-icon"><i class="zmdi zmdi-accounts-add zmdi-hc-lg"></i></span>
-                  <span class="menu-text">Invite Users</span>
-              <% end %>
-            </li><!-- .menu-item -->
+            <% if policy(current_app).invite? %>
+                <li>
+                  <%= link_to new_app_invitation_path(current_app), class: "menu-link" do %>
+                      <span class="menu-icon"><i class="zmdi zmdi-accounts-add zmdi-hc-lg"></i></span>
+                      <span class="menu-text">Invite Users</span>
+                  <% end %>
+                </li><!-- .menu-item -->
+            <% end %>
         <% end %>
       </ul>
     </div>

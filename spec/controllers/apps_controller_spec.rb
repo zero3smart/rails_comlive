@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe AppsController, :type => :controller do
   let!(:user) { create(:user) }
-  let(:app) { create(:app) }
+  let(:app_details) { attributes_for(:app, name: "No Limit") }
+  let(:app) { user.apps.create(app_details) }
 
   context "As an authenticated user" do
     before(:each) do
@@ -30,6 +31,13 @@ RSpec.describe AppsController, :type => :controller do
       end
     end
 
+    describe "GET #edit" do
+      it "returns 200 http status code" do
+        get :edit, params: { id: app.id }
+        expect(response.status).to eq 200
+      end
+    end
+
     describe "POST #create" do
       context "with valid attributes" do
         it "saves the new app in the database" do
@@ -50,6 +58,26 @@ RSpec.describe AppsController, :type => :controller do
           expect{
             post :create, params: { app: attributes_for(:invalid_app)}
           }.not_to change(App, :count)
+        end
+      end
+    end
+
+    describe "PATCH #update" do
+      context "with valid attributes" do
+        it "updates the app details" do
+          app.name = "Galaxy"
+          patch :update, params: { id: app.id, app: app.attributes }
+          app.reload
+          expect(app.name).to eq "Galaxy"
+        end
+      end
+
+      context "with invalid attributes" do
+        it "does not update the app" do
+          app.name = ""
+          patch :update, params: { id: app.id, app: app.attributes }
+          app.reload
+          expect(app.name).to eq "No Limit"
         end
       end
     end

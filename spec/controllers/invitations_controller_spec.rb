@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe InvitationsController, :type => :controller do
-  let!(:user){  create(:user) }
-  let!(:app) { create(:app) }
+  let(:user){  create(:user) }
+  let(:apps) { user.apps << create(:app) } # creates a membership record
+  let(:app) { apps.first }
 
   describe "GET #new" do
     it "returns 200 http status code" do
