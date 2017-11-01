@@ -2,7 +2,10 @@ class CommodityReferencesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_app
 
+  after_action :verify_authorized
+
   def index
+    authorize @app, :show?
     if params[:q]
       generic = params[:generic] == "true"
       @commodity_references = CommodityReference.search params[:q], where: { generic: generic }, page: params[:page], per_page: 10
@@ -16,6 +19,7 @@ class CommodityReferencesController < ApplicationController
   end
 
   def show
+    authorize @app
     @commodity_reference = @app.commodity_references.find(params[:id])
     @packaging = Packaging.new
     @state = @commodity_reference.state ? @commodity_reference.state : State.new
@@ -23,10 +27,12 @@ class CommodityReferencesController < ApplicationController
   end
 
   def new
+    authorize @app
     @commodity_reference = CommodityReference.new
   end
 
   def create
+    authorize @app, :show?
     @commodity_reference = @app.commodity_references.create(commodity_reference_params)
     if @commodity_reference.save
       redirect_to [@app,@commodity_reference], notice: "commodity successfully created"
@@ -36,10 +42,12 @@ class CommodityReferencesController < ApplicationController
   end
 
   def edit
+    authorize @app
     @commodity_reference = @app.commodity_references.find(params[:id])
   end
 
   def update
+    authorize @app
     @commodity_reference = @app.commodity_references.find(params[:id])
     if @commodity_reference.update(commodity_reference_params)
       redirect_to [@app,@commodity_reference], notice: "commodity successfully updated"
@@ -49,10 +57,12 @@ class CommodityReferencesController < ApplicationController
   end
 
   def autocomplete
+    authorize @app, :show?
     render json: CommodityReference.search(params[:query], limit: 10)
   end
 
   def prefetch
+    authorize @app, :show?
     render json: CommodityReference.page(params[:page])
   end
 

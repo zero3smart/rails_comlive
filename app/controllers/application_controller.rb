@@ -1,16 +1,19 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   after_action :last_accessed_app, :record_recent_commodity
 
-
   helper_method :current_user, :current_app, :user_signed_in?
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
 
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+    @current_user ||= User.find_by(id: session[:user_id]) if user_signed_in?
   end
 
   def user_signed_in?
@@ -19,6 +22,11 @@ class ApplicationController < ActionController::Base
 
   def current_app
     App.find_by(id: params[:app_id] || params[:id])
+  end
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
   end
 
   def last_accessed_app
@@ -45,6 +53,5 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     redirect_to login_path, alert: "You need to sign in or sign up before continuing." unless session[:user_id].present?
-    redirect_to login_path, alert: "You need to sign in or sign up before continuing." unless current_user.present?
   end
 end
