@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 feature 'Searching commodity References' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
   given!(:samsung){ create(:commodity_reference, app_id: app.id, name: "Samsung Tvs") }
   given!(:sony){ create(:commodity_reference,  app_id: app.id, name: "Sony home theatre") }
   given!(:hotpoint){ create(:commodity_reference,  app_id: app.id, name: "Hotpoint electronics") }

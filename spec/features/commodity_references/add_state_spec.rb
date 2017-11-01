@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 feature 'Commodity Reference state' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app) }
-  given!(:commodity_reference) { create(:commodity_reference, app: app) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
+  given(:commodity_reference) { create(:commodity_reference, app: app) }
   given(:state) { build(:state) }
 
   background do
