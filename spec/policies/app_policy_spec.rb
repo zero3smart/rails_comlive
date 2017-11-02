@@ -35,12 +35,5 @@ RSpec.describe AppPolicy do
   end
 
   permissions :destroy? do
-    it "grants access if user is member of app" do
-      expect(subject).to permit(user, member_app)
-    end
-
-    it "denies access if user is not member of the app" do
-      expect(subject).not_to permit(user, other_user_app)
-    end
   end
 end

@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'pundit/rspec'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'support/auth0'
@@ -118,6 +119,11 @@ RSpec.configure do |config|
 
   config.append_after(:each) do
     DatabaseCleaner.clean
+  end
+
+  # don't load external fonts
+  config.before(:each, js: true) do
+    page.driver.browser.url_blacklist = ["https://fonts.gstatic.com"]
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
