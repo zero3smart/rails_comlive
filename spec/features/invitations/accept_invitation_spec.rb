@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 feature 'Accept Invitation' do
-  given!(:user) { build(:user) }
-  given!(:app) { create(:app) }
-  given!(:invitation) { create(:invitation, app: app, recipient_email: user.email) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
+  given(:invitation) { create(:invitation, app: app, recipient_email: user.email) }
 
   background do
     mock_accept_invitation(user, invitation.token)
