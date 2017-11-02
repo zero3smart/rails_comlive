@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 feature 'Updating a Reference' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app) }
-  given!(:commodity_reference) { create(:non_generic_commodity_reference, app_id: app.id) }
-  given!(:reference){ create(:reference, app_id: app.id, target_commodity_reference_id: commodity_reference.id) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
+  given(:commodity_reference) { create(:non_generic_commodity_reference, app_id: app.id) }
+  given(:reference){ create(:reference, app_id: app.id, target_commodity_reference_id: commodity_reference.id) }
 
   background do
     log_in(user)

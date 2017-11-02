@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 feature "Visiting references#index page" do
-  given!(:user){ create(:user) }
-  given!(:app) { create(:app) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
   given!(:reference_x) { create(:reference, app: app) }
   given!(:reference_y) { create(:reference, app: app) }
 

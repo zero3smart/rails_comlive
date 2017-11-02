@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature "Visiting reference#show page" do
-
-  given!(:user){ create(:user) }
-  given!(:app) { create(:app) }
-  given!(:reference) { create(:reference, app: app) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
+  given(:reference) { create(:reference, app: app) }
 
   background do
     log_in(user)

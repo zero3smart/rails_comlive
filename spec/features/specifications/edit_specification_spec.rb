@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 feature 'Updating a specification' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app) }
-  given!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
-  given!(:specification) { create(:specification, parent: commodity_reference ) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
+  given(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
+  given(:specification) { create(:specification, parent: commodity_reference ) }
 
   background do
     log_in(user)

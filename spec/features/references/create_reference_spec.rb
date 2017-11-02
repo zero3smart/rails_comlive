@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 feature 'Creating a Reference' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app) }
-  given!(:generic_commodity_reference) { create(:generic_commodity_reference) }
-  given!(:non_generic_commodity_reference) { create(:non_generic_commodity_reference) }
-  given!(:reference){ build(:reference) }
+  given(:user) { create(:user) }
+  given(:apps) { user.apps << create(:app) } # creates a membership record
+  given(:app) { apps.first }
+  given(:generic_commodity_reference) { create(:generic_commodity_reference) }
+  given(:non_generic_commodity_reference) { create(:non_generic_commodity_reference) }
+  given(:reference){ build(:reference) }
 
   background do
     log_in(user)
