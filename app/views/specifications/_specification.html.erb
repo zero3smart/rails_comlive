@@ -2,5 +2,6 @@
   <td><%= specification.property %></td>
   <td><%= specification.value ? specification.value : "Max: #{specification.max} Min: #{specification.min}" %></td>
   <td> <%= specification.uom %></td>
+  <td> <%= specification.visibility_status %></td>
   <td><%= link_to "View", object_url(specification.parent, specification) %></td>
 </tr>

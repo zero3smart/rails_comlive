@@ -5,6 +5,7 @@ class CreateReferences < ActiveRecord::Migration[5.0]
       t.integer :source_commodity_reference_id
       t.integer :target_commodity_reference_id
       t.text :description
+      t.integer :visibility, default: 0
       t.references :app, foreign_key: true
 
       t.timestamps
