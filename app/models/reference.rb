@@ -1,4 +1,6 @@
 class Reference < ApplicationRecord
+  include Visibility
+
   belongs_to :app
   belongs_to :source_commodity_reference, class_name: "CommodityReference"
   belongs_to :target_commodity_reference, class_name: "CommodityReference"

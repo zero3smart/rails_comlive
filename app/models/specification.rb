@@ -1,4 +1,6 @@
 class Specification < ApplicationRecord
+  include Visibility
+
   belongs_to :parent, polymorphic: true
 
   validates_presence_of :property, :uom, :parent

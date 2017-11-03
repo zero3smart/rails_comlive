@@ -1,6 +1,7 @@
 <tr>
-  <td class="text-primary"><%= link.description %></td>
+  <td><%= link.description %></td>
   <td><%= link_to "Open Link", link.url, target: "_blank" %></td>
+  <td><%= link.visibility_status %></td>
   <td>
     <%= link_to edit_app_link_path(@app, link), class: "pull-right" do %>
         <i class="fa fa-pencil"></i> Edit
