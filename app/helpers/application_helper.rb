@@ -33,4 +33,8 @@ module ApplicationHelper
     hash = Digest::MD5.hexdigest(email)
     image_tag "https://www.gravatar.com/avatar/#{hash}?s=#{size}&d=identicon", class: classes
   end
+
+  def options_for_visibility(record)
+    record.class.visibilities.map{|k,v| [k=="publicized" ? "Public" : "Private",k]}
+  end
 end

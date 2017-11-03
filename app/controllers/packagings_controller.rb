@@ -3,16 +3,12 @@ class PackagingsController < ApplicationController
   before_action :set_app
   before_action :set_commodity_reference
 
-  after_action :verify_authorized
-
   def new
-    authorize @app, :show?
     @packaging = Packaging.new
     render layout: !request.xhr?
   end
 
   def create
-    authorize @app, :show?
     @packaging = @commodity_reference.packagings.create(packaging_params)
     if @packaging.save
       redirect_to [@app, @commodity_reference], notice: "Packaging successfully saved"
@@ -22,17 +18,14 @@ class PackagingsController < ApplicationController
   end
 
   def show
-    authorize @app
     @packaging = @commodity_reference.packagings.find(params[:id])
   end
 
   def edit
-    authorize @app
     @packaging = @commodity_reference.packagings.find(params[:id])
   end
 
   def update
-    authorize @app
     @packaging = @commodity_reference.packagings.find(params[:id])
     if @packaging.update(packaging_params)
       redirect_to  [@app, @commodity_reference], notice: "Packaging successfully updated"
@@ -52,6 +45,6 @@ class PackagingsController < ApplicationController
   end
 
   def packaging_params
-    params.require(:packaging).permit(:name, :description, :uom, :quantity)
+    params.require(:packaging).permit(:name, :description, :uom, :quantity, :visibility)
   end
 end
