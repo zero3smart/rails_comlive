@@ -31,6 +31,10 @@ RSpec.describe Link, :type => :model do
       link.valid?
       expect(link.errors[:url]).to include("is invalid")
     end
+    it "is public by default" do
+      link = build(:link)
+      expect(link.visibility).to eq "publicized"
+    end
   end
 
   describe "Associations" do

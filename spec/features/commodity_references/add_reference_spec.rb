@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 feature 'Adding a reference to commodity reference' do
-  given(:user) { create(:user) }
-  given(:apps) { user.apps << create(:app) } # creates a membership record
-  given(:app) { apps.first }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app, user_id: user.id) }
   given(:reference) { build(:reference, app: app) }
 
   given(:generic_commodity_references) { create_list(:generic_commodity_reference, 3, app_id: app.id) }
@@ -26,6 +25,7 @@ feature 'Adding a reference to commodity reference' do
       select reference.kind, from: 'reference[kind]'
       select2("reference_source_commodity_reference_id",generic_search_term, generic_commodity_reference.id,generic_commodity_reference.name)
       select2("reference_target_commodity_reference_id",non_generic_search_term, non_generic_commodity_reference.id,non_generic_commodity_reference.name)
+      select 'Private', from: 'reference[visibility]'
       fill_in 'reference[description]', with: reference.description
 
       click_button 'Submit'
@@ -33,6 +33,7 @@ feature 'Adding a reference to commodity reference' do
 
     expect(page).to have_content(generic_commodity_reference.name)
     expect(page).to have_content(reference.kind)
+    expect(page).to have_content("Private")
     expect(page).to have_content(non_generic_commodity_reference.name)
   end
 

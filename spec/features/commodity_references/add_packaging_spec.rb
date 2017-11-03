@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 feature 'Adding packaging to a commodity' do
-  given(:user) { create(:user) }
-  given(:apps) { user.apps << create(:app) } # creates a membership record
-  given(:app) { apps.first }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app, user_id: user.id) }
   given!(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
   given(:packaging) { build(:packaging) }
 
@@ -20,6 +19,7 @@ feature 'Adding packaging to a commodity' do
       fill_in 'packaging[description]',with: packaging.description
       fill_in 'packaging[quantity]', with: packaging.quantity
       fill_in 'packaging[uom]', with: packaging.uom
+      select 'Private', from: 'packaging[visibility]'
 
       click_button 'Submit'
     end
@@ -27,6 +27,7 @@ feature 'Adding packaging to a commodity' do
     expect(page).to have_link(packaging.name)
     expect(page).to have_content(packaging.quantity)
     expect(page).to have_content(packaging.uom)
+    expect(page).to have_content("Private")
     expect(page).to have_content("Packaging successfully saved")
   end
 

@@ -37,6 +37,11 @@ RSpec.describe Specification, :type => :model do
       expect(specification.errors[:base]).to include("You must set either a minimum or a maximum value")
     end
 
+    it "is public by default" do
+      specification = build(:specification)
+      expect(specification.visibility).to eq "publicized"
+    end
+
     describe "With value absent" do
       context "with min absent and max set" do
         it "has a valid factory" do

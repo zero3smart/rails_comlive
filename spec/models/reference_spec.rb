@@ -42,6 +42,10 @@ RSpec.describe Reference, :type => :model do
       reference.valid?
       expect(reference.errors[:source_commodity_reference]).to include("is not generic")
     end
+    it "is public by default" do
+      reference = build(:reference)
+      expect(reference.visibility).to eq "publicized"
+    end
   end
 
 

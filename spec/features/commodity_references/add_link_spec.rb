@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 feature 'Adding link to a commodity reference' do
-  given(:user) { create(:user) }
-  given(:apps) { user.apps << create(:app) } # creates a membership record
-  given(:app) { apps.first }
+  given!(:user) { create(:user) }
+  given!(:app) { create(:app, user_id: user.id) }
   given!(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
   given(:link) { build(:link) }
 
@@ -19,12 +18,14 @@ feature 'Adding link to a commodity reference' do
       fill_in 'link[url]', with: link.url
       fill_in 'link[description]',with: link.description
       select commodity_reference.name, from: 'link[commodity_reference_id]'
+      select "Private", from: 'link[visibility]'
 
       click_button 'Submit'
     end
 
     expect(page).to have_link('Open Link', href: link.url)
     expect(page).to have_content(link.description)
+    expect(page).to have_content("Private")
     expect(page).to have_content("link successfully created")
   end
 
