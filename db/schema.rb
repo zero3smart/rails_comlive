@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831133955) do
+ActiveRecord::Schema.define(version: 20160818153256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,10 @@ ActiveRecord::Schema.define(version: 20160831133955) do
     t.string   "name"
     t.text     "description"
     t.string   "uuid"
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_apps_on_user_id", using: :btree
     t.index ["uuid"], name: "index_apps_on_uuid", unique: true, using: :btree
   end
 
@@ -85,9 +87,10 @@ ActiveRecord::Schema.define(version: 20160831133955) do
   create_table "custom_units", force: :cascade do |t|
     t.string   "property"
     t.string   "uom"
+    t.integer  "visibility", default: 0
     t.integer  "app_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.index ["app_id"], name: "index_custom_units_on_app_id", using: :btree
   end
 
@@ -130,36 +133,33 @@ ActiveRecord::Schema.define(version: 20160831133955) do
     t.index ["hscode_heading_id"], name: "index_hscode_subheadings_on_hscode_heading_id", using: :btree
   end
 
-  create_table "invitations", force: :cascade do |t|
-    t.integer  "sender_id"
-    t.string   "recipient_email"
-    t.string   "token"
-    t.boolean  "accepted",        default: false
-    t.integer  "app_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["app_id"], name: "index_invitations_on_app_id", using: :btree
-    t.index ["token"], name: "index_invitations_on_token", unique: true, using: :btree
-  end
-
   create_table "links", force: :cascade do |t|
     t.string   "url"
     t.text     "description"
+    t.integer  "visibility",             default: 0
     t.integer  "app_id"
     t.integer  "commodity_reference_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.index ["app_id"], name: "index_links_on_app_id", using: :btree
     t.index ["commodity_reference_id"], name: "index_links_on_commodity_reference_id", using: :btree
   end
 
+  create_table "members", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "app_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_members_on_app_id", using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
-    t.boolean  "owner",       default: false
     t.string   "member_type"
     t.integer  "member_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["member_type", "member_id"], name: "index_memberships_on_member_type_and_member_id", using: :btree
     t.index ["user_id"], name: "index_memberships_on_user_id", using: :btree
   end
@@ -181,9 +181,10 @@ ActiveRecord::Schema.define(version: 20160831133955) do
     t.string   "name"
     t.string   "description"
     t.string   "uuid"
+    t.integer  "visibility",             default: 0
     t.integer  "commodity_reference_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.index ["commodity_reference_id"], name: "index_packagings_on_commodity_reference_id", using: :btree
   end
 
@@ -192,9 +193,10 @@ ActiveRecord::Schema.define(version: 20160831133955) do
     t.integer  "source_commodity_reference_id"
     t.integer  "target_commodity_reference_id"
     t.text     "description"
+    t.integer  "visibility",                    default: 0
     t.integer  "app_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.index ["app_id"], name: "index_references_on_app_id", using: :btree
   end
 
@@ -204,10 +206,11 @@ ActiveRecord::Schema.define(version: 20160831133955) do
     t.decimal  "min"
     t.decimal  "max"
     t.string   "uom"
-    t.integer  "parent_id",   null: false
-    t.string   "parent_type", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "visibility",  default: 0
+    t.integer  "parent_id",               null: false
+    t.string   "parent_type",             null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "standardizations", force: :cascade do |t|
@@ -235,9 +238,10 @@ ActiveRecord::Schema.define(version: 20160831133955) do
     t.string   "status"
     t.text     "info"
     t.string   "url"
+    t.integer  "visibility",             default: 0
     t.integer  "commodity_reference_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.index ["commodity_reference_id"], name: "index_states_on_commodity_reference_id", using: :btree
   end
 
@@ -292,6 +296,7 @@ ActiveRecord::Schema.define(version: 20160831133955) do
     t.index ["oauth_token"], name: "index_users_on_oauth_token", unique: true, using: :btree
   end
 
+  add_foreign_key "apps", "users"
   add_foreign_key "commodities", "brands"
   add_foreign_key "commodity_references", "apps"
   add_foreign_key "commodity_references", "brands"
@@ -308,9 +313,10 @@ ActiveRecord::Schema.define(version: 20160831133955) do
   add_foreign_key "hscode_chapters", "hscode_sections"
   add_foreign_key "hscode_headings", "hscode_chapters"
   add_foreign_key "hscode_subheadings", "hscode_headings"
-  add_foreign_key "invitations", "apps"
   add_foreign_key "links", "apps"
   add_foreign_key "links", "commodity_references"
+  add_foreign_key "members", "apps"
+  add_foreign_key "members", "users"
   add_foreign_key "memberships", "users"
   add_foreign_key "packagings", "commodity_references"
   add_foreign_key "references", "apps"

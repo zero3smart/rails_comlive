@@ -6,6 +6,7 @@ class CreateSpecifications < ActiveRecord::Migration[5.0]
       t.decimal :min
       t.decimal :max
       t.string :uom
+      t.integer :visibility, default: 0
       t.integer :parent_id,  null: false
       t.string :parent_type, null: false
 
