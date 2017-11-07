@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'User can view a specification' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app) }
-  given!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
-  given!(:specification) { create(:spec_with_min_max, parent: commodity_reference ) }
+  given(:user) { create(:user) }
+  given(:app) { user.default_app }
+  given(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
+  given(:specification) { create(:spec_with_min_max, parent: commodity_reference ) }
 
   background do
     log_in(user)
