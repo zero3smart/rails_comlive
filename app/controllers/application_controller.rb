@@ -52,6 +52,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to login_path, alert: "You need to sign in or sign up before continuing." unless session[:user_id].present?
+    redirect_to login_path, alert: "You need to sign in or sign up before continuing." unless current_user.present?
   end
 end
