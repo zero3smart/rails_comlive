@@ -10,7 +10,8 @@ class BarcodesController < ApplicationController
 
   def new
     @barcode = Barcode.new
-    render layout: !request.xhr?
+    @xhr =  !request.xhr?
+    render layout: @xhr
   end
 
   def create

@@ -3,13 +3,9 @@ class Barcode < ApplicationRecord
 
   validates_presence_of :format, :content, :barcodeable
   validates_inclusion_of :format, in: BARCODE_FORMATS, message: " is not a valid barcode"
+  validates_with BarcodeValidator
 
-  def html_output
-    begin
-      generator = BarcodeGenerator.new(self)
-      generator.generate.html_safe
-    rescue Exception => e
-      e.message
-    end
+  def output
+    BarcodeGenerator.new(format, content).generate.html_safe
   end
 end

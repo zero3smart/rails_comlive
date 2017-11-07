@@ -1,5 +1,90 @@
 <div class="row">
-  <div class="col-md-12">
-    <%= render 'form' %>
+  <div class="col-md-7">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">New Barcode</h4>
+        <span class="pull-right"></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <%= render 'form' %>
+      </div>
+    </div><!-- .widget -->
+  </div>
+
+  <div class="col-md-5">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Barcode Content Quide</h4>
+        <span class="pull-right"></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">BOOKLAND</th>
+              <td>Should be a valid ISBN with / without number system or check digit.
+                E.g. 978-82-92526-14-9, 82-92526-14-9,82-92526-14
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">CODE 128</th>
+              <td>Can be any alphanumeric or numeric-only characters. Example: ABC-abc-1234
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">CODE 25 IATA</th>
+              <td>Should consist of decimal digits 0-9 only. Example 1023456789
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">CODE 25 INTERLEAVED</th>
+              <td>Should consist of evenly paired decimal digits only 0-9. Example: 034597 can be paired to
+                03, 45, 97
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">CODE 25 INTERLEAVED</th>
+              <td>Should consist of decimal digits 0-9 only. Example 1387549
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">CODE 39</th>
+              <td>Should consist of any combination of uppercase letters (A-Z), numeric digits (0-9) and any of the
+                following special characters (-, ., $, /, +, %, and space) e.g. WIKI-980
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">CODE 93</th>
+              <td>Should consist of any combination of uppercase letters (A-Z), numeric digits (0-9) and any of the
+                following special characters (-, ., $, /, +, %, and space) e.g. WIKI-980
+                $, /, + and %:
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">EAN 13</th>
+              <td>Should consist of exactly 12 digits. Example 589365802134
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">EAN 8</th>
+              <td>Should consist of exactly 7 digits. Example 5893658
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">QR CODE</th>
+              <td>Can be any alpha-numeric string, text, url etc
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">UPC SUPPLEMENTAL</th>
+              <td>Should be valid with 2 or 5 digits. Example 45 or 67894 are valid inputs
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- .widget -->
   </div>
 </div>
