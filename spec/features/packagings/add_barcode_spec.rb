@@ -5,7 +5,7 @@ feature 'Adding barcode to a packaging' do
   given(:app) { user.default_app }
   given(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
   given(:packaging) { create(:packaging, commodity_reference_id: commodity_reference.id) }
-  given(:barcode) { build(:barcode, format: "ean_8", content: "1234567") }
+  given(:barcode) { build(:barcode) }
 
   background do
     log_in(user)
@@ -14,13 +14,11 @@ feature 'Adding barcode to a packaging' do
   end
 
   context "With valid details" do
-    scenario "User can successfully add barcode to a package", js: true do
-      within("div#sharedModal") do
-        select barcode.format.titleize.upcase, from: "barcode[format]"
-        fill_in "barcode[content]", with: barcode.content
+    scenario "User can successfully add barcode to a package" do
+      select barcode.format.titleize.upcase, from: "barcode[format]"
+      fill_in "barcode[content]", with: barcode.content
 
-        click_button "Submit"
-      end
+      click_button "Create Barcode"
 
       expect(page).to have_text("Barcode successfully created")
       expect(page).to have_text(barcode.format.titleize)
@@ -30,13 +28,11 @@ feature 'Adding barcode to a packaging' do
   end
 
   context "With invalid details" do
-    scenario "User cannot add the barcode to package", js: true do
-      within("div#sharedModal") do
-        select barcode.format.titleize.upcase, from: "barcode[format]"
-        fill_in "barcode[content]", with: ""
+    scenario "User cannot add the barcode to package" do
+      select barcode.format.titleize.upcase, from: "barcode[format]"
+      fill_in "barcode[content]", with: ""
 
-        click_button "Submit"
-      end
+      click_button "Create Barcode"
 
       expect(page).to have_text("Content can't be blank")
     end
