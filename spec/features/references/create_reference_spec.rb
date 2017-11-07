@@ -2,8 +2,7 @@ require 'rails_helper'
 
 feature 'Creating a Reference' do
   given(:user) { create(:user) }
-  given(:apps) { user.apps << create(:app) } # creates a membership record
-  given(:app) { apps.first }
+  given(:app) { user.default_app }
   given(:generic_commodity_reference) { create(:generic_commodity_reference) }
   given(:non_generic_commodity_reference) { create(:non_generic_commodity_reference) }
   given(:reference){ build(:reference) }

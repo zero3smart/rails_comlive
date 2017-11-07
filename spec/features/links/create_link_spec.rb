@@ -2,8 +2,7 @@ require 'rails_helper'
 
 feature 'Create Link' do
   given(:user) { create(:user) }
-  given(:apps) { user.apps << create(:app) } # creates a membership record
-  given(:app) { apps.first }
+  given(:app) { user.default_app }
   given!(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
   given(:link) { build(:link) }
 

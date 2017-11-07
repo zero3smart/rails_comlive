@@ -2,8 +2,7 @@ require 'rails_helper'
 
 feature 'Recently Visited Commodity References' do
   given(:user) { create(:user) }
-  given(:apps) { user.apps << create(:app) } # creates a membership record
-  given(:app) { apps.first }
+  given(:app) { user.default_app }
   given(:commodity_references){ create_list(:commodity_reference, 10, app_id: app.id) }
 
   background do
