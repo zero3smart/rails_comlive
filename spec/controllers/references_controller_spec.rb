@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ReferencesController, :type => :controller do
   let(:user) { create(:user) }
-  let(:apps) { user.apps << create(:app) } # creates a membership record
-  let(:app) { apps.first }
+  let(:app) { user.default_app }
   let(:reference) { create(:reference, app: app) }
 
   before(:each) do

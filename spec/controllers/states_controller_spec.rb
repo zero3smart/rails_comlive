@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe StatesController, :type => :controller do
   let(:user) { create(:user) }
-  let(:apps) { user.apps << create(:app) } # creates a membership record
-  let(:app) { apps.first }
+  let(:app) { user.default_app }
   let(:commodity_reference){ create(:commodity_reference, app: app) }
   let(:state) { create(:state, commodity_reference: commodity_reference, status: "recall", url: "https://www.youtube.com/watch?v=lhkslaPN-4") }
 

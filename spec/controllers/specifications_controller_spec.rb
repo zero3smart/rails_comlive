@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SpecificationsController, :type => :controller do
   let(:user) { create(:user) }
-  let(:apps) { user.apps << create(:app) } # creates a membership record
-  let(:app) { apps.first }
+  let(:app) { user.default_app }
   let(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
 
   context "As an authenticated user" do

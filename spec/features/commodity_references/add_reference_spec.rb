@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Adding a reference to commodity reference' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app, user_id: user.id) }
+  given(:user) { create(:user) }
+  given(:app) { user.default_app }
   given(:reference) { build(:reference, app: app) }
 
   given(:generic_commodity_references) { create_list(:generic_commodity_reference, 3, app_id: app.id) }

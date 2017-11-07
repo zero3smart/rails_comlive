@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Adding specification to a commodity_reference' do
-  given!(:user) { create(:user) }
-  given!(:app) { create(:app, user_id: user.id) }
-  given!(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
+  given(:user) { create(:user) }
+  given(:app) { user.default_app }
+  given(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
   given(:specification) { build(:spec_with_min_max, value: 34.90) }
 
 
