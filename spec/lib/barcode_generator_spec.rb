@@ -1,21 +1,52 @@
-require 'rails_helper'
+require 'barby'
+require 'barby/barcode/bookland'
+require 'barby/barcode/code_128'
+require 'barby/barcode/code_25'
+require 'barby/barcode/code_25_interleaved'
+require 'barby/barcode/code_25_iata'
+require 'barby/barcode/code_39'
+require 'barby/barcode/code_93'
+require 'barby/barcode/ean_13'
+require 'barby/barcode/ean_8'
+require 'barby/barcode/qr_code'
+require 'barby/barcode/upc_supplemental'
+# require 'barby/barcode/pdf_417'
+# require 'barby/barcode/data_matrix' => unable to install dependency semacode
+# require 'barby/barcode/gs1_128' => looks like its dropped in favour of code 128
 
-RSpec.describe BarcodeGenerator do
-  it "needs a barcode to initialize" do
-    expect { BarcodeGenerator.new }.to raise_error(ArgumentError)
+
+require 'barby/outputter/html_outputter'
+require 'barby/outputter/png_outputter'
+
+class BarcodeGenerator
+  attr_reader :barcode, :format
+
+  def initialize(format, content)
+    @format = format
+    klass = normalize_class(format)
+    @barcode = format == "qr_code" ? klass.new(content, level: :q, size: 5) : klass.new(content)
   end
 
-  it "raises data no valid error if wrong data" do
-    barcode = create(:barcode, format: "ean_8", content: "abcdefg")
-    expect{ BarcodeGenerator.new( barcode ) }.to raise_error(ArgumentError)
+  def generate
+    return barcode.to_html unless format.eql?("qr_code")
+    base64_output = Base64.encode64(barcode.to_png({ xdim: 5 }))
+    "data:image/png;base64,#{base64_output}"
   end
 
-  describe "#generate" do
-    it "returns html table string for the barcode" do
-      barcode = create(:barcode, format: "ean_8", content: "1234567")
-      generator = BarcodeGenerator.new( barcode )
-      expect(generator.generate).to be_a String
-      expect(generator.generate).to match(/table/)
+  private
+
+  def normalize_class(type)
+    case type
+      when  "ean_13"
+        Barby::EAN13
+      when "ean_8"
+        Barby::EAN8
+      when "upc_supplemental"
+        Barby::UPCSupplemental
+      when "code_25_iata"
+        Barby::Code25IATA
+      else
+        "Barby/#{type}".classify.constantize
     end
   end
 end

@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :hscode_chapter do
-    category { SecureRandom.urlsafe_base64(1) }
+    sequence(:category, 10)
     description { Faker::Lorem.sentence }
     association :hscode_section
   end
