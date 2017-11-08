@@ -1,33 +1,50 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
+---
 en:
-  sitename: "commodity.live"
-
+  errors:
+    messages:
+      already_confirmed: was already confirmed, please try signing in
+      confirmation_period_expired: needs to be confirmed within %{period}, please
+        request a new one
+      expired: has expired, please request a new one
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error prohibited this %{resource} from being saved:'
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+  general:
+    back: Back
+    cancel: Cancel
+    confirm: Are you sure?
+    destroy: Delete
+    edit: Edit
+    new: New
+  hello: Hello world
+  layouts:
+    application:
+      about: About
+      account: Account
+      app_store: App Store
+      imprint: Imprint
+      logout: Logout
+      my_mails: My Mails
+      press: Press
+      preview: Preview
+      profile: Profile
+      sign_in: Login
+      sign_up: Register
   misc:
-    commodity: "commodity"
-    commoditites: "commodities"
-    company: "company"
-    companies: "companies"
-    collection: "collection"
+    collection: collection
     collections: collections
-    search: "search"
-    latest: "latest"
+    commoditites: commodities
+    commodity: commodity
+    companies: companies
+    company: company
+    latest: latest
+    search: search
+  sitename: commodity.live
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%B %d, %Y %I:%M %p"

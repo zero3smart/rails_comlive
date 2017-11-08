@@ -1,0 +1,12 @@
+---
+'no':
+  general:
+    cancel: Avbryt
+    destroy: Slett
+    new: Ny
+  layouts:
+    application:
+      logout: Logg ut
+      sign_up: Meld deg inn
+  misc:
+    latest: siste
