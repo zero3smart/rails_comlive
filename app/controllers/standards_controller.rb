@@ -1,12 +1,16 @@
 class StandardsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
+  add_breadcrumb "Standards", :standards_path
+
   def index
     @standards = Standard.all
   end
 
   def new
     @standard = Standard.new
+
+    add_breadcrumb "New", new_standard_path
   end
 
   def show
@@ -16,6 +20,7 @@ class StandardsController < ApplicationController
       authenticate_user! if params[:id]
       @standard = Standard.find_by(uuid: params[:uuid])
     end
+    add_breadcrumb @standard.name, @standard
   end
 
   def create
@@ -29,6 +34,9 @@ class StandardsController < ApplicationController
 
   def edit
     @standard = Standard.find(params[:id])
+
+    add_breadcrumb @standard.name, @standard
+    add_breadcrumb "Edit", edit_standard_path(@standard)
   end
 
   def update

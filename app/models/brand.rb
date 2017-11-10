@@ -3,6 +3,7 @@ class Brand < ApplicationRecord
 
   has_many :memberships, as: :member
   has_many :users, through: :memberships
+  has_many :commodities
 
   has_many :ownerships, as: :parent
   has_many :children, through: :ownerships, source: :child, source_type: 'Brand'

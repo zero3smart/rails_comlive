@@ -3,16 +3,20 @@ class SpecificationsController < ApplicationController
   before_action :set_app
   before_action :set_parent
 
+  after_action :verify_authorized
+
   def index
+    authorize @app, :show?
     @specifications = @parent.specifications
   end
 
   def new
+    authorize @app, :show?
     @specification = Specification.new
-    render layout: !request.xhr?
   end
 
   def create
+    authorize @app, :show?
     @specification = @parent.specifications.create(specification_params)
     if @specification.save
       redirect_to parent_url, notice: "Specification successfully created"
@@ -22,15 +26,18 @@ class SpecificationsController < ApplicationController
   end
 
   def show
+    authorize @app
     @specification = @parent.specifications.find(params[:id])
   end
 
 
   def edit
+    authorize @app
     @specification = @parent.specifications.find(params[:id])
   end
 
   def update
+    authorize @app
     @specification = @parent.specifications.find(params[:id])
     if @specification.update(specification_params)
       redirect_to parent_url, notice: "Specification updated successfully"
@@ -42,7 +49,7 @@ class SpecificationsController < ApplicationController
   private
 
   def set_app
-    @app = current_user.apps.find(params[:app_id])
+    @app = App.find(params[:app_id])
   end
 
   def set_parent
