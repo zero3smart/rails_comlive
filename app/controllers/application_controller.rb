@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  add_breadcrumb "Home", :root_path
 
   private
 

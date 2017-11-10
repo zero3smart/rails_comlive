@@ -1,12 +1,16 @@
 class BrandsController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
 
+  add_breadcrumb "Brands", :brands_path
+
   def index
     @brands = Brand.all
   end
 
   def new
     @brand = Brand.new
+
+    add_breadcrumb "New", :new_brand_path
   end
 
   def create
@@ -26,10 +30,15 @@ class BrandsController < ApplicationController
       authenticate_user! if params[:id]
       @brand = Brand.find_by(uuid: params[:uuid])
     end
+
+    add_breadcrumb @brand.name, @brand
   end
 
   def edit
     @brand = Brand.find(params[:id])
+
+    add_breadcrumb @brand.name, @brand
+    add_breadcrumb "Edit", edit_brand_path(@brand)
   end
 
   def update

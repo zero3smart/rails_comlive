@@ -2,6 +2,8 @@ class CommoditiesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :autocomplete, :prefetch]
 
   def index
+    add_breadcrumb "Commodities", :commodities_path
+
     if params[:q]
       generic = params[:generic] == "true"
       @commodities = Commodity.search params[:q], where: { generic: generic }, page: params[:page], per_page: 10
@@ -21,10 +23,16 @@ class CommoditiesController < ApplicationController
       authenticate_user! if params[:id]
       @commodity = Commodity.find_by(uuid: params[:uuid])
     end
+
+    add_breadcrumb "Commodities", :commodities_path
+    add_breadcrumb @commodity.name, @commodity
   end
 
   def new
     @commodity = Commodity.new
+
+    add_breadcrumb "Commodities", :commodities_path
+    add_breadcrumb "New", new_commodity_path
   end
 
   def create
