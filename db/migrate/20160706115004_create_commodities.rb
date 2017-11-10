@@ -12,5 +12,6 @@ class CreateCommodities < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+    add_index :commodities, :uuid, unique: true
   end
 end

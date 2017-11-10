@@ -1,5 +1,11 @@
 <tr>
-  <td><%= link_to packaging.name, [@app,@commodity_reference, packaging] %></td>
+  <td>
+    <% if @commodity_reference %>
+        <%= link_to packaging.name, [@app, @commodity_reference, packaging] %>
+    <% else %>
+        <%= link_to packaging.name, slugged_packaging_path(packaging.uuid, packaging.name.parameterize) %>
+    <% end %>
+  </td>
   <td><%= packaging.quantity  %></td>
   <td><%= packaging.uom %></td>
   <td><%= packaging.visibility_status %></td>

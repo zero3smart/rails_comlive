@@ -1,0 +1,6 @@
+<h1>Brands</h1>
+<% if @brands.any? %>
+    <%= render @brands %>
+<% else %>
+    <p>No brands found. <%= link_to "Create Brand", new_brand_path %></p>
+<% end %>

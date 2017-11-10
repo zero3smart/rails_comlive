@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-9">
     <div class="widget stats-widget">
       <header class="widget-header">
         <h3 class="widget-title"><%= @commodity.name %></h3>
@@ -42,6 +42,15 @@
 
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-3">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Share Barcode</h4>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body text-center">
+        <%= barcode_for(@commodity) %>
+      </div>
+    </div><!-- .widget -->
   </div>
 </div>

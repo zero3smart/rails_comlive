@@ -1,18 +1,43 @@
+class Authenticated
+  def self.matches?(request)
+    request.session[:user_id].present?
+  end
+end
+
 Rails.application.routes.draw do
 
   get "/auth/auth0/callback" => "auth0#callback"
   get "/auth/failure" => "auth0#failure"
 
   get "login" => "sessions#new", as: :login
+  get "invitations/:token" => "invitations#accept", as: :accept_invitation
   delete "logout" => "sessions#destroy", as: :logout
 
-  root to: "apps#index", constraints: lambda { |request| request.session[:user_id].present? }
+  root to: "apps#index", constraints: Authenticated
   root to: "welcome#landing"
 
-  resources :commodities, :brands, :standards
+  constraints(uuid: /\d{10}/) do
+    get '/brands/:uuid/:title' => 'brands#show',  as: :slugged_brand
+    get '/commodities/:uuid/:title' => 'commodities#show',  as: :slugged_commodity
+    get '/packagings/:uuid/:title' => 'packagings#show',  as: :slugged_packaging
+    get '/standards/:uuid/:title' => 'standards#show',  as: :slugged_standard
+  end
+
+  resources :commodities do
+    collection do
+      get :autocomplete
+      get :prefetch
+    end
+
+    resources :barcodes
+  end
+
+  resources :packagings, only: [:index]
+
+  resources :brands, :standards
 
   resources :apps do
-    resources :invitations
+    resources :invitations, only: [:new, :create]
     resources :commodity_references, path: "commodities" do
       collection do
         get :autocomplete
@@ -21,6 +46,7 @@ Rails.application.routes.draw do
       resources :states, :specifications
       resources :packagings do
         resources :specifications
+        resources :barcodes
       end
     end
 
@@ -34,16 +60,11 @@ Rails.application.routes.draw do
   resources :ownerships, :standardizations
   resources :uoms, only: [:index]
 
-  get "/", to: "welcome#landing", as: :landing
-
-
   # API STUFF
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
-      resources :users
       resources :apps
-      resources :commodities
     end
   end
 

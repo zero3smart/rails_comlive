@@ -11,6 +11,13 @@ RSpec.describe PackagingsController, :type => :controller do
       sign_in user
     end
 
+    describe "GET #index" do
+      it "returns 200 http status code" do
+        get :index
+        expect(response.status).to eq 200
+      end
+    end
+
     describe "POST #create" do
       context "with valid attributes" do
         it "saves the new packaging state in the database" do
@@ -64,9 +71,37 @@ RSpec.describe PackagingsController, :type => :controller do
         expect(response.status).to eq 200
       end
     end
+
+    describe "GET #show" do
+      it "returns 200 http status code" do
+        get :show, params: {  app_id: app.id, commodity_reference_id: commodity_reference.id, id: packaging }
+        expect(response.status).to eq 200
+      end
+    end
+
+    describe "GET #index" do
+      it "returns 200 http status code" do
+        get :index
+        expect(response.status).to eq 200
+      end
+    end
   end
 
   context "As an unauthenticated user" do
+
+    describe "GET #index" do
+      it "returns 200 http status code" do
+        get :index
+        expect(response.status).to eq 200
+      end
+    end
+
+    describe "GET #show" do
+      it "returns 200 http status code" do
+        get :show, params: { uuid: packaging.uuid, title: packaging.name.parameterize}
+        expect(response.status).to eq 200
+      end
+    end
 
     describe "POST #create" do
       it "redirects to the signin page" do

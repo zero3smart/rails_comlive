@@ -10,7 +10,7 @@
         <%= form_tag commodities_path, method: :get do %>
             <div class="input-group stylish-input-group">
               <%= text_field_tag :query, params[:query], id: "commodity-search", class: "form-control", placeholder: "Search Commodities",
-                                 autocomplete: "off", data: { prefetch_url: "#", autocomplete_url: "#" } %>
+                                 autocomplete: "off", data: { prefetch_url: prefetch_commodities_path, autocomplete_url: autocomplete_commodities_path } %>
               <span class="input-group-addon">
             <%= button_tag type: "submit", name: nil, id: "search-btn" do %>
               <span class="fa fa-search"></span>
@@ -56,7 +56,7 @@
             <div class="list-group recently-added">
               <% if @recent_commodities.any? %>
                   <% @recent_commodities.each do |commodity| %>
-                      <%= link_to [@app, commodity], class: "list-group-item" do %>
+                      <%= link_to slugged_commodity_path(commodity.uuid, commodity.name.parameterize), class: "list-group-item" do %>
                           <%= commodity.name %>
                       <% end %>
                   <% end %>

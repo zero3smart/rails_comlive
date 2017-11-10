@@ -3,7 +3,7 @@
     <div class="widget">
       <header class="widget-header">
         <h4 class="widget-title pull-left"><%= @brand.name %></h4>
-        <span class="pull-right"><%= link_to "Edit", edit_brand_path(@brand) %></span>
+        <span class="pull-right"><%= link_to "Edit", edit_brand_path(@brand) if user_signed_in? %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
@@ -13,7 +13,7 @@
   </div>
 
   <div class="col-md-4">
-    <% unless @brand.official? %>
+    <% if user_signed_in? && !@brand.official? %>
         <div class="widget todo-widget">
           <header class="widget-header">
             <h4 class="widget-title pull-left">Is this your Brand</h4>
@@ -31,18 +31,20 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="widget todo-widget">
-          <header class="widget-header">
-            <h4 class="widget-title">Assign Standard</h4>
-          </header>
-          <hr class="widget-separator">
-          <div class="widget-body p-b-0">
-            <%= render 'standardizations/form', referable: @brand %>
-          </div>
-          <footer class="widget-footer">
-            <%= link_to "Assign Standard", "#", id: "assign-standard", class: "btn btn-sm btn-primary pull-right" %>
-          </footer>
-        </div>
+        <% if user_signed_in? %>
+            <div class="widget todo-widget">
+              <header class="widget-header">
+                <h4 class="widget-title">Assign Standard</h4>
+              </header>
+              <hr class="widget-separator">
+              <div class="widget-body p-b-0">
+                <%= render 'standardizations/form', referable: @brand %>
+              </div>
+              <footer class="widget-footer">
+                <%= link_to "Assign Standard", "#", id: "assign-standard", class: "btn btn-sm btn-primary pull-right" %>
+              </footer>
+            </div>
+        <% end %>
 
         <div class="widget todo-widget">
           <header class="widget-header">

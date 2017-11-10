@@ -4,7 +4,7 @@
     <p><%= @standard.description %></p>
   </div>
   <div class="col-md-4">
-    <% unless @standard.official? %>
+    <% if user_signed_in? && !@standard.official? %>
         <h2>Is this your Standard</h2>
         <p>Claim it now and start interacting with your fans today!</p>
         <%= link_to "Claim This Standard", "#", class: "btn btn-primary", data: { toggle: "modal", target: "#claimModal" } %>

@@ -6,7 +6,6 @@ RSpec.describe StandardsController, :type => :controller do
 
   context "As an authenticated user" do
     before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user
     end
 
@@ -81,12 +80,10 @@ RSpec.describe StandardsController, :type => :controller do
   context "As an unauthenticated user" do
 
     describe "GET #index" do
-      it "redirects to the signin page" do
+      it "returns 200 http status code" do
         get :index
 
-        expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
-        expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
+        expect(response.status).to eq 200
       end
     end
 
@@ -95,7 +92,7 @@ RSpec.describe StandardsController, :type => :controller do
         get :new
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -105,18 +102,16 @@ RSpec.describe StandardsController, :type => :controller do
         post :create, params: { standard: attributes_for(:standard) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
 
     describe "GET #show" do
-      it "redirects to the signin page" do
-        get :show, params: { id: 1 }
+      it "returns 200 http status code" do
+        get :show, params: { uuid: standard.uuid, title: standard.name }
 
-        expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
-        expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
+        expect(response.status).to eq 200
       end
     end
 
@@ -125,7 +120,7 @@ RSpec.describe StandardsController, :type => :controller do
         get :edit, params: { id: 1 }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end
@@ -135,7 +130,7 @@ RSpec.describe StandardsController, :type => :controller do
         patch :update, params: { id: 1, standard: attributes_for(:standard) }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end

@@ -11,5 +11,6 @@ class CreatePackagings < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+    add_index :packagings, :uuid, unique: true
   end
 end

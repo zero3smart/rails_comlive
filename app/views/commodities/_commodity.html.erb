@@ -1,6 +1,6 @@
 <div class="media">
   <div class="media-body">
-    <h4 class="media-heading"><%= link_to commodity.name, [@app, commodity], class: "search-result" %></h4>
+    <h4 class="media-heading"><%= link_to commodity.name, slugged_commodity_path(commodity.uuid, commodity.name.parameterize), class: "search-result" %></h4>
     <p><small><%= commodity.short_description %></small></p>
     <p><%= commodity.long_description %></p>
   </div>

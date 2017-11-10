@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Packagings</h4>
+        <span class="pull-right"></span>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table class="table no-cellborder">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>UOM</th>
+              <th>Visibility</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if @packagings.any? %>
+                <%= render @packagings %>
+            <% else %>
+                <p>No packagings found</p>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- .widget -->
+
+  </div>
+</div>

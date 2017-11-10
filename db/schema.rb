@@ -14,14 +14,14 @@ ActiveRecord::Schema.define(version: 20160902071041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.string   "uuid"
-    t.boolean  "default",     default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["uuid"], name: "index_apps_on_uuid", unique: true, using: :btree
   end
 
@@ -41,8 +41,10 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.boolean  "official",    default: false
     t.string   "logo"
     t.string   "description"
+    t.string   "uuid"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.index ["uuid"], name: "index_brands_on_uuid", unique: true, using: :btree
   end
 
   create_table "commodities", force: :cascade do |t|
@@ -57,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.index ["brand_id"], name: "index_commodities_on_brand_id", using: :btree
+    t.index ["uuid"], name: "index_commodities_on_uuid", unique: true, using: :btree
   end
 
   create_table "commodity_references", force: :cascade do |t|
@@ -169,6 +172,7 @@ ActiveRecord::Schema.define(version: 20160902071041) do
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.boolean  "owner",       default: false
+    t.boolean  "default",     default: false
     t.string   "member_type"
     t.integer  "member_id"
     t.datetime "created_at",                  null: false
@@ -199,6 +203,7 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.index ["commodity_reference_id"], name: "index_packagings_on_commodity_reference_id", using: :btree
+    t.index ["uuid"], name: "index_packagings_on_uuid", unique: true, using: :btree
   end
 
   create_table "references", force: :cascade do |t|
@@ -242,9 +247,11 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.string   "name"
     t.text     "description"
     t.string   "logo"
+    t.string   "uuid"
     t.boolean  "official",    default: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.index ["uuid"], name: "index_standards_on_uuid", unique: true, using: :btree
   end
 
   create_table "states", force: :cascade do |t|

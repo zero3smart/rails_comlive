@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-9">
     <div class="widget">
       <header class="widget-header">
         <h4 class="widget-title pull-left">Packaging: <%= @packaging.name %></h4>
@@ -12,6 +12,18 @@
       </div>
     </div><!-- .widget -->
   </div>
+
+  <div class="col-md-3">
+    <div class="widget">
+      <header class="widget-header">
+        <h4 class="widget-title pull-left">Share Barcode</h4>
+      </header>
+      <hr class="widget-separator"/>
+      <div class="widget-body text-center">
+        <%= barcode_for(@packaging) %>
+      </div>
+    </div><!-- .widget -->
+  </div>
 </div>
 
 <div class="row">
@@ -19,7 +31,7 @@
     <div class="widget">
       <header class="widget-header">
         <h4 class="widget-title pull-left">Packaging Specifications</h4>
-        <span class="pull-right"><%= link_to "Add Specification", new_app_commodity_reference_packaging_specification_path(@app, @commodity_reference, @packaging), class: "load-in-modal" %></span>
+        <span class="pull-right"><%= link_to "Add Specification", new_app_commodity_reference_packaging_specification_path(@app, @commodity_reference, @packaging), class: "load-in-modal" if @app %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
@@ -47,7 +59,7 @@
     <div class="widget">
       <header class="widget-header">
         <h4 class="widget-title pull-left">Packaging Barcodes</h4>
-        <span class="pull-right"><%= link_to "Add Barcode", new_app_commodity_reference_packaging_barcode_path(@app, @commodity_reference, @packaging) %></span>
+        <span class="pull-right"><%= link_to "Add Barcode", new_app_commodity_reference_packaging_barcode_path(@app, @commodity_reference, @packaging) if @app %></span>
       </header>
       <hr class="widget-separator"/>
       <div class="widget-body">
