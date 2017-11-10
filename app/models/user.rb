@@ -34,4 +34,9 @@ class User < ApplicationRecord
     memberships.find_by(member_type: "App", member_id: app.id).update(owner: true, default: true)
     return app
   end
+
+  def name
+    return email.split("@").first if first_name.nil? || last_name.nil?
+    [first_name, last_name].join(" ")
+  end
 end
