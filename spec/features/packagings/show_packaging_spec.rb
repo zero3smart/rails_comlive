@@ -17,4 +17,9 @@ feature 'Packaging#show' do
     expect(page).to have_content(packaging.description)
     expect(page).to have_content(packaging.uom)
   end
+
+  context "When not logged in" do
+    scenario "Should show a qr code"
+  end
+
 end
