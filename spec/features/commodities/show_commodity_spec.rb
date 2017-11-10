@@ -1,35 +1,44 @@
 require 'rails_helper'
 
-feature 'Show Commodities' do
-  background do
-    @user = create(:user, email: 'user@example.com', password: 'secretpass')
-    @app = create(:app, user_id: @user.id)
-    log_in(@user)
-    @commodity =  create(:commodity, app_id: @app.id)
+feature 'Listing Commodity References' do
+  given(:user) { create(:user) }
+  given(:commodity) { create(:commodity) }
+
+  context "When user logged in" do
+    background do
+      log_in(user)
+      visit commodity_path(commodity)
+    end
+
+    feature "Visiting #show page" do
+      scenario "Should show commodity details" do
+        expect(page).to have_content commodity.name
+        expect(page).to have_content commodity.short_description
+        expect(page).to have_content commodity.long_description
+      end
+
+      scenario "Should show a qr code" do
+        expect(page).to have_css('img.qr_code')
+      end
+    end
   end
 
-  feature "Visiting #show page" do
-    scenario "It should show the commodity's details" do
-      visit app_commodity_path(@app, @commodity)
-      expect(page).to have_text(@commodity.short_description)
-      expect(page).to have_text(@commodity.long_description)
-    end
+  context "When not logged in" do
+    feature "Visiting #show page" do
 
-    scenario "With links present" do
-      link_1 = create(:link, app_id: @app.id, commodity_id: @commodity.id)
-      link_2 = create(:link, app_id: @app.id, commodity_id: @commodity.id)
+      background do
+        visit slugged_commodity_path(commodity.uuid,commodity.name.parameterize)
+      end
 
-      visit app_commodity_path(@app, @commodity)
+      scenario "Should show commodity details" do
+        expect(page).to have_content commodity.name
+        expect(page).to have_content commodity.short_description
+        expect(page).to have_content commodity.long_description
+      end
 
-      expect(page).to have_text(link_1.description)
-      expect(page).to have_link('Open Link', href: link_1.url)
-      expect(page).to have_text(link_2.description)
-      expect(page).to have_link('Open Link', href:link_2.url)
-    end
-
-    scenario "Without any links" do
-      visit app_commodity_path(@app, @commodity)
-      expect(page).to have_text("No links found")
+      scenario "Should show a qr code" do
+        expect(page).to have_css('img.qr_code')
+      end
     end
   end
 end
