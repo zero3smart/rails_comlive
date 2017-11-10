@@ -1,5 +1,5 @@
 class CommoditiesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :show, :autocomplete, :prefetch]
 
   def index
     if params[:q]
@@ -15,9 +15,12 @@ class CommoditiesController < ApplicationController
   end
 
   def show
-    @commodity = Commodity.find(params[:id])
-    @packaging = Packaging.new
-    @standardization = Standardization.new
+    if user_signed_in?
+      @commodity = Commodity.find_by(id: params[:id])
+    else
+      authenticate_user! if params[:id]
+      @commodity = Commodity.find_by(uuid: params[:uuid])
+    end
   end
 
   def new
@@ -27,14 +30,7 @@ class CommoditiesController < ApplicationController
   def create
     @commodity = Commodity.create(commodity_params)
     if @commodity.save
-      app = current_user.apps.create!(name: "Untitled App")
-      attributes = Commodity.attribute_names.reject{|a|
-        ["id","created_at","updated_at","uuid"].include?(a)
-      }
-      attributes = attributes.each_with_object({}) do |attribute,hash|
-        hash[attribute] = @commodity.send(attribute)
-      end
-      commodity_ref = @commodity.commodity_references.create!(attributes.merge(app_id: app.id))
+      commodity_ref = @commodity.create_reference(current_user)
       redirect_to [commodity_ref.app,commodity_ref], notice: "commodity successfully created"
     else
       render :new
