@@ -6,12 +6,14 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
-      user.provider     = auth.provider
-      user.uid          = auth.uid
-      user.email        = auth.info.email
-      user.first_name   = auth.info.first_name
-      user.last_name    = auth.info.last_name
-      user.oauth_token  = auth.credentials.token
+      user.provider      = auth.provider
+      user.uid           = auth.uid
+      user.email         = auth.info.email
+      user.first_name    = auth.info.first_name
+      user.last_name     = auth.info.last_name
+      user.access_token  = auth.credentials.id_token
+      user.refresh_token = auth.credentials.refresh_token
+      user.expires_at    = Time.now + 3600.seconds
       user.save!
     end
   end
@@ -38,5 +40,21 @@ class User < ApplicationRecord
   def name
     return email.split("@").first if first_name.nil? || last_name.nil?
     [first_name, last_name].join(" ")
+  end
+
+  def fresh_token
+    refresh! if token_expired?
+    access_token
+  end
+
+  private
+
+  def refresh!
+    data = TokenRefresher.new(refresh_token)
+    update_attributes(access_token: data['id_token'], expires_at: Time.now + (data['expires_in'].to_i).seconds)
+  end
+
+  def token_expired?
+    expires_at < Time.now
   end
 end

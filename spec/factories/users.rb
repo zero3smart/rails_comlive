@@ -7,7 +7,7 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     provider "auth0"
     uid { "uid|#{Faker::Crypto.md5}" }
-    oauth_token { Faker::Lorem.characters(16)  }
+    access_token { Faker::Lorem.characters(16)  }
 
     after(:create) do |user|
       create(:membership, user: user, member: create(:app), owner: true, default: true)

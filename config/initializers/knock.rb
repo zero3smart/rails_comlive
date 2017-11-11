@@ -34,7 +34,7 @@ Knock.setup do |config|
   ##
   ## Default:
   #config.current_user_from_token = -> (claims) { User.find claims['sub'] }
-  config.current_user_from_token = -> (claims) { User.find_or_create_by(uid: claims['sub']) }
+  config.current_user_from_token = -> (claims) { User.find_by(uid: claims['sub']) }
 
   ## Expiration claim
   ## ----------------
