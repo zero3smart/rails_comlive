@@ -8,7 +8,12 @@ class Api::V1::AppsController < Api::V1::BaseController
   end
 
   def show
-    render json: App.find(params[:id])
+    app = App.find(params[:id])
+    begin
+      render json: App.find(params[:id])
+    catch()
+      render_error("can not find app", 404)
+    end
   end
 
 end
