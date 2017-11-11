@@ -1,14 +1,12 @@
-class Api::V1::CommoditiesController < Api::V1::BaseController
+module Api::V1
+  class CommoditiesController < ApiController
 
-  #before_action :authenticate
-  before_action :setuser
+    def index
+      render_error("can not list all commodities", 400)
+    end
 
-  def index
-    render_error("can not list all commodities", 400)
+    def show
+
+    end
   end
-
-  def show
-
-  end
-
 end

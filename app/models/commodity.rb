@@ -32,8 +32,4 @@ class Commodity < ApplicationRecord
     end
     self.commodity_references.create!(attributes.merge(app_id: app.id))
   end
-
-  def as_json(options={})
-    super(:only => [:id,:name]).merge(href:  Rails.application.routes.url_helpers.slugged_commodity_path(self.uuid,self.name.parameterize))
-  end
 end

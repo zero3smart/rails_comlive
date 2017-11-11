@@ -59,11 +59,19 @@ class CommoditiesController < ApplicationController
   end
 
   def autocomplete
-    render json: Commodity.search(params[:query], limit: 10)
+    @commodities =  Commodity.search(params[:query], limit: 10)
+    response = @commodities.each_with_object([]) do |commodity,arr|
+      arr << { id: commodity.id, name: commodity.name, href: slugged_commodity_path(commodity.uuid,commodity.name.parameterize)}
+    end
+    render json: response
   end
 
   def prefetch
-    render json: Commodity.page(params[:page])
+    @commodities =  Commodity.page(params[:page])
+    response = @commodities.each_with_object([]) do |commodity,arr|
+      arr << { id: commodity.id, name: commodity.name, href: slugged_commodity_path(commodity.uuid,commodity.name.parameterize)}
+    end
+    render json: response
   end
 
   private

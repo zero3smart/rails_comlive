@@ -1,14 +1,13 @@
-class Api::V1::UsersController < Api::V1::BaseController
+module Api::V1
+  class UsersController < ApiController
 
-  #before_action :authenticate
-  before_action :setuser
+    def index
+      render json: { errors: "cannot list all users" }, status: :forbidden
+    end
 
-  def index
-    render json: { errors: "cannot list all users" }, status: :forbidden
+    def show
+      render json: @current_user
+    end
+
   end
-
-  def show
-    render json: current_user
-  end
-
 end
