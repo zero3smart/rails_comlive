@@ -13,7 +13,7 @@ class User < ApplicationRecord
       user.last_name     = auth.info.last_name
       user.access_token  = auth.credentials.id_token
       user.refresh_token = auth.credentials.refresh_token
-      user.expires_at    = Time.now + 3600.seconds
+      user.expires_at    = Time.now + 36000.seconds
       user.save!
     end
   end
