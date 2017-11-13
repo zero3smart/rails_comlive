@@ -1,186 +1,107 @@
 - title "Commodity Live"
-
-%main#app-main.app-main.landing
-  .wrap
-    %section.app-content
-      / header
-      .header
-        .container
-          .header-content
-            %h1= t('landing.pitch')
-            %p.subheading= t('landing.pitch_text_html')
-            = form_tag searches_path, class: "form-horizontal", id: "",
-            data: { commodity_au: autocomplete_commodities_path, brand_au: autocomplete_brands_path, standard_au: autocomplete_standards_path },
-            method: :get do
-              .input-group
-                = search_field_tag :query, nil, placeholder: "Search", id: "", class: "form-control input-lg"
-                %span.input-group-addon{:style => "width:0px; padding-left:0px; padding-right:0px; border:none;"}
-                .dropdown.form-control.input-lg
-                  %select.selectpicker.show-tick{:title => "Everywhere"}
-                    %option{:value => "1"} Commodity
-                    %option{:value => "2"} Product
-                    %option{:value => "3"} Brand
-                    %option{:value => "4"} Standard
-                    %option{:value => "5"} Classification
-
-              = button_tag(type: 'submit', class: "btn btn-primary btn-lg", name: nil, id: "") do
-                Search
-          / header-content
-        / container
-      / header
-      = render 'shared/flash'
-      .container
-        .col-sm-12
-          %h2.heading= t('landing.why')
-          %h3.subheading= t('landing.whytext_html')
-        .col-sm-12
-          .slider.center
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Engineers
-                    = image_tag "landing/icon-engineers.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Start out with defining what requirements you need - standards and specifications
-                        %li Let the state of the product be clearly visible to the whole supply chain to stop fabrication errors.
-                        %li Share your work from a platform that makes it usable to others - not as a document full of specs.
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Manufacturer
-                    = image_tag "landing/icon-manufacturers.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Let your systems or operators communicate directly with a stable and reliable platform for product information exchange.
-                        %li Make sure you have the same product information as your clients.
-                        %li No more tweaking your ERP system to fit your product needs - we have the flexibility you need.
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Brand
-                    = image_tag "landing/icon-brand.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Your product data
-                        %li Officially approved by you
-                        %li Reliably through a stable platform
-                        %li Less labour intense for others
-                        %li Enabled for machine to machine communications
-                        %li Ready for lifecycle communication
-                        %li Let your standards and certification show clearly
-                        %li Present data in a way that makes it usable for others
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Shipping supplier
-                    = image_tag "landing/icon-shipping.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Packaging data
-                        %li Directly from the source
-                        %li No punching
-                        %li HSCodes and other classification available
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Distributor
-                    = image_tag "landing/icon-distributor.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Product data
-                        %li One system for collecting data from all your partners
-                        %li Reliable through a stable platform
-                        %li Add your own private data on top of official or public data
-                        %li Presentable both in a beautiful interface for humans and consistent way to machines.
-                        %li Easily integratable with ERP-systems and other crucial platforms
-                        %li No more manual punching - export your data once and have the owner of the data maintain it
-                        %li Create classification systems that lets you group together products based on your criteria.
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Shop/Retail
-                    = image_tag "landing/icon-shop-retail.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Product data
-                        %li One system for collecting data from all your partners
-                        %li Reliable through a stable platform
-                        %li Add your own private data on top of official or public data, visible only to you
-                        %li Easily integratable with ERP-systems and other crucial platforms
-                        %li No more manual punching - export your data once and have the owner of the data maintain it
-                        %li Get real time information on state: End-Of-Life or callbacks
-                        %li Create classification systems that lets you group together products based on your criteria.
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Consumers
-                    = image_tag "landing/icon-consumers.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Know what you are buying - traceability
-                        %li Compare actual data with other products
-                        %li Get real time information on state: End-Of-Life or callbacks
-                        %li Forget about manuals - get them online
-                        %li Consistent information - no more browsing cryptical websites in foreign languages.
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 System developers
-                    = image_tag "landing/icon-devs.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Connect your software with a world of products.
-                        %li Stop punching and maintaining data that already exists
-                        %li Allow users to see and purchase products from with your solution to create more revenue.
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Standardization organizations
-                    = image_tag "landing/icon-standards-organizations.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Put your official stamp on products so that the Brand can use it directly - not just as a PDF.
-                        %li Increase your visibility and traceability
-            %div
-              .user.flip-container{:ontouchstart => "this.classList.toggle('hover');"}
-                .flipper
-                  .front
-                    %h4 Governance
-                    = image_tag "landing/icon-governance.png", class: "img-responsive" 
-                  .back
-                    %h5 Benefits
-                    .user-benefits
-                      %ul
-                        %li Get product information directly from the Brand
-                        %li Get correct classifications and create your own
-                        %li Increase transparency
-    / .app-content
-  / .wrap
+/ header
+.header.clearfix
+  .container
+    .header-content
+      = image_tag "commodity.live.png", alt: "image"
+      %p= t('landing.pitch')
+      %form
+        %input.form-control{:placeholder => t('landing.searchfor').upcase, :type => "text"}/
+        %button.btn.btn-brand{:type => "submit"}= t('landing.search').upcase
+      %ul.list-inline
+        %li
+          %a{:href => "#"}
+            %i.fa.fa-twitter
+        %li
+          %a{:href => "#"}
+            %i.fa.fa-google-plus
+        %li
+          %a{:href => "#"}
+            %i.fa.fa-facebook
+        %li
+          %a{:href => "#"}
+            %i.fa.fa-linkedin
+    / header-content
+  / container
+/ header
+= render 'shared/flash'
+/ about
+#about.container
+  .row
+    .col-sm-6
+      .img-wrapper
+        = image_tag "circle-1.png", alt: "image", class: "img-responsive"
+        %p.img-heading= t('landing.why').upcase
+      / img-wrapper
+    / col
+    .col-sm-6
+      %p.desc-1= t('landing.whytext')
+    / col
+  / row
+  .row
+    .col-sm-6
+      %p.desc-1= t('landing.howtext')
+    / col
+    .col-sm-6
+      .img-wrapper
+        = image_tag "circle-2.png", alt: "image", class: "img-responsive"
+        %p.img-heading= t('landing.how').upcase
+      / img-wrapper
+    / col
+  / row
+  .row
+    .col-sm-6
+      .img-wrapper
+        = image_tag "circle-3.png", alt: "image", class: "img-responsive"
+        %p.img-heading= t('landing.whom').upcase
+      / img-wrapper
+    / col
+    .col-sm-6
+      %p.desc-1= t('landing.whomtext')
+    / col
+  / row
+/ about
+/ signup
+#signup
+  .container
+    %h1 GET STARTED
+    %h2 Sign up to add commodities
+    %form
+      .input-group
+        %input.form-control{:placeholder => "ENTER YOUR EMAIL", :type => "text"}/
+        %span.input-group-btn
+          %button.btn.btn-brand{:type => "button"}
+            CREATE
+            %span.hidden-xs FREE
+            ACCOUNT
+      / /input-group
+  / container
+/ signup
+/ contact
+#contact
+  .container
+    %h1 CONTACT
+    %h3
+      Do you have questions, feedback or need support?
+      %br/
+      We are here to help you!
+    .row
+      .col-sm-6
+        %form
+          %input.form-control{:placeholder => "YOUR NAME", :type => "text"}/
+          %input.form-control{:placeholder => "YOUR EMAIL", :type => "text"}/
+          %textarea.form-control{:placeholder => "YOUR MESSAGE"}
+          %button.btn.btn-brand{:type => "submit"} SUBMIT
+      / col
+      .col-sm-6
+        %ul.list-unstyled
+          %li NTTY AS
+          %li Grensen 12
+          %li 0159 Oslo
+          %li info@ntty.com
+          %li
+            %a{:href => "#"} www.ntty.com
+      / col
+    / row
+  / container
+/ contact

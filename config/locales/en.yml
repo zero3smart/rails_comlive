@@ -1,50 +1,55 @@
----
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
 en:
-  errors:
-    messages:
-      already_confirmed: was already confirmed, please try signing in
-      confirmation_period_expired: needs to be confirmed within %{period}, please
-        request a new one
-      expired: has expired, please request a new one
-      not_found: not found
-      not_locked: was not locked
-      not_saved:
-        one: '1 error prohibited this %{resource} from being saved:'
-        other: "%{count} errors prohibited this %{resource} from being saved:"
-  general:
-    back: Back
-    cancel: Cancel
-    confirm: Are you sure?
-    destroy: Delete
-    edit: Edit
-    new: New
-  hello: Hello world
-  layouts:
-    application:
-      about: About
-      account: Account
-      app_store: App Store
-      imprint: Imprint
-      logout: Logout
-      my_mails: My Mails
-      press: Press
-      preview: Preview
-      profile: Profile
-      sign_in: Login
-      sign_up: Register
+  sitename: "commodity.live"
+
+  functions:
+    update: "update"
+
   misc:
-    collection: collection
+    commodity: "commodity"
+    commoditites: "commodities"
+    company: "company"
+    companies: "companies"
+    collection: "collection"
     collections: collections
-    commoditites: commodities
-    commodity: commodity
-    companies: companies
-    company: company
-    latest: latest
-    search: search
-  sitename: commodity.live
-  time:
-    formats:
-      devise:
-        mailer:
-          invitation_instructions:
-            accept_until_format: "%B %d, %Y %I:%M %p"
+    search: "search"
+    latest: "latest"
+    more: "read more"
+
+  app:
+    app: "Team/App"
+    apps: "Teams/Apps"
+    non-found: "No teams/apps found"
+
+  landing:
+    pitch: "is an online, worldwide register of commodities and products: goods and services"
+    searchfor: "search for any product or commodity"
+    search: "search"
+    why: "why"
+    whytext: "In a globalized market, companies need accurate and comparable data on the goods they buy and sell. Today, getting this data is a mix of spreadsheets, reading websites, manual punching and a few scattered APIs. Why spend time and effort registering data that already exists? We aim to provide a worldwide database of all goods, both generic (the actual commodities) and specific. The database can be accessed through powerful APIs and an intuitive user interface, and helps simplify and improve cooperation by ensuring that everyone is talking about the same product or version. You can register or retrieve data from the system, eliminating the need for the same inconsistent data in different systems."
+    how: "how"
+    howtext: "This online, worldwide database is both community driven and an official data provider. Anyone who holds data on a product can contribute to evolve and build the database, and anyone has access to add and edit public information. You can add private information to any piece of data within the database to keep it accessible only within an organization or a team. An official brand has the ability to take ownership of the product and verify the data. The database is easy to use, and provides everyone with a neutral and stable platform for data exchange."
+    whom: |
+      for
+      whom
+    whomtext: "Commodity.live is an open and free database where anyone can search for or register both their own or others products, commodites, brands and standards. All parts of the supply chain, system developers and standardization organizations will benefit from using our neutral and stable system."
