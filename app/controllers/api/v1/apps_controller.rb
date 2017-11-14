@@ -6,13 +6,8 @@ module Api::V1
     end
 
     def show
-      app = App.find(params[:id])
-      begin
-        render json: App.find(params[:id])
-        catch()
-        render_error("can not find app", 404)
-      end
+      @app = @current_user.apps.find(params[:id])
+      render json: @app
     end
-
   end
 end
