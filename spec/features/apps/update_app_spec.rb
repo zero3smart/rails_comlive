@@ -24,6 +24,6 @@ feature 'Updating app' do
     click_button "Update App"
 
     expect(page).to have_text("Name can't be blank")
-    expect(page).to have_text("Update App")
+    expect(page).to have_text("update Teams/Apps")
   end
 end
