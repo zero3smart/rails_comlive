@@ -3,6 +3,11 @@ class Commodity < ApplicationRecord
 
   belongs_to :brand, optional: true
   has_many :commodity_references
+  has_many :specifications, through: :commodity_references
+  has_many :packagings, through: :commodity_references
+  has_many :standards, through: :commodity_references
+  has_many :references, through: :commodity_references
+  has_many :links, through: :commodity_references
   has_many :barcodes, as: :barcodeable
 
   validates_presence_of :name, :measured_in

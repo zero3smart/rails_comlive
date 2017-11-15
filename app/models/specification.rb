@@ -8,6 +8,10 @@ class Specification < ApplicationRecord
   validates_presence_of :value, unless: lambda { self.max.present? || self.min.present? }
   validate :min_or_max_present, unless: lambda { self.value.present? }
 
+  def app
+    @app ||= parent.app
+  end
+
   private
 
   def min_or_max_present

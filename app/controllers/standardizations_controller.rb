@@ -33,7 +33,7 @@ class StandardizationsController < ApplicationController
       when Brand
         model
       else
-        [model.app, model]
+        model.commodity
     end
   end
 end

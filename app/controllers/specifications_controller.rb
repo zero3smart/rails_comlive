@@ -63,9 +63,9 @@ class SpecificationsController < ApplicationController
     model = @parent
     case model
       when CommodityReference
-        [model.app, model]
+        model.commodity
       when Packaging
-        [model.commodity_reference.app, model.commodity_reference, model]
+        [model.commodity_reference.app, model.commodity_reference,model]
     end
   end
 

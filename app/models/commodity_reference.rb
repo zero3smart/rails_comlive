@@ -11,7 +11,6 @@ class CommodityReference < ApplicationRecord
   belongs_to :unspsc_family, optional: true
   belongs_to :unspsc_segment, optional: true
 
-  has_many :commodity_references
   has_many :links
   has_many :references
   has_many :packagings
