@@ -18,6 +18,11 @@ RSpec.describe Standard, :type => :model do
       standard.valid?
       expect(standard.errors[:description]).to include("can't be blank")
     end
+
+    it "is public by default" do
+      standard = build(:standard)
+      expect(standard.visibility).to eq "publicized"
+    end
   end
 
   describe "Associations" do
