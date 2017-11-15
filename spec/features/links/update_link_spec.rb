@@ -8,7 +8,7 @@ feature 'Update Link' do
 
   background do
     log_in(user)
-    visit edit_app_link_path(app, link)
+    visit edit_app_commodity_reference_link_path(app, commodity_reference, link)
   end
 
   feature "Visiting #edit page" do
@@ -22,14 +22,14 @@ feature 'Update Link' do
     context "With correct details" do
       scenario "user should successfully update a link" do
         fill_in "link[description]", with: "description updated"
-        fill_in "link[url]", with: "https://www.google.com/search?q=strengtheningthenumbers"
+        fill_in "link[url]", with: "https://www.google.com"
         select commodity_reference.name, :from => "link[commodity_reference_id]"
 
         click_button "Update Link"
 
         expect(page).to have_text("link successfully updated")
         expect(page).to have_text("description updated")
-        expect(page).to have_link("Open Link", href: "https://www.google.com/search?q=strengtheningthenumbers")
+        expect(page).to have_link("https://www.google.com", href: "https://www.google.com")
       end
     end
 

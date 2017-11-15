@@ -2,16 +2,15 @@ require 'rails_helper'
 
 feature 'Invitations' do
   given(:user) { create(:user) }
-  given(:app) { create(:app) }
-
-  background do
-    log_in(user)
-  end
 
   context "When current user is owner of the app" do
-    feature 'User can invite another user to an app' do
-      given!(:membership) { create(:membership, user: user, member: app, owner: true) }
+    given(:app) { user.default_app }
 
+    background do
+      log_in(user)
+    end
+
+    feature 'User can invite another user to an app' do
       background do
         visit app_path(app)
         click_link "Invite Users"
@@ -38,10 +37,15 @@ feature 'Invitations' do
   end
 
   context "When current user is not owner of the app" do
-    scenario "User should not see the invite user link" do
-      visit app_path(app)
+    given(:app) { create(:app) }
 
-      expect(page).not_to have_link("Invite Users")
+    background do
+      log_in(user)
+    end
+
+    scenario "User should not be able to invite users to the app" do
+      visit new_app_invitation_path(app)
+      expect(page).to have_text("You are not authorized to perform this action.")
     end
   end
 end

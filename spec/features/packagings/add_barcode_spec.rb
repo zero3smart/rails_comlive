@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Adding barcode to a packaging' do
   given(:user) { create(:user) }
   given(:app) { user.default_app }
-  given(:commodity_reference) { create(:generic_commodity_reference, app_id: app.id) }
+  given(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
   given(:packaging) { create(:packaging, commodity_reference_id: commodity_reference.id) }
   given(:barcode) { build(:barcode) }
 

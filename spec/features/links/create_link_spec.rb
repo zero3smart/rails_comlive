@@ -8,7 +8,7 @@ feature 'Create Link' do
 
   background do
     log_in(user)
-    visit new_app_link_path(app)
+    visit new_app_commodity_reference_link_path(app,commodity_reference)
   end
 
   feature "Visiting #new page" do
@@ -21,7 +21,7 @@ feature 'Create Link' do
       click_button "Create Link"
 
       expect(page).to have_text("link successfully created")
-      expect(page).to have_link("Open Link", href: link.url)
+      expect(page).to have_link(link.url, href: link.url)
       expect(page).to have_text(link.description)
     end
 
