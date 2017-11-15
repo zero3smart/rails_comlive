@@ -3,12 +3,12 @@ require 'rails_helper'
 feature 'Updating a Reference' do
   given(:user) { create(:user) }
   given(:app) { user.default_app }
-  given(:commodity_reference) { create(:non_generic_commodity_reference, app_id: app.id) }
-  given(:reference){ create(:reference, app_id: app.id, target_commodity_reference_id: commodity_reference.id) }
+  given(:commodity_reference) { create(:commodity_reference, app_id: app.id) }
+  given(:reference){ create(:reference, commodity_reference: commodity_reference) }
 
   background do
     log_in(user)
-    visit edit_app_reference_path(app, reference)
+    visit edit_app_commodity_reference_reference_path(app, commodity_reference, reference)
   end
 
   feature "Visiting #edit page" do
@@ -43,8 +43,4 @@ feature 'Updating a Reference' do
       expect(page).to have_text("Description can't be blank")
     end
   end
-
-
-
-
 end

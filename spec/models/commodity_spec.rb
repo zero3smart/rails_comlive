@@ -47,6 +47,36 @@ RSpec.describe Commodity, :type => :model do
       expect(assoc.macro).to eq :has_many
     end
 
+    it "has many specifications" do
+      assoc = Commodity.reflect_on_association(:specifications)
+      expect(assoc.macro).to eq :has_many
+      expect(assoc.options[:through]).to eq :commodity_references
+    end
+
+    it "has many packagings" do
+      assoc = Commodity.reflect_on_association(:packagings)
+      expect(assoc.macro).to eq :has_many
+      expect(assoc.options[:through]).to eq :commodity_references
+    end
+
+    it "has many standards" do
+      assoc = Commodity.reflect_on_association(:standards)
+      expect(assoc.macro).to eq :has_many
+      expect(assoc.options[:through]).to eq :commodity_references
+    end
+
+    it "has many references" do
+      assoc = Commodity.reflect_on_association(:references)
+      expect(assoc.macro).to eq :has_many
+      expect(assoc.options[:through]).to eq :commodity_references
+    end
+
+    it "has many links" do
+      assoc = Commodity.reflect_on_association(:links)
+      expect(assoc.macro).to eq :has_many
+      expect(assoc.options[:through]).to eq :commodity_references
+    end
+
     it "has many barcodes" do
       assoc = Commodity.reflect_on_association(:barcodes)
       expect(assoc.macro).to eq :has_many

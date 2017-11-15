@@ -12,14 +12,14 @@ RSpec.describe Reference, :type => :model do
       expect(reference.errors[:kind]).to include("can't be blank")
     end
     it "is invalid without a source commodity" do
-      reference = build(:reference, source_commodity_reference_id: nil)
+      reference = build(:reference, source_commodity_id: nil)
       reference.valid?
-      expect(reference.errors[:source_commodity_reference]).to include("can't be blank")
+      expect(reference.errors[:source_commodity]).to include("can't be blank")
     end
     it "is invalid without a target commodity" do
-      reference = build(:reference, target_commodity_reference_id: nil)
+      reference = build(:reference, target_commodity_id: nil)
       reference.valid?
-      expect(reference.errors[:target_commodity_reference]).to include("can't be blank")
+      expect(reference.errors[:target_commodity]).to include("can't be blank")
     end
     it "is invalid without a description" do
       reference = build(:reference, description: nil)
@@ -37,10 +37,15 @@ RSpec.describe Reference, :type => :model do
       expect(reference.errors[:kind]).to include("is not allowed")
     end
     it "is invalid if source commodity is not generic" do
-      commodity = create(:non_generic_commodity_reference)
-      reference = build(:reference, source_commodity_reference: commodity)
+      commodity = create(:non_generic_commodity)
+      reference = build(:reference, source_commodity: commodity)
       reference.valid?
-      expect(reference.errors[:source_commodity_reference]).to include("is not generic")
+      expect(reference.errors[:source_commodity]).to include("is not generic")
+    end
+    it "is invalid without a commodity reference" do
+      reference = build(:reference, commodity_reference_id: nil)
+      reference.valid?
+      expect(reference.errors[:commodity_reference]).to include("can't be blank")
     end
     it "is public by default" do
       reference = build(:reference)
@@ -50,18 +55,24 @@ RSpec.describe Reference, :type => :model do
 
 
   describe "Associations" do
+
     it "belongs to app" do
       assoc = Reference.reflect_on_association(:app)
       expect(assoc.macro).to eq :belongs_to
     end
 
+    it "belongs to a commodity reference" do
+      assoc = Reference.reflect_on_association(:commodity_reference)
+      expect(assoc.macro).to eq :belongs_to
+    end
+
     it "belongs to source commodity" do
-      assoc = Reference.reflect_on_association(:source_commodity_reference)
+      assoc = Reference.reflect_on_association(:source_commodity)
       expect(assoc.macro).to eq :belongs_to
     end
 
     it "belongs to target commodity" do
-      assoc = Reference.reflect_on_association(:target_commodity_reference)
+      assoc = Reference.reflect_on_association(:target_commodity)
       expect(assoc.macro).to eq :belongs_to
     end
   end
