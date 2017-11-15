@@ -1,7 +1,19 @@
-- tabs = %w(summary specifications packagings standards barcodes references classifications links)
-
 %ul.nav.nav-tabs.box.m-0{ role: "tablist" }
-  - tabs.each_with_index do |tab,index|
-    %li{ role: "presentation", class: index.zero? ? "active"  : "" }
-      = link_to "#tab-#{index}", aria: { controls: "tab-#{index}" }, data: { toggle: "tab" }, role: "tab" do
-        = tab
+  %li{ role: "presentation", class: "active" }
+    = link_to "#tab-1", aria: { controls: "tab-1" }, data: { toggle: "tab" }, role: "tab" do
+      Specifications
+  %li{ role: "presentation" }
+    = link_to "#tab-2", aria: { controls: "tab-2" }, data: { toggle: "tab" }, role: "tab" do
+      Packagings
+  %li{ role: "presentation" }
+    = link_to "#tab-3", aria: { controls: "tab-2" }, data: { toggle: "tab" }, role: "tab" do
+      Standards
+  %li{ role: "presentation" }
+    = link_to "#tab-4", aria: { controls: "tab-2" }, data: { toggle: "tab" }, role: "tab" do
+      References
+  %li{ role: "presentation" }
+    = link_to "#tab-5", aria: { controls: "tab-2" }, data: { toggle: "tab" }, role: "tab" do
+      Classifications
+  %li{ role: "presentation" }
+    = link_to "#tab-6", aria: { controls: "tab-2" }, data: { toggle: "tab" }, role: "tab" do
+      External Links

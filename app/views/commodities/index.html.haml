@@ -57,7 +57,7 @@
             .list-group.recently-visited
               - if recent_commodities.any?
                 - recent_commodities.each do |commodity|
-                  = link_to commodity, class: "list-group-item" do
+                  = link_to [commodity.app, commodity], class: "list-group-item" do
                     = commodity.name
               - else
                 %p No recent commodities visited

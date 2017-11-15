@@ -208,14 +208,16 @@ ActiveRecord::Schema.define(version: 20160902071041) do
 
   create_table "references", force: :cascade do |t|
     t.string   "kind"
-    t.integer  "source_commodity_reference_id"
-    t.integer  "target_commodity_reference_id"
+    t.integer  "source_commodity_id"
+    t.integer  "target_commodity_id"
     t.text     "description"
-    t.integer  "visibility",                    default: 0
+    t.integer  "visibility",             default: 0
     t.integer  "app_id"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.integer  "commodity_reference_id"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.index ["app_id"], name: "index_references_on_app_id", using: :btree
+    t.index ["commodity_reference_id"], name: "index_references_on_commodity_reference_id", using: :btree
   end
 
   create_table "specifications", force: :cascade do |t|
@@ -249,6 +251,7 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.string   "logo"
     t.string   "uuid"
     t.boolean  "official",    default: false
+    t.integer  "visibility",  default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.index ["uuid"], name: "index_standards_on_uuid", unique: true, using: :btree
@@ -339,6 +342,7 @@ ActiveRecord::Schema.define(version: 20160902071041) do
   add_foreign_key "memberships", "users"
   add_foreign_key "packagings", "commodity_references"
   add_foreign_key "references", "apps"
+  add_foreign_key "references", "commodity_references"
   add_foreign_key "standardizations", "standards"
   add_foreign_key "standardizations", "users"
   add_foreign_key "states", "commodity_references"

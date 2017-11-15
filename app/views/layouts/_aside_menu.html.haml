@@ -42,14 +42,3 @@
                 %i.zmdi.zmdi-accounts-add.zmdi-hc-lg
               %span.menu-text Invite Users
           / .menu-item
-
-        %li.menu-item.has-submenu
-          %a.menu-link.submenu-toggle{:href => "javascript:void(0)"}
-            %span.menu-icon
-              %i.fa.fa-leaf.fa-lg
-            %span.menu-text.foldable Classifications
-            %span.menu-caret.foldable
-              %i.zmdi.zmdi-hc-sm.zmdi-chevron-right
-          %ul.submenu
-            %li= link_to "All Classifications", app_classifications_path(current_app)
-            %li= link_to "Add Classification", new_app_classification_path(current_app)

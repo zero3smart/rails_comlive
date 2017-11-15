@@ -29,6 +29,18 @@ RSpec.describe InvitationsController, :type => :controller do
         expect(flash[:alert]).to eq("Invalid invitation token")
       end
     end
+
+    context "When user is signed in" do
+      it "creates membership for the user" do
+        sign_in user
+
+        invitation = create(:invitation, recipient_email: user.email)
+
+        expect {
+          get :accept, params: { token: invitation.token }
+        }.to change(Membership, :count).by(1)
+      end
+    end
   end
 
   describe "POST #create" do

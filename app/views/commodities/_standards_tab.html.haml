@@ -1,17 +1,13 @@
 #tab-3.tab-pane.fade{ role: "tabpanel" }
-  - if @standards.any?
-    .row
-      .col-md-12
-        %h4.segment-name Standards
-    .table-responsive.box.p-t-md
-      %table.table.table-striped.no-cellborder.dataTable{ cellspacing: 0}
-        %thead
-          %tr
-            %th Name
-            %th Description
-            %th
-        %tbody
-          = render @standards
-  - else
-    - if user_signed_in?
-      = render 'shared/missing_prompt', title: t("commodities.show.tabs.standards.title"), description: t("commodities.show.tabs.standards.description"), anchor: t("commodities.show.tabs.standards.button"), href: new_standardization_path(referable_type: "CommodityReference", referable_id: @com_ref.id)
+  .row
+    .col-md-12
+      %h4.segment-name Standards
+  .table-responsive.box.p-t-md
+    %table.table.table-striped.no-cellborder.dataTable{ cellspacing: 0}
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th
+      %tbody
+        = render @standards

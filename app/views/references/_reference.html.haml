@@ -7,7 +7,7 @@
     %td.segment-actions
       %span.hidden 2
       - if policy(reference).edit?
-        = link_to edit_app_commodity_reference_reference_path(current_app,reference.commodity_reference,reference), class: "btn-edit" do
+        = link_to "#", class: "btn-edit" do
           %i.fa.fa-pencil
           Edit
       .segment-state.dropdown

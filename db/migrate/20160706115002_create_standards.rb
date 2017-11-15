@@ -6,6 +6,7 @@ class CreateStandards < ActiveRecord::Migration[5.0]
       t.string :logo
       t.string :uuid
       t.boolean :official, default: false
+      t.integer :visibility, default: 0
 
       t.timestamps
     end

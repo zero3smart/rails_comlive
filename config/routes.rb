@@ -39,19 +39,13 @@ Rails.application.routes.draw do
   resources :apps do
     resources :invitations, only: [:new, :create]
     resources :commodity_references, path: "commodities" do
-      collection do
-        get :autocomplete
-        get :prefetch
-      end
-      resources :states, :specifications
+      resources :states, :specifications, :references
+      resources :links, except: [:index, :show]
+
       resources :packagings do
-        resources :specifications
-        resources :barcodes
+        resources :specifications, :barcodes
       end
     end
-
-    resources :links, except: [:index, :show]
-    resources :references
     resources :custom_units, path: "custom-units"
   end
 
@@ -64,8 +58,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
+      resources :users
       resources :apps
+      resources :commodities
     end
   end
-
 end

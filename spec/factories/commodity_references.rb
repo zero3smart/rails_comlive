@@ -14,14 +14,5 @@ FactoryGirl.define do
     factory :invalid_commodity_reference do
       name nil
     end
-
-    factory :generic_commodity_reference do
-      generic true
-      brand nil
-    end
-
-    factory :non_generic_commodity_reference do
-      generic false
-    end
   end
 end

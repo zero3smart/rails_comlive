@@ -7,14 +7,13 @@ RSpec.describe StandardizationsController, :type => :controller do
 
   context "As an authenticated user" do
     before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
       sign_in user
     end
 
     describe "POST #create" do
       context "with valid attributes" do
         it "saves the new standardization in the database" do
-          attrs = { standard_id: standard.id, referable_type: commodity_reference.class.to_s, referable_id: commodity_reference.id }
+          attrs = { standard_id: standard.id, referable_type: "CommodityReference", referable_id: commodity_reference.id }
           expect{
             post :create, params: { standardization: attrs }
           }.to change(Standardization, :count).by(1)
@@ -38,7 +37,7 @@ RSpec.describe StandardizationsController, :type => :controller do
         post :create, params:  { standardization: {} }
 
         expect(response.status).to eq 302
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(login_path)
         expect(flash[:alert]).to eq("You need to sign in or sign up before continuing.")
       end
     end

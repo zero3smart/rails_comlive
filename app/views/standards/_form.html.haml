@@ -1,57 +1,11 @@
-- content_for :js do
-  = javascript_include_tag "//api.filestackapi.com/filestack.js"
-
-= form_for [@brand, @standard], html: { class: "form-horizontal" } do |f|
+= form_for [@app, @standard] do |f|
+  = errors_for @standard
   .form-group
-    = f.label :standard_name, class: "col-sm-4 control-label required"
-    .col-sm-6
-      = f.text_field :name, class: "form-control", placeholder: "e.g Quality Management Systems"
-      = errors_for_field(@standard, :name)
+    = f.label :name
+    = f.text_field :name, class: "form-control"
   .form-group
-    = f.label :standard_code, class: "col-sm-4 control-label"
-    .col-sm-6
-      .row
-        .col-sm-6
-          = f.text_field :code, class: "form-control", placeholder: "e.g. 9001"
-          = errors_for_field(@standard, :code)
-        .col-sm-6
-          = f.text_field :version, class: "form-control", placeholder: "version"
-          = errors_for_field(@standard, :version)
-
+    = f.label :description
+    = f.text_area :description, class: "form-control"
   .form-group
-    = f.label :certifier, class: "col-sm-4 control-label"
-    .col-sm-6
-      .row
-        .col-sm-6
-          = f.text_field :certifier, class: "form-control", placeholder: "Name"
-          = errors_for_field(@standard, :certifier)
-
-        .col-sm-6
-          = f.text_field :certifier_url, class: "form-control", placeholder: "http://"
-          = errors_for_field(@standard, :certifier_url)
-
-  .form-group
-    = f.label :description, class: "col-sm-4 control-label"
-    .col-sm-6
-      = f.text_area :description, class: "form-control"
-      = errors_for_field(@standard, :description)
-
-  .form-group
-    = f.label :standard_logo, class: "col-sm-4 control-label"
-    .col-sm-6
-      = f.hidden_field :logo, class: "form-control"
-      = errors_for_field(@standard, :logo)
-      %input{ "data-fp-apikey" => ENV["FILEPICKER_API_KEY"], "data-fp-container" => "modal", "data-fp-mimetypes" => "image/*",
-      "data-fp-store-location" => "s3", "data-fp-crop-ratio" => "1/1", :onchange => "setLogo(event.fpfile.url,'standard_logo')",
-      "data-fp-button-text" => t(".upload_logo"), :type => "filepicker"}/
-
-  .form-group
-    = f.label :publishing, class: "col-sm-4 control-label"
-    .col-sm-6
-      = f.select :visibility, options_for_visibility(@standard), {}, class: "selectpicker show-tick", data: { width: "fit", header: "Publishing of the data"}
-      = errors_for_field(@standard, :visibility)
-
-  .row
-    .col-sm-8.col-sm-offset-4
-      = f.submit class: "btn btn-primary"
-      = link_to "Cancel", :back, class: "btn btn-default btn-md m-l-sm"
+    = f.select :visibility, options_for_visibility(@standard), {}, class: "form-control"
+  = f.submit class: "btn btn-primary"

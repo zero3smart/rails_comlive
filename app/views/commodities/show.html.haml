@@ -1,71 +1,104 @@
 %section.app-content
   - if @brand
-    .box.commodity-brand.segment-edit.p-sm
+    .box.commodity-brand.p-sm
       .row.no-gutter
         .row-sm-height
           .col-md-6.col-sm-height.col-sm-middle
             = link_to @brand, class: "brand-logo" do
-              = image_tag @brand.logo
-            = link_to @brand.name, @brand, class: "brand-title"
+              = image_tag "http://placehold.it/100x100"
+            = link_to @brand.name, @brand, class: "fz-lg p-l-sm brand-title"
 
           .hidden-xs.col-md-6.col-sm-height.col-sm-middle.text-right
-            - @brand.commodities.limit(3).each do |commodity|
+            - (0..3).each do
               .hidden-sm.avatar.avatar-md.avatar-circle.m-r-sm
-                = link_to commodity do
-                  = image_tag commodity.avatar_url
+                = link_to "#" do
+                  = image_tag "http://placehold.it/60x60"
 
-            .summary
-              = link_to "#" do
-                %span= @brand.commodities.count
+            .pull-right.text-center
+              = link_to "#", class: "m-b-0" do
+                %span.fz-xl.fw-500.lh-1.block= @brand.commodities.count
                 = "Commodity".pluralize(@brand.commodities.count)
-
-      .segment-actions
-        - if user_signed_in?
-          = link_to edit_brand_path(@brand), class: "btn-edit" do
-            %i.fa.fa-pencil
-            Edit
-        .segment-state.dropdown
-          = render 'shared/pubmode', mode: "Official"
 
   .box.m-0
     .row
       .col-md-12
-        .segment.segment-edit.segment-header
-          .commodity-heading
-            %h1.p-md.pull-left= @commodity.name
-          .segment-actions
-            - if user_signed_in?
-              = link_to edit_commodity_path(@commodity), class: "btn-edit" do
-                %i.fa.fa-pencil
-                Edit
-            = link_to "#", class: "btn-share", data: { toggle: "modal", target: "#modalShare" } do
-              %i.fa.fa-share-alt
-              Share
-            .segment-state.dropdown.inline-block
-              = render 'shared/pubmode', mode: @commodity.visibility_status
+        .commodity-heading
+          %h1.p-md.pull-left= @commodity.name
 
-    - if @state
-      = render @state
+          - if @commodity.generic?
+            .pull-right.m-sm
+              .text-center
+                %p.m-b-xs.fz-sm Is it your commodity?
+                = link_to "#", class: "btn btn-outline rounded btn-primary" do
+                  %i.fa.fa-gavel.fa-md
+                  Claim This Commodity
+
+    .row
+      .col-md-12
+        .alert.alert-warning.m-md.m-t-0{ role: "alert" }
+          %strong State: "Early stage/prototype
+          %span Info: Descriptive text
+          = link_to "Link: link to further info page", "#", class: "alert-link"
+
+    .row.no-gutter
+      .col-sm-6.col-md-5
+        .col-sm-12
+          %h4.p-sm.p-l-md.p-b-0.fz-md.pull-left.m-0 Image Gallery
+        .col-sm-12.segment.segment-edit.segment-image
+          .segment-actions
+            = link_to "#", class: "btn-edit" do
+              %i.fa.fa-pencil
+              Edit
+            .segment-state.dropdown
+              = render 'shared/pubmode', mode: "Official"
+
+          #widget-gallery.m-md.m-r-lg
+            %ul#image-gallery.gallery.list-unstyled.cS-hidden
+              - (0..5).each do
+                %li{ data: { thumb: "http://placehold.it/50x35" } }
+                  = image_tag "http://placehold.it/500x350"
+
+
+      .col-sm-6.col-md-7
+        .col-sm-12
+          %h4.p-smp-l-md.p-b-0.fz-md.m-0.inline-block Description
+        .row.no-gutter
+          .col-md-12
+            .segment.segment-edit.segment-description
+              .segment-actions
+                = link_to "#", class: "btn-edit" do
+                  %i.fa.fa-pencil
+                  Edit
+                .segment-state.dropdown
+                  = render 'shared/pubmode', mode: "Official"
+
+              %article.p-md
+                = @commodity.short_description
+
+              %article.p-md
+                = @commodity.long_description
+
+        .row.no-gutter
+          .col-md-12
+            .segment.segment-edit.segment-description
+              .segment-actions
 
   .row
     .col-md-12
       %hr.m-0/
       .m-b-lg.nav-tabs-horizontal
         .segment-add
-          = render 'tab_menu'
+          = render :partial => 'tab_menu'
           .segment-actions
             = link_to "#", class: "btn-add icon icon-circle icon-md", data: { toggle: "modal", target: "#modalAdd" } do
               %i.fa.fa-plus
         .tab-content
-          = render 'summary_tab'
           = render 'specifications_tab'
           = render 'packagings_tab'
           = render 'standards_tab'
-          = render 'barcodes_tab'
           = render 'references_tab'
           = render 'classifications_tab'
           = render 'links_tab'
 
   = render 'add_items' if user_signed_in?
-  = render 'shared/social_share', share_url: slugged_commodity_url(@commodity.uuid,@commodity.name.parameterize)
 

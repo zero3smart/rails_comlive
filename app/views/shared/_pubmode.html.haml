@@ -14,7 +14,10 @@
     %strong.public Public
     %small
       This information will be publicly available and published under
-      %a{:href => "http://choosealicense.com/licenses/cc-by-4.0/", :target => "_blank"} Creative Commons Attribution 4.0 International Public License"
+      = succeed "." do
+        %a{:href => "http://choosealicense.com/licenses/cc-by-4.0/", :target => "_blank"}
+          "Creative Commons Attribution 4.0
+          International Public License"
   %li{ class: mode == "Official" ? "selected" : "" }
     %strong.official Official
     %small Approved data by the actual maker of commodity

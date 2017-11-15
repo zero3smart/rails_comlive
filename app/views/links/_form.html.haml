@@ -1,19 +1,21 @@
 = form_for [@app, @commodity_reference, @link], html: { class: "form-horizontal" } do |f|
+  = errors_for @link
   .form-group
     = f.label :url, class: "col-sm-4 control-label"
     .col-sm-6
       = f.text_field :url, class: "form-control"
-      = errors_for_field(@link, :url)
+  .form-group
+    = f.label :commodity, class: "col-sm-4 control-label"
+    .col-sm-6
+      = f.select :commodity_reference_id, @app.commodity_references.map {|c| [c.name, c.id] }, {}, class: "form-control"
   .form-group
     = f.label :description, class: "col-sm-4 control-label"
     .col-sm-6
       = f.text_area :description, class: "form-control autoresize"
-      = errors_for_field(@link, :description)
   .form-group
     = f.label :publishing, class: "col-sm-4 control-label"
     .col-sm-6
-      = f.select :visibility, options_for_visibility(@link), {}, class: "selectpicker show-tick", data: { width: "fit", header: "Publishing of the data"}
-      = errors_for_field(@link, :visibility)
+      = f.select :visibility, options_for_visibility(@link), {}, class: "form-control"
   .row
     .col-sm-8.col-sm-offset-4
       = f.submit class: "btn btn-primary"
