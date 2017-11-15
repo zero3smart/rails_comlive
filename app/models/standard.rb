@@ -1,5 +1,6 @@
 class Standard < ApplicationRecord
   include Uuideable
+  include Visibility
 
   has_many :memberships, foreign_key: :member_id, as: :member
   has_many :users, through: :memberships

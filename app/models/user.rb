@@ -28,7 +28,9 @@ class User < ApplicationRecord
   end
 
   def default_app
-    memberships.find_by(member_type: "App", default: true).member
+    membership = memberships.find_by(member_type: "App", default: true)
+    return nil unless membership
+    membership.member
   end
 
   def create_default_app
@@ -50,7 +52,7 @@ class User < ApplicationRecord
   private
 
   def refresh!
-    data = TokenRefresher.new(refresh_token).request
+    data = TokenRefresher.new(refresh_token)
     update_attributes(access_token: data['id_token'], expires_at: Time.now + (data['expires_in'].to_i).seconds)
   end
 

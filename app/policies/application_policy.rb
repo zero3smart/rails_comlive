@@ -50,4 +50,11 @@ class ApplicationPolicy
       scope
     end
   end
+
+  private
+
+  def member?(app)
+    return false if user.nil?
+    app.users.where(id: user.id).exists?
+  end
 end

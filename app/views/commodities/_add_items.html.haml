@@ -1,45 +1,16 @@
 #modalAdd.modal.fade{:role => "dialog", :tabindex => "-1"}
   .modal-dialog
     .modal-content
-      .modal-header.b-0
-        %h3.widget-title.m-b-0 Add Details
-        = link_to "#", class: "modal-close", data: { dismiss: "modal" } do
+      .modal-header
+        %h3.pull-left.m-0 Add info to this commodity
+        = link_to "#", class: "pull-right fz-lg text-muted", data: { dismiss: "modal" } do
           %i.fa.fa-times
       .modal-body
-        .list-group.widget-add
-          = link_to new_app_commodity_reference_image_path(current_app, @com_ref), class: "list-group-item" do
-            Image
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to new_app_commodity_reference_specification_path(current_app, @com_ref), class: "list-group-item" do
-            Specification
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to "#", class: "list-group-item" do
-            = t('misc.classification')
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to new_app_commodity_reference_packaging_path(current_app,@com_ref), class: "list-group-item" do
-            Packaging
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to new_standardization_path(referable_type: "CommodityReference", referable_id: @com_ref.id), class: "list-group-item" do
-            Standard
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to new_commodity_barcode_path(@commodity), class: "list-group-item" do
-            Barcodes
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to new_app_commodity_reference_reference_path(current_app,@com_ref), class: "list-group-item" do
-            Reference
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to new_app_commodity_reference_state_path(current_app,@com_ref), class: "list-group-item" do
-            State
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
-          = link_to new_app_commodity_reference_link_path(current_app,@com_ref), class: "list-group-item" do
-            External Link
-            %span.btn-add.icon.icon-circle.icon-md
-              %i.fa.fa-plus
+        .list-group
+          = link_to "Image", "#", class: "list-group-item"
+          = link_to "Specification", new_app_commodity_reference_specification_path(current_app, @com_ref), class: "list-group-item"
+          = link_to "Classification", "#", class: "list-group-item"
+          = link_to "Packaging", new_app_commodity_reference_packaging_path(current_app,@com_ref), class: "list-group-item"
+          = link_to "Standard", new_standardization_path(referable_type: "CommodityReference", referable_id: @com_ref.id), class: "list-group-item"
+          = link_to "Reference", new_app_commodity_reference_reference_path(current_app,@com_ref), class: "list-group-item"
+          = link_to "External Link", new_app_commodity_reference_link_path(current_app,@com_ref), class: "list-group-item"
