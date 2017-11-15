@@ -1,7 +1,7 @@
 var ready, select2For;
 
 select2For = function(select){
-    var url = select.data("url");
+    url = select.data("url");
 
     select.select2({
         ajax: {
@@ -10,7 +10,7 @@ select2For = function(select){
             delay: 250,
             data: function (params) {
                 return {
-                    q: params.term || "", // search term
+                    q: params.term, // search term
                     page: params.page || 1
                 };
             },
@@ -33,49 +33,39 @@ select2For = function(select){
                     }
                 };
             },
-            cache: true,
+            cache: true
         },
-        // minimumInputLength: 3,
+        minimumInputLength: 1,
         width: '100%'
-    })
+    });
 }
 
 ready = function(){
-    // $("input#commodity_generic").change(function(){
-    //     var checkbox = $(this);
-    //     var checked = checkbox.is(":checked");
-    //     var ref_select = $("select#commodity_reference_brand_id");
-    //     var com_select = $("select#commodity_brand_id");
-    //     var div = $("div#commodity-brand");
-    //
-    //     if(checked){
-    //         ref_select.prop("selectedIndex", 0);
-    //         com_select.prop("selectedIndex", 0);
-    //         div.hide();
-    //         checkbox.parent().css("margin-bottom","40px");
-    //     } else {
-    //         checkbox.parent().css("margin-bottom","10px");
-    //         div.show();
-    //     }
-    // });
+    $("input#commodity_generic").change(function(){
+        var checkbox = $(this);
+        var checked = checkbox.is(":checked");
+        var ref_select = $("select#commodity_reference_brand_id");
+        var com_select = $("select#commodity_brand_id");
+        var div = $("div#commodity-brand");
+
+        if(checked){
+            ref_select.prop("selectedIndex", 0);
+            com_select.prop("selectedIndex", 0);
+            div.hide();
+            checkbox.parent().css("margin-bottom","40px");
+        } else {
+            checkbox.parent().css("margin-bottom","10px");
+            div.show();
+        }
+    });
 
     // on page load
     var source_commodity = $("#reference_source_commodity_id");
-    if(source_commodity.length){
+    var target_commodity = $("#reference_target_commodity_id");
+    if(source_commodity.length && target_commodity.length){
         select2For(source_commodity);
-    }
-    // Textarea auto resize
-    $('textarea.autoresize').each(function () {
-        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-    }).on('input', function () {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-    });
-    var standardization_select = $("#standardization_standard_id");
-    if(standardization_select.length){
-        select2For(standardization_select);
+        select2For(target_commodity);
     }
 }
 
 $(document).ready(ready);
-

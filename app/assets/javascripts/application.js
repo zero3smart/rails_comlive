@@ -24,6 +24,7 @@
 //= require plugins
 //= require typeahead.bundle
 //= require masonry.min
+//= require lightslider
 //= require imagesloaded.min
 //= require app
 //= require unitwise_atoms
@@ -31,3 +32,4 @@
 //= require commodities
 //= require brands
 //= require standards
+//= require references
