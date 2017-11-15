@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   after_action :last_accessed_app, :record_recent_commodity
 
-  helper_method :current_user, :current_app, :user_signed_in?
+  helper_method :current_user, :current_app, :user_signed_in?, :commodity_url
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -22,7 +22,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_app
-    App.find_by(id: params[:app_id] || params[:id])
+    return current_user.default_app unless cookies[:last_app_id]
+    App.find(cookies[:last_app_id])
+    # return @current_app if defined?(@current_app)
+    # @current_app ||= begin
+    #   app = App.find(cookies[:last_app_id]) if cookies[:last_app_id]
+    #   app = current_user.default_app if current_user
+    # end
   end
 
   def user_not_authorized
@@ -38,9 +44,9 @@ class ApplicationController < ActionController::Base
 
   def record_recent_commodity
     return unless request.get?
-    return unless request.path.match(/\/apps\/\d+\/commodities\/(\d+)/)
+    return unless request.path.match(/\/commodities\/(\d+)/)
     commodities = cookies.permanent[:recent_commodities] || []
-    commodity_id = request.path.match(/\/apps\/\d+\/commodities\/(\d+)/)[1]
+    commodity_id = request.path.match(/\/commodities\/(\d+)/)[1]
     if commodities.empty?
       commodities << commodity_id
     else
@@ -50,6 +56,11 @@ class ApplicationController < ActionController::Base
       commodities.pop if commodities.size > 5
     end
     cookies.permanent[:recent_commodities] = commodities.join(",")
+  end
+
+  def commodity_url(commodity)
+    return commodity_path(commodity) if user_signed_in?
+    slugged_commodity_path(commodity.uuid, commodity.name.parameterize)
   end
 
   def authenticate_user!

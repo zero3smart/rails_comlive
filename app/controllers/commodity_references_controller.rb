@@ -23,7 +23,7 @@ class CommodityReferencesController < ApplicationController
     @commodity_reference = @app.commodity_references.find(params[:id])
     @packaging = Packaging.new
     @state = @commodity_reference.state ? @commodity_reference.state : State.new
-    @standardization = Standardization.new
+    @standardization = Standardization.new(referable: @commodity_reference)
   end
 
   def new

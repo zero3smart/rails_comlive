@@ -26,7 +26,8 @@ class InvitationsController < ApplicationController
     authorize Invitation
     @invitation = Invitation.find_by(token: params[:token])
     if user_signed_in?
-      redirect_to root_path, alert: "You are already signed in"
+      current_user.accept_invite(@invitation.token)
+      redirect_to app_path(@invitation.app), notice: "Invitation accepted"
     else
       redirect_to root_path, alert: "Invalid invitation token" unless @invitation
     end

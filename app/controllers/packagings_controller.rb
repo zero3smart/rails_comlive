@@ -23,7 +23,7 @@ class PackagingsController < ApplicationController
     authorize @app, :show?
     @packaging = @commodity_reference.packagings.create(packaging_params)
     if @packaging.save
-      redirect_to [@app, @commodity_reference], notice: "Packaging successfully saved"
+      redirect_to @commodity_reference.commodity, notice: "Packaging successfully saved"
     else
       render :new
     end
@@ -48,7 +48,7 @@ class PackagingsController < ApplicationController
     authorize @app
     @packaging = @commodity_reference.packagings.find(params[:id])
     if @packaging.update(packaging_params)
-      redirect_to  [@app, @commodity_reference], notice: "Packaging successfully updated"
+      redirect_to  @commodity_reference.commodity, notice: "Packaging successfully updated"
     else
       render :edit
     end
