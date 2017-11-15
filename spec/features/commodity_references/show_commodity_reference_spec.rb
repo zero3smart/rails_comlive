@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Show Commodity Reference' do
+feature 'Show Commodity Reference', skip: "Commodity reference abstracted. Delete maybe?" do
   given(:user) { create(:user) }
   given(:app) { user.default_app }
   given(:commodity_reference) { create(:commodity_reference, app: app) }

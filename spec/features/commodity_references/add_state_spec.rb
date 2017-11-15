@@ -11,7 +11,7 @@ feature 'Commodity Reference state' do
     visit app_commodity_reference_path(app, commodity_reference)
   end
 
-  scenario 'User can set state to a commodity reference', js: true do
+  scenario 'User can set state to a commodity reference', js: true, pending: "No UI for state" do
     click_link "Set State"
 
     within("div#sharedModal") do
