@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Listing Commodity References' do
+feature 'Listing Commodities' do
   given(:user) { create(:user) }
   given(:commodity_ids) { create_list(:commodity, 10).map(&:id) }
 

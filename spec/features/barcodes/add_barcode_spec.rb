@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Adding barcode' do
+feature 'Adding barcode', skip: "Waiting for Barcode UI" do
   given(:user) { create(:user) }
   given(:commodity) { create(:commodity) }
   given(:barcode) { build(:barcode) }

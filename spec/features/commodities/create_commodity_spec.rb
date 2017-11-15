@@ -23,7 +23,8 @@ feature 'Commodity creation' do
 
       expect(page).to have_text("commodity successfully created")
       expect(page).to have_text(commodity.name)
-      expect(page).to have_text("THIS IS A GENERIC COMMODITY")
+      expect(page).to have_text(/Claim This Commodity/i)
+      expect(page).to have_text("Is it your commodity?")
     end
 
     scenario "With all possible details", js: true do
@@ -38,7 +39,8 @@ feature 'Commodity creation' do
       click_button "Create Commodity"
 
       expect(page).to have_text("commodity successfully created")
-      expect(page).to have_text("THIS IS A GENERIC COMMODITY")
+      expect(page).to have_text(/Claim This Commodity/i)
+      expect(page).to have_text("Is it your commodity?")
       expect(page).to have_text(commodity.name)
       expect(page).to have_text(commodity.short_description)
       expect(page).to have_text(commodity.long_description)
@@ -56,7 +58,8 @@ feature 'Commodity creation' do
 
       expect(page).to have_text(commodity.name)
       expect(page).to have_text("commodity successfully created")
-      expect(page).not_to have_text("THIS IS A GENERIC COMMODITY")
+      expect(page).not_to have_text(/Claim This Commodity/i)
+      expect(page).not_to have_text("Is it your commodity?")
     end
   end
 
