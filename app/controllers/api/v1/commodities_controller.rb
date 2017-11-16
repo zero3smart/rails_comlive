@@ -1,12 +1,15 @@
 module Api::V1
   class CommoditiesController < ApiController
 
+    # skeleton for commodities. should be revised
     def index
-      render_error("can not list all commodities", 400)
+      @commodities = Commodity.all
+      render json: @commodities
     end
 
     def show
-
+      @commodity = Commodity.find(params[:id])
+      render json: @commodity
     end
   end
 end
