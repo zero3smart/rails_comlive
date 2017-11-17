@@ -22,6 +22,7 @@
 //= require select2.min
 //= require perfect-scrollbar.jquery
 //= require plugins
+//= require tree.jquery
 //= require typeahead.bundle
 //= require masonry.min
 //= require lightslider
@@ -33,3 +34,4 @@
 //= require brands
 //= require standards
 //= require references
+//= require classifications

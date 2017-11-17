@@ -66,6 +66,14 @@ ready = function(){
         select2For(source_commodity);
         select2For(target_commodity);
     }
+
+    // Textarea auto resize
+    $('textarea.autoresize').each(function () {
+        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+    }).on('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
 }
 
 $(document).ready(ready);

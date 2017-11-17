@@ -9,6 +9,7 @@ class App < ApplicationRecord
   has_many :invitations
   has_many :memberships, as: :member
   has_many :users, through: :memberships
+  has_many :classifications
 
   before_create :assign_uuid
 
