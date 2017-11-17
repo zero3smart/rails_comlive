@@ -9,6 +9,7 @@ class Commodity < ApplicationRecord
   has_many :references, through: :commodity_references
   has_many :links, through: :commodity_references
   has_many :barcodes, as: :barcodeable
+  has_many :classification_commodities
 
   validates_presence_of :name, :measured_in
   validates_presence_of :brand_id, unless: "generic?"
