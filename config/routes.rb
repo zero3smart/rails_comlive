@@ -37,6 +37,10 @@ Rails.application.routes.draw do
   resources :brands, :standards
 
   resources :apps do
+    resources :classifications do
+      resources :levels
+    end
+
     resources :invitations, only: [:new, :create]
     resources :commodity_references, path: "commodities" do
       resources :states, :specifications, :references

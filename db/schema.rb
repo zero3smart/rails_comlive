@@ -10,11 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902071041) do
+ActiveRecord::Schema.define(version: 20160922081409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "app_accesses", force: :cascade do |t|
+    t.boolean  "owner",             default: false
+    t.boolean  "contributor",       default: false
+    t.integer  "added_by_id"
+    t.integer  "app_id"
+    t.integer  "classification_id"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["app_id"], name: "index_app_accesses_on_app_id", using: :btree
+    t.index ["classification_id"], name: "index_app_accesses_on_classification_id", using: :btree
+  end
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -45,6 +57,41 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.index ["uuid"], name: "index_brands_on_uuid", unique: true, using: :btree
+  end
+
+  create_table "classification_commodities", force: :cascade do |t|
+    t.boolean  "needs_moderation"
+    t.integer  "level_id"
+    t.integer  "commodity_id"
+    t.integer  "added_by_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["commodity_id"], name: "index_classification_commodities_on_commodity_id", using: :btree
+    t.index ["level_id"], name: "index_classification_commodities_on_level_id", using: :btree
+  end
+
+  create_table "classification_standards", force: :cascade do |t|
+    t.boolean  "inheritable",      default: false
+    t.boolean  "force",            default: false
+    t.boolean  "needs_moderation", default: true
+    t.integer  "added_by_id"
+    t.integer  "level_id"
+    t.integer  "standard_id"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["level_id"], name: "index_classification_standards_on_level_id", using: :btree
+    t.index ["standard_id"], name: "index_classification_standards_on_standard_id", using: :btree
+  end
+
+  create_table "classifications", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "visibility",   default: 0
+    t.integer  "moderator_id"
+    t.integer  "app_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["app_id"], name: "index_classifications_on_app_id", using: :btree
   end
 
   create_table "commodities", force: :cascade do |t|
@@ -155,6 +202,18 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.datetime "updated_at",                      null: false
     t.index ["app_id"], name: "index_invitations_on_app_id", using: :btree
     t.index ["token"], name: "index_invitations_on_token", unique: true, using: :btree
+  end
+
+  create_table "levels", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "position"
+    t.boolean  "needs_moderation",  default: true
+    t.integer  "parent_id"
+    t.integer  "added_by_id"
+    t.integer  "classification_id"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["classification_id"], name: "index_levels_on_classification_id", using: :btree
   end
 
   create_table "links", force: :cascade do |t|
@@ -268,6 +327,21 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.index ["commodity_reference_id"], name: "index_states_on_commodity_reference_id", using: :btree
   end
 
+  create_table "units", force: :cascade do |t|
+    t.string   "uom"
+    t.string   "value_type"
+    t.float    "min"
+    t.float    "max"
+    t.boolean  "force"
+    t.boolean  "needs_moderation", default: true
+    t.boolean  "inheritable",      default: false
+    t.integer  "added_by_id"
+    t.integer  "level_id"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["level_id"], name: "index_units_on_level_id", using: :btree
+  end
+
   create_table "unspsc_classes", force: :cascade do |t|
     t.string   "code"
     t.string   "long_code"
@@ -320,6 +394,13 @@ ActiveRecord::Schema.define(version: 20160902071041) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  add_foreign_key "app_accesses", "apps"
+  add_foreign_key "app_accesses", "classifications"
+  add_foreign_key "classification_commodities", "commodities"
+  add_foreign_key "classification_commodities", "levels"
+  add_foreign_key "classification_standards", "levels"
+  add_foreign_key "classification_standards", "standards"
+  add_foreign_key "classifications", "apps"
   add_foreign_key "commodities", "brands"
   add_foreign_key "commodity_references", "apps"
   add_foreign_key "commodity_references", "brands"
@@ -337,6 +418,7 @@ ActiveRecord::Schema.define(version: 20160902071041) do
   add_foreign_key "hscode_headings", "hscode_chapters"
   add_foreign_key "hscode_subheadings", "hscode_headings"
   add_foreign_key "invitations", "apps"
+  add_foreign_key "levels", "classifications"
   add_foreign_key "links", "apps"
   add_foreign_key "links", "commodity_references"
   add_foreign_key "memberships", "users"
@@ -346,6 +428,7 @@ ActiveRecord::Schema.define(version: 20160902071041) do
   add_foreign_key "standardizations", "standards"
   add_foreign_key "standardizations", "users"
   add_foreign_key "states", "commodity_references"
+  add_foreign_key "units", "levels"
   add_foreign_key "unspsc_classes", "unspsc_families"
   add_foreign_key "unspsc_commodities", "unspsc_classes"
   add_foreign_key "unspsc_families", "unspsc_segments"

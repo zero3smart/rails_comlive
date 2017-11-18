@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe App, :type => :model do
+  subject { described_class }
+
   describe "Validations" do
     it "has a valid factory" do
       app = build(:app)
@@ -21,48 +23,53 @@ RSpec.describe App, :type => :model do
 
   describe "Associations" do
     it "has many commodity references" do
-      assoc = App.reflect_on_association(:commodity_references)
+      assoc = subject.reflect_on_association(:commodity_references)
       expect(assoc.macro).to eq :has_many
     end
 
     it "has many links" do
-      assoc = App.reflect_on_association(:links)
+      assoc = subject.reflect_on_association(:links)
       expect(assoc.macro).to eq :has_many
     end
 
     it "has many references" do
-      assoc = App.reflect_on_association(:references)
+      assoc = subject.reflect_on_association(:references)
       expect(assoc.macro).to eq :has_many
     end
 
     it "has many measurements" do
-      assoc = App.reflect_on_association(:measurements)
+      assoc = subject.reflect_on_association(:measurements)
       expect(assoc.macro).to eq :has_many
     end
 
     it "has many custom units" do
-      assoc = App.reflect_on_association(:custom_units)
+      assoc = subject.reflect_on_association(:custom_units)
       expect(assoc.macro).to eq :has_many
     end
 
     it "has many brands" do
-      assoc = App.reflect_on_association(:brands)
+      assoc = subject.reflect_on_association(:brands)
       expect(assoc.macro).to eq :has_many
     end
 
     it "has many standards" do
-      assoc = App.reflect_on_association(:standards)
+      assoc = subject.reflect_on_association(:standards)
       expect(assoc.macro).to eq :has_many
     end
 
     it "has many users" do
-      assoc = App.reflect_on_association(:users)
+      assoc = subject.reflect_on_association(:users)
       expect(assoc.macro).to eq :has_many
       expect(assoc.options[:through]).to eq :memberships
     end
 
     it "has many invitations" do
-      assoc = App.reflect_on_association(:invitations)
+      assoc = subject.reflect_on_association(:invitations)
+      expect(assoc.macro).to eq :has_many
+    end
+
+    it "has many classifications" do
+      assoc = subject.reflect_on_association(:classifications)
       expect(assoc.macro).to eq :has_many
     end
   end
